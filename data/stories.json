@@ -1,34 +1,14 @@
 {
     "stories": [
         {
-            "id": "lost-kingdom",
-            "title": "The Lost Kingdom",
-            "description": "A forgotten realm holds ancient secrets. Elara's journey through magical lands begins.",
-            "author": "flharia",
-            "genre": "Fantasy",
-            "cover": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&fit=crop",
-            "file": "stories/the-lost-kingdom.html",
+            "id": "what-men-live-by",
+            "title": "What Men Live By, and Other Tales",
+            "description": "What Men Live By, and Other Tales by Leo Tolstoy is a collection of short stories written in the late 19th century. The stories delve into themes of compassion, human connection, and existential truths that explore what it means to be human",
+            "author": "Leo Tolstoy",
+            "genre": "philosophical",
+            "cover": "https://upload.wikimedia.org/wikipedia/commons/3/34/Lev_Nikolayevich_Tolstoy_1848.jpg?w=500&fit=crop",
+            "file": "stories/what-men-live-and-other-stories.html",
             "wordCount": 2500
-        },
-        {
-            "id": "midnight-shadows",
-            "title": "Midnight Shadows",
-            "description": "A detective unravels a conspiracy in 1920s New York. Darkness hides more than secrets.",
-            "author": "flharia",
-            "genre": "Mystery",
-            "cover": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&fit=crop",
-            "file": "stories/midnight-shadows.html",
-            "wordCount": 3200
-        },
-        {
-            "id": "beyond-stars",
-            "title": "Beyond the Stars",
-            "description": "Year 2150. Captain Rey discovers a planet that shouldn't exist. Reality begins to unravel.",
-            "author": "flharia",
-            "genre": "Sci-Fi",
-            "cover": "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=500&fit=crop",
-            "file": "stories/beyond-stars.html",
-            "wordCount": 2800
         }
     ]
 }

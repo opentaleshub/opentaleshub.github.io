@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Lost Kingdom - Open Tales Hub</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <style>
+        .story-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .chapter {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: rgba(43, 188, 138, 0.05);
+            border-left: 4px solid #2bbc8a;
+            border-radius: 5px;
+        }
+        
+        .chapter h2 {
+            color: #2bbc8a;
+            margin-bottom: 1rem;
+        }
+        
+        .chapter-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+        }
+        
+        .chapter-content {
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .chapter-content p {
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header will be loaded by JavaScript -->
+    <div id="header"></div>
+    
+    <!-- Story Content -->
+    <div class="story-container">
+        <!-- Story Title -->
+        <h1 style="color: #2bbc8a; text-align: center; margin-bottom: 1rem;">
+            The Lost Kingdom
+        </h1>
+        
+        <!-- Story Metadata -->
+        <div style="text-align: center; color: #888; margin-bottom: 3rem;">
+            <span>By flharia</span> • 
+            <span>Fantasy</span> • 
+            <span>12 Chapters</span> • 
+            <span>★ 4.8</span>
+        </div>
+        
+        <!-- Chapter 1 -->
+        <div class="chapter">
+            <h2>Chapter 1: The Beginning</h2>
+            <div class="chapter-content">
+                <p>The kingdom of Eldoria was once the jewel of the continent. Its spires touched the clouds, and its streets were paved with magic. But that was a thousand years ago. Now, it was just a story told to children—a cautionary tale about pride and power.</p>
+                
+                <p>Elara stood at the edge of the Whispering Woods, the map in her hands trembling. She could feel the ancient magic here, a low hum in the air that made the hairs on her arms stand on end. According to the legends, the entrance to the lost kingdom was somewhere in these woods, hidden by enchantments so old that even the trees remembered them differently.</p>
+                
+                <p>She took a deep breath and stepped into the shadows. The canopy above was so thick that midday felt like dusk. Strange lights flickered between the trees, and voices seemed to whisper just at the edge of hearing. Elara tightened her grip on her staff, the crystal at its tip glowing with a soft blue light.</p>
+                
+                <p>"Show me the way," she whispered, and the crystal's glow intensified, pointing deeper into the woods.</p>
+                
+                <p>For hours, she followed the light, her boots sinking into the mossy ground. The air grew colder, and the whispers louder. She could make out words now—old words in a language she didn't understand, but somehow felt familiar.</p>
+                
+                <p>Just as the sun began to set, the trees parted, revealing a stone archway covered in ivy. Carved into the stone were symbols that matched those on her map. This was it—the entrance to Eldoria.</p>
+                
+                <p>But as she reached out to touch the archway, a figure stepped from the shadows. Tall and cloaked in darkness, with eyes that glowed like embers. Elara froze, her heart pounding.</p>
+                
+                <p>"No one has found this place in centuries," the figure said, its voice like rustling leaves. "Why do you seek the lost kingdom?"</p>
+                
+                <p>Elara gathered her courage. "I seek the Heartstone. My village is dying, and only its magic can save us."</p>
+                
+                <p>The figure was silent for a long moment. Then it stepped aside. "The path is dangerous, child. Eldoria does not give up its secrets easily. But if your heart is true, you may yet find what you seek."</p>
+                
+                <p>With a final glance at the figure, Elara stepped through the archway—and into another world.</p>
+            </div>
+        </div>
+        
+        <!-- Chapter Navigation -->
+        <div class="chapter-navigation">
+            <a href="#" class="btn btn-secondary">← Previous Chapter</a>
+            <a href="#chapter2" class="btn">Next Chapter →</a>
+        </div>
+        
+        <!-- Coming Soon Notice -->
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: rgba(255, 204, 0, 0.1); border-radius: 10px;">
+            <h3 style="color: #ffcc00;">More Chapters Coming Soon!</h3>
+            <p>This story is being updated regularly. Check back for new chapters!</p>
+        </div>
+    </div>
+    
+    <!-- Footer will be loaded by JavaScript -->
+    <div id="footer"></div>
+    
+    <!-- JavaScript Files -->
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/reading-tools.js"></script>
+    
+    <script>
+        // Load header and footer
+        fetch('../includes/header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header').innerHTML = data;
+            })
+            .catch(error => {
+                document.getElementById('header').innerHTML = '<div style="text-align: center; padding: 2rem;"><a href="/">← Back to Home</a></div>';
+            });
+        
+        fetch('../includes/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer').innerHTML = data;
+            })
+            .catch(error => {
+                document.getElementById('footer').innerHTML = '<footer style="text-align: center; padding: 2rem;">© Open Tales Hub</footer>';
+            });
+    </script>
+</body>
+</html>

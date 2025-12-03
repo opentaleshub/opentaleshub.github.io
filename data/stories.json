@@ -7,28 +7,7 @@
             "author": "Leo Tolstoy",
             "genre": "Classic Literature",
             "cover": "https://upload.wikimedia.org/wikipedia/commons/3/34/Lev_Nikolayevich_Tolstoy_1848.jpg?w=500&fit=crop",
-            "file": "stories/what-men-live-by.html",
-            "wordCount": 3200
-        },
-        {
-        "id": "the-tell-tale-heart",
-        "title": "The Tell-Tale Heart",
-        "description": "The narrator of \"Tell-Tale Heart\" defends his sanity – he says he is nervous, but that he can not be called mad. His senses are in fact quickened, and he is more alert and has heard things from both heaven and hell.",
-        "author": "Edgar Allan Poe",
-        "genre": "Horror",
-        "cover": "https://poemuseum.org/wp-content/uploads/TellTaleHeart.jpg?w=500&fit=crop",
-        "file": "stories/the-tell-tale-heart.html",
-        "wordCount": 2164
-         },
-	 {
-            "id": "what-men-live-by2",
-            "title": "What Men Live By",
-            "description": "Leo Tolstoy's profound tale of an angel learning about human love, compassion, and what truly sustains us.",
-            "author": "Leo Tolstoy",
-            "genre": "Classic Literature",
-            "cover": "https://www.marxists.org/archive/tolstoy/leo-tolstoy-18.jpg?w=500&fit=crop",
-            "file": "stories/what-men-lives-by2.html",
-            "wordCount": 3200
+            "file": "stories/what-men-live-by.html"
         }
     ]
 }

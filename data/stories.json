@@ -6,7 +6,8 @@
             "description": "Leo Tolstoy's profound tale of an angel learning about human love, compassion, and what truly sustains us.",
             "author": "Leo Tolstoy",
             "genre": "Classic Literature",
-            "cover": "https://upload.wikimedia.org/wikipedia/commons/3/34/Lev_Nikolayevich_Tolstoy_1848.jpg?w=500&fit=crop",
+            "cover2": "https://upload.wikimedia.org/wikipedia/commons/3/34/Lev_Nikolayevich_Tolstoy_1848.jpg?w=500&fit=crop",
+	    "cover": "https://coverart.oclc.org/ImageWebSvc/oclc/+-+4028909296_140.jpg?allowDefault=false&client=WorldcatOrgUI",
             "file": "stories/what-men-live-by.html",
             "wordCount": 3200
         }

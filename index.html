@@ -3,36 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Open Tales Hub</title>
+    <title>Open Tales Hub - Simple Story Reading</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body class="dark-theme">
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <i class="fas fa-moon"></i>
+    </button>
+    
+    <!-- Header -->
     <header>
         <div class="container">
             <h1><i class="fas fa-book-open"></i> Open Tales Hub</h1>
-            <p>Short stories for quiet nights</p>
+            <p class="tagline">Simple stories, comfortable reading</p>
         </div>
     </header>
 
+    <!-- Main Content -->
     <main class="container">
-        <section class="stories-container">
-            <!-- Stories will load here from JSON -->
+        <section class="stories-section">
+            <h2 class="section-title">Available Stories</h2>
             <div id="stories-list" class="stories-grid">
+                <!-- Stories load here -->
                 <div class="loading">
                     <i class="fas fa-spinner fa-spin"></i> Loading stories...
                 </div>
             </div>
         </section>
+        
+        <section class="site-info">
+            <h3>How to read</h3>
+            <p>Click any story to start reading. Use the theme toggle for comfortable reading day or night.</p>
+            <p>All stories are short reads (5-15 minutes).</p>
+        </section>
     </main>
 
+    <!-- Footer -->
     <footer>
         <div class="container">
-            <p>Made with <i class="fas fa-heart"></i> by flharia</p>
-            <p class="footer-note">All stories are short reads • Dark theme optimized</p>
+            <p>Created by flharia</p>
+            <p class="footer-links">
+                <a href="https://github.com/opentaleshub" target="_blank">GitHub</a>
+            </p>
         </div>
     </footer>
 
+    <!-- JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>

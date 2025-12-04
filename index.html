@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <link rel="manifest" href="manifest.json">
     <meta charset="UTF-8">
@@ -46,50 +46,41 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="dark-theme">
-    <!-- Theme Toggle Button -->
-    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
-        <i class="fas fa-moon"></i>
-    </button>
-    
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <h1><i class="fas fa-book-open"></i> Open Tales Hub</h1>
-            <p class="tagline">Simple stories, comfortable reading</p>
-        </div>
-    </header>
+<body>
+    <div class="container">
+        <header>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>
+                    <h1>Open Tales Hub</h1>
+                    <p>A minimal story reading platform.</p>
+                </div>
+                <button id="themeToggle" style="background: none; border: 1px solid var(--border); color: var(--text); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
 
-    <!-- Main Content -->
-    <main class="container">
-        <section class="stories-section">
-            <h2 class="section-title">Available Stories</h2>
-            <div id="stories-list" class="stories-grid">
-                <!-- Stories load here -->
-                <div class="loading">
-                    <i class="fas fa-spinner fa-spin"></i> Loading stories...
+        <main>
+            <h2>Stories</h2>
+            <div id="stories">
+                <!-- Stories will be loaded here by JavaScript -->
+                <div style="text-align: center; padding: 2rem; color: var(--text-secondary);">
+                    <div class="loading-spinner" style="width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem;"></div>
+                    <p>Loading stories...</p>
                 </div>
             </div>
-        </section>
-        
-        <section class="site-info">
-            <h3>How to read</h3>
-            <p>Click any story to start reading. Use the theme toggle for comfortable reading day or night.</p>
-            <p>All stories are short reads (5-15 minutes).</p>
-        </section>
-    </main>
+        </main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <p>Created by flharia</p>
-            <p class="footer-links">
-                <a href="https://github.com/opentaleshub" target="_blank">GitHub</a>
-            </p>
-        </div>
-    </footer>
+        <footer>
+            <p>No ads. No tracking. Just stories.</p>
+        </footer>
+    </div>
 
-    <!-- JavaScript -->
     <script src="script.js"></script>
+    <style>
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
 </body>
 </html>

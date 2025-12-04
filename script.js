@@ -1,101 +1,131 @@
-// Theme Management
-class ThemeManager {
+// script.js - Main site functionality for homepage
+
+class OpenTales {
     constructor() {
-        this.themeToggle = document.getElementById('themeToggle');
         this.init();
     }
     
     init() {
-        // Load saved theme or default to dark
-        const savedTheme = localStorage.getItem('opentales-theme') || 'dark';
-        this.setTheme(savedTheme);
-        
-        // Setup toggle button
-        if (this.themeToggle) {
-            this.themeToggle.addEventListener('click', () => this.toggleTheme());
-        }
-    }
-    
-    setTheme(theme) {
-        document.body.className = theme + '-theme';
-        localStorage.setItem('opentales-theme', theme);
-        
-        // Update button icon
-        if (this.themeToggle) {
-            const icon = this.themeToggle.querySelector('i');
-            if (icon) {
-                icon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
-            }
-            this.themeToggle.setAttribute('title', `Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`);
-        }
-    }
-    
-    toggleTheme() {
-        const currentTheme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        this.setTheme(newTheme);
-    }
-}
-
-// Stories Loader
-class StoriesLoader {
-    constructor() {
-        this.stories = [];
-        this.init();
-    }
-    
-    async init() {
-        await this.loadStories();
-        this.renderStories();
+        this.loadStories();
+        this.initTheme();
+        this.initEventListeners();
     }
     
     async loadStories() {
+        const storiesContainer = document.getElementById('stories');
+        const allStoriesContainer = document.getElementById('allStoriesContainer');
+        
+        if (!storiesContainer && !allStoriesContainer) return;
+        
         try {
+            // Show loading
+            if (storiesContainer) {
+                storiesContainer.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: var(--text-secondary);">
+                        <div class="loading-spinner" style="width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem;"></div>
+                        <p>Loading stories...</p>
+                    </div>
+                `;
+            }
+            
+            // Fetch stories from JSON
             const response = await fetch('data/stories.json');
             const data = await response.json();
-            this.stories = data.stories || [];
+            const stories = data.stories || [];
+            
+            // Generate HTML for stories
+            const storiesHTML = stories.map(story => this.createStoryCard(story)).join('');
+            
+            // Update containers
+            if (storiesContainer) {
+                storiesContainer.innerHTML = storiesHTML;
+            }
+            
+            if (allStoriesContainer) {
+                allStoriesContainer.innerHTML = storiesHTML;
+            }
+            
         } catch (error) {
             console.error('Error loading stories:', error);
-            this.stories = [];
+            
+            // Show error
+            if (storiesContainer) {
+                storiesContainer.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: var(--text-secondary);">
+                        <p>Failed to load stories. Please try again later.</p>
+                        <button onclick="location.reload()" style="
+                            margin-top: 1rem;
+                            padding: 0.5rem 1rem;
+                            background: var(--accent);
+                            color: white;
+                            border: none;
+                            border-radius: 4px;
+                            cursor: pointer;
+                        ">Retry</button>
+                    </div>
+                `;
+            }
         }
     }
     
-    renderStories() {
-        const container = document.getElementById('stories-list');
-        if (!container) return;
+    createStoryCard(story) {
+        return `
+        <div class="story">
+            <h3>${story.title}</h3>
+            <em>by ${story.author}</em>
+            <p>${story.description}</p>
+            <a href="${story.file}">Read →</a>
+        </div>
+        `;
+    }
+    
+    initTheme() {
+        const themeToggle = document.getElementById('themeToggle');
+        const icon = themeToggle?.querySelector('i');
         
-        if (this.stories.length === 0) {
-            container.innerHTML = '<div class="no-stories">No stories available yet.</div>';
-            return;
+        if (themeToggle && icon) {
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            icon.className = savedTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+            
+            // Setup toggle
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                icon.className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+            });
         }
-        
-        let html = '';
-        
-        this.stories.forEach(story => {
-            html += `
-            <a href="${story.file}" class="story-card">
-                <img src="${story.cover}" alt="${story.title}" class="story-image">
-                <div class="story-content">
-                    <h3 class="story-title">${story.title}</h3>
-                    <p class="story-description">${story.description}</p>
-                    <div class="story-meta">
-                        <span>${story.author}</span>
-                        <span>${story.genre}</span>
-                    </div>
-                </div>
-            </a>
-            `;
+    }
+    
+    initEventListeners() {
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
         });
-        
-        container.innerHTML = html;
     }
 }
 
-// Initialize when page loads
+// Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize theme manager
-    new ThemeManager();
+    new OpenTales();
     
-    // Initialize stories loader
-    new StoriesLoader();
+    // Add CSS for spinner animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    `;
+    document.head.appendChild(style);
 });

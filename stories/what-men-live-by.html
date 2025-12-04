@@ -1,568 +1,188 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>What Men Live By | Open Tales Hub</title>
+    <title>What Men Live By · Leo Tolstoy | Open Tales</title>
+    
+    <!-- Reusable styles -->
     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../story.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* Story Page Specific Styles */
-        .story-page {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .story-header {
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .story-header h1 {
-            color: var(--accent-color);
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-        }
-
-        .story-header .description {
-            color: var(--text-color);
-            opacity: 0.8;
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-        }
-
-        .meta-grid {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            color: var(--text-color);
-            opacity: 0.7;
-            font-size: 0.9rem;
-        }
-
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .story-content {
-            line-height: 1.8;
-            font-size: 1.1rem;
-        }
-
-        .story-content p {
-            margin-bottom: 1.5rem;
-        }
-
-        .chapter-title {
-            color: var(--accent-color);
-            margin: 40px 0 20px 0;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        .quote {
-            font-style: italic;
-            color: var(--accent-color);
-            padding-left: 20px;
-            border-left: 3px solid var(--accent-color);
-            margin: 30px 0;
-            padding: 20px;
-            background: rgba(108, 99, 255, 0.05);
-            border-radius: 5px;
-        }
-
-        .author-note {
-            background: rgba(255, 193, 7, 0.1);
-            padding: 20px;
-            border-radius: 5px;
-            border-left: 3px solid #ffc107;
-            margin: 30px 0;
-        }
-
-        .content-container {
-            padding: 30px;
-            background: var(--card-bg);
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 30px;
-        }
-
-        /* Reading Controls */
-        .reading-controls {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            z-index: 100;
-        }
-
-        .control-btn {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            box-shadow: 0 4px 12px var(--shadow);
-            transition: transform 0.2s;
-        }
-
-        .control-btn:hover {
-            transform: scale(1.1);
-            background: var(--accent-light);
-        }
-
-        .back-to-home {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--accent-color);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 500;
-            margin-top: 30px;
-            transition: all 0.3s;
-        }
-
-        .back-to-home:hover {
-            background: var(--accent-light);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px var(--shadow);
-        }
-
-        /* Progress Bar */
-        .reading-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 3px;
-            background: var(--accent-color);
-            width: 0%;
-            z-index: 9999;
-            transition: width 0.1s;
-        }
-
-        /* Word Count */
-        .word-count {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--card-bg);
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            border: 1px solid var(--border-color);
-            opacity: 0.7;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .story-page {
-                padding: 15px;
-            }
-
-            .story-header h1 {
-                font-size: 1.8rem;
-            }
-
-            .content-container {
-                padding: 20px;
-            }
-
-            .reading-controls {
-                bottom: 15px;
-                left: 15px;
-            }
-
-            .word-count {
-                bottom: 15px;
-                right: 15px;
-                font-size: 0.8rem;
-            }
-        }
-    </style>
 </head>
-<body class="dark-theme">
-    <!-- Theme Toggle -->
-    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
-        <i class="fas fa-moon"></i>
-    </button>
-
-    <!-- Reading Progress Bar -->
-    <div class="reading-progress" id="readingProgress"></div>
-
-    <!-- Story Content -->
-    <div class="story-page">
-        <!-- Header -->
-        <header class="story-header">
-            <h1>What Men Live By</h1>
-            <p class="description">A profound short story about love, compassion, and what truly sustains humanity</p>
-            <div class="story-meta">
-                <span><i class="fas fa-user"></i> Leo Tolstoy</span>
-                <span><i class="fas fa-book"></i> Classic Literature</span>
-                <span><i class="fas fa-clock"></i> 15 min read</span>
-                <span><i class="fas fa-calendar"></i> 1885</span>
+<body>
+    <!-- Reading progress -->
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <!-- Main container -->
+    <div class="container">
+        <!-- Header with theme toggle -->
+        <header style="margin-bottom: 2rem; padding-top: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <a href="../index.html" style="text-decoration: none; color: var(--text); display: flex; align-items: center; gap: 0.5rem;">
+                    <span>←</span>
+                    <span style="font-weight: 500;">Open Tales</span>
+                </a>
+                <button id="themeToggle" class="control-btn" style="position: static;">
+                    <i class="fas fa-moon"></i>
+                </button>
             </div>
         </header>
-
-        <!-- Story Container -->
-        <div class="content-container">
-            <div class="story-content" id="storyContent">
-                <div class="author-note">
-                    <p><strong>About this story:</strong> Leo Tolstoy wrote "What Men Live By" in 1885. It's a profound exploration of Christian love and the true meaning of human existence, told through the simple life of a shoemaker.</p>
+        
+        <!-- Story content -->
+        <article class="story-container">
+            <header class="story-header">
+                <h1>What Men Live By</h1>
+                <p class="story-subtitle">A profound short story about love, compassion, and what truly sustains humanity</p>
+                <div class="story-meta">
+                    <span><i class="fas fa-user"></i> Leo Tolstoy</span>
+                    <span><i class="fas fa-book"></i> Classic Literature</span>
+                    <span><i class="fas fa-clock"></i> 15 minute read</span>
+                    <span><i class="fas fa-calendar"></i> 1885</span>
                 </div>
-
-                <h3 class="chapter-title">Part I</h3>
-
-                <p>A shoemaker named Simon, who had neither house nor land of his own, lived with his wife and children in a peasant's hut and earned his living by his work. Work was cheap, but bread was dear, and what he earned he spent for food. The man and his wife had but one sheepskin coat between them for winter wear, and even that was worn to tatters, and this was the second year he had been wanting to buy sheep-skins for a new coat.</p>
-
-                <p>Before winter Simon saved up a little money: a three-rouble note lay hidden in his wife's box, and five roubles and twenty kopeks were owed him by customers in the village.</p>
-
-                <p>So one morning he prepared to go to the village to buy the sheep-skins. He put on over his shirt his wife's wadded nankeen jacket, and over that he put his own cloth coat. He took the three-rouble note in his pocket, cut himself a stick to serve as a staff, and started off after breakfast.</p>
-
-                <div class="quote">
-                    "I'll collect the five roubles that are due to me," thought he, "add the three I have got, and that will be enough to buy sheep-skins for the winter coat."
+            </header>
+            
+            <div class="story-content">
+                <div class="chapter-section">
+                    <h2 class="chapter-title">Part I</h2>
+                    
+                    <p>A shoemaker named Simon, who had neither house nor land of his own, lived with his wife and children in a peasant's hut and earned his living by his work. Work was cheap, but bread was dear, and what he earned he spent for food. The man and his wife had but one sheepskin coat between them for winter wear, and even that was worn to tatters, and this was the second year he had been wanting to buy sheep-skins for a new coat.</p>
+                    
+                    <p>Before winter Simon saved up a little money: a three-rouble note lay hidden in his wife's box, and five roubles and twenty kopeks were owed him by customers in the village.</p>
+                    
+                    <p>So one morning he prepared to go to the village to buy the sheep-skins. He put on over his shirt his wife's wadded nankeen jacket, and over that he put his own cloth coat. He took the three-rouble note in his pocket, cut himself a stick to serve as a staff, and started off after breakfast.</p>
+                    
+                    <div class="quote">
+                        I'll collect the five roubles that are due to me, add the three I have got, and that will be enough to buy sheep-skins for the winter coat.
+                    </div>
+                    
+                    <p>He came to the village and called at a peasant's hut, but the man was not at home. The peasant's wife promised that the money should be paid next week, but she would not pay it herself. Then Simon called on another peasant, but this one swore he had no money, and would only pay twenty kopeks for the boots he had mended. Simon then tried to buy the sheep-skins on credit, but the dealer would not trust him.</p>
+                    
+                    <p>"Bring your money," said he, "then you may have your pick of the skins. We know what debt-collecting is like."</p>
+                    
+                    <p>So Simon did not get his skins. He had only twenty kopeks in his pocket, and with these he started for home. He reflected that he would have to get through the winter as best he could without a new sheep-skin coat. He would have to make his old one last another year.</p>
+                    
+                    <p>On his way to the village, Simon came upon a chapel, and seeing a man sitting by the chapel, he stopped to look at him. The man was entirely naked, sitting motionless, leaning against the wall, staring straight before him. Simon was frightened, thinking the man might be ill or dead, but as he drew nearer he saw that it was a living man, and apparently in his senses.</p>
+                    
+                    <p>"Who are you?" asked Simon. "Why are you sitting here naked in the cold?"</p>
+                    
+                    <p>The stranger turned his head and looked at Simon, and Simon saw that his face was pale and his eyes dull, as if he were very tired.</p>
+                    
+                    <p>"I am not naked," said the man, "though it seems so to you."</p>
+                    
+                    <p>"But why are you sitting here in the frost?" persisted Simon.</p>
+                    
+                    <p>"I must," answered the man.</p>
+                    
+                    <p>"But where are your clothes?"</p>
+                    
+                    <p>"I have none."</p>
+                    
+                    <p>"Who are you, then?"</p>
+                    
+                    <p>"I am a man."</p>
+                    
+                    <p>"But what man? How do you come to be here?"</p>
+                    
+                    <p>"I cannot tell you. I do not know myself."</p>
                 </div>
-
-                <p>On his way to the village, Simon came upon a chapel, and seeing a man sitting by the chapel, he stopped to look at him. The man was entirely naked, sitting motionless, leaning against the wall, staring straight before him. Simon was frightened, thinking the man might be ill or dead, but as he drew nearer he saw that it was a living man, and apparently in his senses.</p>
-
-                <p>"Who are you?" asked Simon. "Why are you sitting here naked in the cold?"</p>
-
-                <p>The stranger turned his head and looked at Simon, and Simon saw that his face was pale and his eyes dull, as if he were very tired.</p>
-
-                <p>"I am not naked," said the man, "though it seems so to you."</p>
-
-                <p>"But why are you sitting here in the frost?" persisted Simon.</p>
-
-                <p>"I must," answered the man.</p>
-
-                <p>"But where are your clothes?"</p>
-
-                <p>"I have none."</p>
-
-                <p>"Who are you, then?"</p>
-
-                <p>"I am a man."</p>
-
-                <p>"But what man? How do you come to be here?"</p>
-
-                <p>"I cannot tell you. I do not know myself."</p>
-
-                <h3 class="chapter-title">Part II</h3>
-
-                <p>Simon took off his cloth coat, threw it over the man's shoulders, and helped him to his feet. The man was tall and well-built, but very thin, and he shivered with cold. Simon put his arm round him and led him to his home.</p>
-
-                <p>When they reached the hut, Simon's wife, Matryona, came out to meet them. She was alarmed when she saw the naked man, but Simon said: "Here is a man, wife, who has no clothes. Take him in and give him something to eat."</p>
-
-                <p>Matryona, though she was sorry for the man, was vexed with her husband. "We have scarcely enough bread for ourselves," she said, "and you bring naked beggars home."</p>
-
-                <p>But Simon said: "Give him some bread, Matryona. He is a human being."</p>
-
-                <p>So Matryona cut a slice of bread and gave it to the stranger. He took it and began to eat, but he ate slowly, as if he were very weak.</p>
-
-                <div class="quote">
-                    "Love is the only thing that we can carry with us when we go, and it makes the end so easy."
+                
+                <div class="chapter-section">
+                    <h2 class="chapter-title">Part II</h2>
+                    
+                    <p>Simon took off his cloth coat, threw it over the man's shoulders, and helped him to his feet. The man was tall and well-built, but very thin, and he shivered with cold. Simon put his arm round him and led him to his home.</p>
+                    
+                    <p>When they reached the hut, Simon's wife, Matryona, came out to meet them. She was alarmed when she saw the naked man, but Simon said: "Here is a man, wife, who has no clothes. Take him in and give him something to eat."</p>
+                    
+                    <p>Matryona, though she was sorry for the man, was vexed with her husband. "We have scarcely enough bread for ourselves," she said, "and you bring naked beggars home."</p>
+                    
+                    <p>But Simon said: "Give him some bread, Matryona. He is a human being."</p>
+                    
+                    <p>So Matryona cut a slice of bread and gave it to the stranger. He took it and began to eat, but he ate slowly, as if he were very weak.</p>
+                    
+                    <div class="quote">
+                        Love is the only thing that we can carry with us when we go, and it makes the end so easy.
+                    </div>
+                    
+                    <p>Simon gave the stranger his own place to sleep that night. The next morning, when Simon awoke, the stranger was already up, sitting on the bench and looking out of the window. He turned to Simon and said: "I must work for you, master. Teach me your trade."</p>
+                    
+                    <p>Simon was a shoemaker, and he agreed to teach the man. He soon found that his new apprentice learned quickly and worked well. The stranger, who said his name was Michael, stayed with Simon and Matryona for six years.</p>
+                    
+                    <p>He never went out, never spoke unless spoken to, and lived quietly and industriously. He worked hard and well, and Simon grew to love him as a son.</p>
                 </div>
-
-                <p>Simon gave the stranger his own place to sleep that night. The next morning, when Simon awoke, the stranger was already up, sitting on the bench and looking out of the window. He turned to Simon and said: "I must work for you, master. Teach me your trade."</p>
-
-                <p>Simon was a shoemaker, and he agreed to teach the man. He soon found that his new apprentice learned quickly and worked well. The stranger, who said his name was Michael, stayed with Simon and Matryona for six years.</p>
-
-                <h3 class="chapter-title">Part III</h3>
-
-                <p>One day, a rich man came to Simon's shop and ordered a pair of boots that would last for a year without wearing out. Michael, who was now an excellent shoemaker, was given the task. But instead of making boots, Michael made a pair of soft slippers.</p>
-
-                <p>When Simon saw what Michael had done, he was angry. "You have ruined the leather!" he cried. "The gentleman ordered boots that would last a year, and you have made slippers that will not last a week!"</p>
-
-                <p>Michael replied quietly: "The man will not need boots. He will die tonight."</p>
-
-                <p>And indeed, that evening news came that the rich man had died suddenly. Simon was astonished, and he began to understand that Michael was not an ordinary man.</p>
-
-                <p>Some time later, a woman came with her twin daughters to order shoes. She was poor and could only afford one pair, but her daughters both needed shoes. Michael made two pairs of shoes from the leather for one pair. When the woman came to collect them, she wept with gratitude.</p>
-
-                <p>That evening, Michael called Simon and Matryona to him. "My time with you is over," he said. "I must now tell you who I am and why I came to you."</p>
-
-                <div class="quote">
-                    "I have learned that all men live not by care for themselves, but by love."
+                
+                <div class="chapter-section">
+                    <h2 class="chapter-title">Part III</h2>
+                    
+                    <p>One day, a rich man came to Simon's shop and ordered a pair of boots that would last for a year without wearing out. Michael, who was now an excellent shoemaker, was given the task. But instead of making boots, Michael made a pair of soft slippers.</p>
+                    
+                    <p>When Simon saw what Michael had done, he was angry. "You have ruined the leather!" he cried. "The gentleman ordered boots that would last a year, and you have made slippers that will not last a week!"</p>
+                    
+                    <p>Michael replied quietly: "The man will not need boots. He will die tonight."</p>
+                    
+                    <p>And indeed, that evening news came that the rich man had died suddenly. Simon was astonished, and he began to understand that Michael was not an ordinary man.</p>
+                    
+                    <p>Some time later, a woman came with her twin daughters to order shoes. She was poor and could only afford one pair, but her daughters both needed shoes. Michael made two pairs of shoes from the leather for one pair. When the woman came to collect them, she wept with gratitude.</p>
+                    
+                    <p>That evening, Michael called Simon and Matryona to him. "My time with you is over," he said. "I must now tell you who I am and why I came to you."</p>
+                    
+                    <div class="quote">
+                        I have learned that all men live not by care for themselves, but by love.
+                    </div>
+                    
+                    <p>Michael revealed that he was an angel. God had sent him to take the soul of a woman who had just given birth to twin girls. But the woman pleaded for her life, saying her babies would die without her. Michael took pity on her and did not take her soul. For this disobedience, God punished him by sending him to earth to learn three truths:</p>
+                    
+                    <ol>
+                        <li><strong>What dwells in man?</strong></li>
+                        <li><strong>What is not given to man?</strong></li>
+                        <li><strong>What do men live by?</strong></li>
+                    </ol>
+                    
+                    <p>"I have learned the answers," said Michael. "What dwells in man is <em>love</em>. What is not given to man is to know his own needs. And what men live by is <em>love</em>—not by care for themselves, but by the love that exists in other people."</p>
+                    
+                    <p>As he finished speaking, Michael's face became radiant. Wings appeared from his shoulders, and he rose up through the roof and disappeared into the sky.</p>
+                    
+                    <p>Simon and Matryona fell to their knees in awe. From that day on, they lived differently, understanding that true wealth lies not in possessions but in love and compassion for others.</p>
+                    
+                    <div class="quote">
+                        I understood that God does not wish men to live apart, and therefore he does not reveal to them what each one needs for himself; but he wishes them to live united, and therefore reveals to each of them what is necessary for all.
+                    </div>
+                    
+                    <p>Years passed. Simon's business prospered, not because he worked harder, but because everything he did now seemed to turn out well. He never turned away anyone in need, and shared whatever he had. He and Matryona grew old together, surrounded by the love of their children and grandchildren, always remembering the angel who had taught them what men truly live by.</p>
                 </div>
-
-                <p>Michael revealed that he was an angel. God had sent him to take the soul of a woman who had just given birth to twin girls. But the woman pleaded for her life, saying her babies would die without her. Michael took pity on her and did not take her soul. For this disobedience, God punished him by sending him to earth to learn three truths:</p>
-
-                <ol>
-                    <li>What dwells in man?</li>
-                    <li>What is not given to man?</li>
-                    <li>What do men live by?</li>
-                </ol>
-
-                <p>"I have learned the answers," said Michael. "What dwells in man is love. What is not given to man is to know his own needs. And what men live by is love—not by care for themselves, but by the love that exists in other people."</p>
-
-                <p>As he finished speaking, Michael's face became radiant. Wings appeared from his shoulders, and he rose up through the roof and disappeared into the sky.</p>
-
-                <p>Simon and Matryona fell to their knees in awe. From that day on, they lived differently, understanding that true wealth lies not in possessions but in love and compassion for others.</p>
-
-                <div class="quote">
-                    "I understood that God does not wish men to live apart, and therefore he does not reveal to them what each one needs for himself; but he wishes them to live united, and therefore reveals to each of them what is necessary for all."
+                
+                <div class="chapter-section" style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border);">
+                    <h2 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--text);">About this Story</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                        "What Men Live By" (Russian: "Чем люди живы") is a short story written by Leo Tolstoy in 1885. 
+                        It explores themes of Christian love, compassion, and the fundamental truths of human existence. 
+                        The story is considered one of Tolstoy's most accessible and profound works, embodying his 
+                        philosophical and spiritual beliefs during his later years.
+                    </p>
                 </div>
+                
+                <a href="../index.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    Return to all stories
+                </a>
             </div>
-        </div>
-
-        <!-- Back to Home Button -->
-        <div style="text-align: center;">
-            <a href="../index.html" class="back-to-home">
-                <i class="fas fa-arrow-left"></i> Back to All Stories
-            </a>
-        </div>
+        </article>
     </div>
-
-    <!-- Reading Controls -->
+    
+    <!-- Reading controls -->
     <div class="reading-controls">
-        <button class="control-btn" id="fontIncrease" title="Increase Font Size">
+        <button class="control-btn" id="fontIncrease" title="Increase font size">
             <i class="fas fa-plus"></i>
         </button>
-        <button class="control-btn" id="fontDecrease" title="Decrease Font Size">
+        <button class="control-btn" id="fontDecrease" title="Decrease font size">
             <i class="fas fa-minus"></i>
         </button>
-        <button class="control-btn" id="scrollTop" title="Scroll to Top">
+        <button class="control-btn" id="scrollTopBtn" title="Scroll to top">
             <i class="fas fa-arrow-up"></i>
         </button>
     </div>
-
-    <!-- Word Count -->
-    <div class="word-count" id="wordCount">0 words read</div>
-
-    <script>
-        // Theme Management
-        class StoryThemeManager {
-            constructor() {
-                this.themeToggle = document.getElementById('themeToggle');
-                this.init();
-            }
-
-            init() {
-                // Load saved theme or default to dark
-                const savedTheme = localStorage.getItem('opentales-theme') || 'dark';
-                this.setTheme(savedTheme);
-
-                // Setup toggle button
-                if (this.themeToggle) {
-                    this.themeToggle.addEventListener('click', () => this.toggleTheme());
-                }
-            }
-
-            setTheme(theme) {
-                document.body.className = theme + '-theme';
-                localStorage.setItem('opentales-theme', theme);
-
-                // Update button icon
-                if (this.themeToggle) {
-                    const icon = this.themeToggle.querySelector('i');
-                    if (icon) {
-                        icon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
-                    }
-                    this.themeToggle.setAttribute('title',
-                        `Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`);
-                }
-            }
-
-            toggleTheme() {
-                const currentTheme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                this.setTheme(newTheme);
-            }
-        }
-
-        // Font Size Control
-        class FontSizeManager {
-            constructor() {
-                this.fontSize = 16; // Base font size
-                this.contentElement = document.getElementById('storyContent');
-                this.increaseBtn = document.getElementById('fontIncrease');
-                this.decreaseBtn = document.getElementById('fontDecrease');
-                this.init();
-            }
-
-            init() {
-                // Load saved font size
-                const savedSize = localStorage.getItem('opentales-fontsize');
-                if (savedSize) {
-                    this.fontSize = parseInt(savedSize);
-                    this.applyFontSize();
-                }
-
-                // Setup event listeners
-                if (this.increaseBtn) {
-                    this.increaseBtn.addEventListener('click', () => this.increaseFont());
-                }
-
-                if (this.decreaseBtn) {
-                    this.decreaseBtn.addEventListener('click', () => this.decreaseFont());
-                }
-            }
-
-            increaseFont() {
-                if (this.fontSize < 24) {
-                    this.fontSize += 1;
-                    this.applyFontSize();
-                    this.saveFontSize();
-                }
-            }
-
-            decreaseFont() {
-                if (this.fontSize > 12) {
-                    this.fontSize -= 1;
-                    this.applyFontSize();
-                    this.saveFontSize();
-                }
-            }
-
-            applyFontSize() {
-                if (this.contentElement) {
-                    this.contentElement.style.fontSize = this.fontSize + 'px';
-                }
-            }
-
-            saveFontSize() {
-                localStorage.setItem('opentales-fontsize', this.fontSize);
-            }
-        }
-
-        // Reading Progress and Position
-        class ReadingTracker {
-            constructor() {
-                this.progressBar = document.getElementById('readingProgress');
-                this.wordCountElement = document.getElementById('wordCount');
-                this.storyId = window.location.pathname.split('/').pop();
-                this.init();
-            }
-
-            init() {
-                // Setup scroll tracking
-                window.addEventListener('scroll', () => this.updateProgress());
-
-                // Load saved position
-                this.loadPosition();
-
-                // Calculate word count
-                this.calculateWordCount();
-
-                // Save position on scroll
-                let saveTimeout;
-                window.addEventListener('scroll', () => {
-                    clearTimeout(saveTimeout);
-                    saveTimeout = setTimeout(() => this.savePosition(), 1000);
-                });
-
-                // Setup scroll to top
-                const scrollTopBtn = document.getElementById('scrollTop');
-                if (scrollTopBtn) {
-                    scrollTopBtn.addEventListener('click', () => {
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                    });
-                }
-            }
-
-            updateProgress() {
-                if (!this.progressBar) return;
-
-                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                const scrolled = (winScroll / height) * 100;
-
-                this.progressBar.style.width = scrolled + '%';
-
-                // Update word count
-                this.updateWordCount();
-            }
-
-            calculateWordCount() {
-                const contentElement = document.getElementById('storyContent');
-                if (!contentElement) return;
-
-                const text = contentElement.textContent || '';
-                const words = text.split(/\s+/).filter(word => word.length > 0);
-                this.totalWords = words.length;
-
-                // Update word count display
-                this.updateWordCount();
-            }
-
-            updateWordCount() {
-                if (!this.wordCountElement || !this.totalWords) return;
-
-                const contentElement = document.getElementById('storyContent');
-                if (!contentElement) return;
-
-                // Estimate words read based on scroll position
-                const scrollPercent = (window.scrollY + window.innerHeight) /
-                                     document.documentElement.scrollHeight;
-                const wordsRead = Math.min(
-                    Math.floor(this.totalWords * scrollPercent),
-                    this.totalWords
-                );
-
-                this.wordCountElement.textContent =
-                    `${wordsRead.toLocaleString()} of ${this.totalWords.toLocaleString()} words`;
-            }
-
-            savePosition() {
-                const position = window.scrollY;
-                localStorage.setItem(`reading-${this.storyId}`, position);
-            }
-
-            loadPosition() {
-                const savedPosition = localStorage.getItem(`reading-${this.storyId}`);
-                if (savedPosition) {
-                    setTimeout(() => {
-                        window.scrollTo(0, parseInt(savedPosition));
-                    }, 100);
-                }
-            }
-        }
-
-        // Initialize everything when page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initialize theme manager
-            new StoryThemeManager();
-
-            // Initialize font size manager
-            new FontSizeManager();
-
-            // Initialize reading tracker
-            new ReadingTracker();
-
-            // Add keyboard shortcuts
-            document.addEventListener('keydown', (e) => {
-                // Ctrl/Cmd + Plus to increase font
-                if ((e.ctrlKey || e.metaKey) && e.key === '=') {
-                    e.preventDefault();
-                    document.getElementById('fontIncrease')?.click();
-                }
-
-                // Ctrl/Cmd + Minus to decrease font
-                if ((e.ctrlKey || e.metaKey) && e.key === '-') {
-                    e.preventDefault();
-                    document.getElementById('fontDecrease')?.click();
-                }
-
-                // Escape to toggle theme
-                if (e.key === 'Escape') {
-                    document.getElementById('themeToggle')?.click();
-                }
-            });
-        });
-    </script>
+    
+    <!-- Reusable JavaScript -->
+    <script src="../story.js"></script>
 </body>
 </html>

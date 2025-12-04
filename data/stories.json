@@ -1,13 +1,20 @@
 {
-    "stories": [
-        {
-            "id": "what-men-live-by",
-            "title": "What Men Live By",
-            "description": "Leo Tolstoy's profound tale of an angel learning about human love, compassion, and what truly sustains us.",
-            "author": "Leo Tolstoy",
-            "genre": "Classic Literature",
-            "cover": "https://upload.wikimedia.org/wikipedia/commons/3/34/Lev_Nikolayevich_Tolstoy_1848.jpg?w=500&fit=crop",
-            "file": "stories/what-men-live-by.html"
-        }
-    ]
+  "stories": [
+    {
+      "id": "what-men-live-by",
+      "title": "What Men Live By",
+      "description": "A profound short story about love, compassion, and what truly sustains humanity",
+      "author": "Leo Tolstoy",
+      "genre": "Classic Literature",
+      "file": "stories/what-men-live-by.html"
+    },
+    {
+      "id": "tell-tale-hearts",
+      "title": "The Tell-Tale Heart",
+      "description": "A haunting psychological thriller exploring madness, guilt, and the inescapable conscience",
+      "author": "Edgar Allan Poe",
+      "genre": "Gothic Horror",
+      "file": "stories/tell-tale-hearts.html"
+    }
+  ]
 }

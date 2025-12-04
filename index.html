@@ -1,86 +1,329 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-    <link rel="manifest" href="manifest.json">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Google Verification -->
-    <meta name="google-site-verification" content="dpSN8mBfDgM5Eit3fY6IzPo4fZi5HFEmhMfa7PE1oog" />
+    <!-- SEO & Meta Tags -->
+    <title>Open Tales Hub – Immersive Short Stories for Quick Reading</title>
+    <meta name="description" content="Discover beautiful, immersive short stories from classic literature. Read online with smooth animations, dark/light themes, and distraction-free interface.">
+    <meta name="keywords" content="short stories, classic literature, online reading, dark mode, immersive reading">
 
-    <!-- SEO Title -->
-    <title>Open Tales Hub – Simple Stories, Quick Reading</title>
-
-    <!-- SEO Description -->
-    <meta name="description" content="Open Tales Hub offers simple, short, and comfortable stories to read online. Enjoy quick 5–15 minute tales with smooth UI and light/dark themes.">
-
-    <!-- Keywords -->
-    <meta name="keywords" content="open tales hub, opentaleshub, short stories, simple stories, online reading, story hub">
-
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://opentaleshub.github.io/">
-
-    <!-- Open Graph (For Facebook / WhatsApp) -->
-    <meta property="og:title" content="Open Tales Hub – Simple Stories, Quick Reading">
-    <meta property="og:description" content="Easy-to-read short stories (5–15 min) with dark/light mode. Updated regularly.">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Open Tales Hub – Immersive Short Stories">
+    <meta property="og:description" content="Beautiful short stories with immersive reading experience.">
     <meta property="og:url" content="https://opentaleshub.github.io/">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://opentaleshub.github.io/cover.jpg">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Open Tales Hub – Simple Stories">
-    <meta name="twitter:description" content="Easy, short stories for quick reading.">
-    <meta name="twitter:image" content="https://opentaleshub.github.io/cover.jpg">
+    <meta name="twitter:title" content="Open Tales Hub – Immersive Stories">
+    <meta name="twitter:description" content="Beautiful short stories for quick reading.">
 
-    <!-- Favicon (Optional) -->
-    <link rel="icon" type="image/png" href="favicon.png">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📖</text></svg>">
 
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <meta name="google-site-verification" content="dpSN8mBfDgM5Eit3fY6IzPo4fZi5HFEmhMfa7PE1oog" />
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Open Tales Hub - Simple Story Reading</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                <div>
-                    <h1>Open Tales Hub</h1>
-                    <p>A minimal story reading platform.</p>
-                </div>
-                <button id="themeToggle" style="background: none; border: 1px solid var(--border); color: var(--text); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+    <!-- Particle Background -->
+    <div class="particles-container" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <i class="fas fa-book-open"></i>
+                <span>Open Tales</span>
+            </a>
+            <div class="nav-controls">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
                     <i class="fas fa-moon"></i>
                 </button>
+                <button class="nav-btn" id="searchToggle" aria-label="Search stories">
+                    <i class="fas fa-search"></i>
+                </button>
             </div>
-        </header>
+        </div>
+    </nav>
 
-        <main>
-            <h2>Stories</h2>
-            <div id="stories">
-                <!-- Stories will be loaded here by JavaScript -->
-                <div style="text-align: center; padding: 2rem; color: var(--text-secondary);">
-                    <div class="loading-spinner" style="width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem;"></div>
-                    <p>Loading stories...</p>
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-container">
+            <div class="search-header">
+                <h3>Search Stories</h3>
+                <button class="close-search" id="closeSearch">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="search-input-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search by title, author, or genre..." autocomplete="off">
+                <div class="search-hint">
+                    <span>Press <kbd>Esc</kbd> to close</span>
                 </div>
             </div>
-        </main>
-
-        <footer>
-            <p>No ads. No tracking. Just stories.</p>
-        </footer>
+            <div class="search-results" id="searchResults"></div>
+        </div>
     </div>
 
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="title-line">Immerse Yourself</span>
+                    <span class="title-line">In Timeless Tales</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Discover beautiful short stories from classic literature.
+                    Perfect for a 5-15 minute escape into another world.
+                </p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <i class="fas fa-book"></i>
+                        <span id="totalStories">7+ Stories</span>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-clock"></i>
+                        <span>5-15 min read</span>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-palette"></i>
+                        <span>Dark/Light Theme</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-illustration">
+                <div class="floating-book">
+                    <div class="book-cover">
+                        <div class="book-spine"></div>
+                        <div class="book-pages"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <span>Scroll to explore</span>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Featured Quote -->
+        <section class="quote-section">
+            <div class="quote-card" id="dailyQuote">
+                <div class="quote-icon">
+                    <i class="fas fa-quote-left"></i>
+                </div>
+                <p class="quote-text">"The purpose of a writer is to keep civilization from destroying itself."</p>
+                <p class="quote-author">— Albert Camus</p>
+                <button class="refresh-quote" id="refreshQuote">
+                    <i class="fas fa-sync-alt"></i>
+                    New Quote
+                </button>
+            </div>
+        </section>
+
+        <!-- Stories Grid -->
+        <section class="stories-section">
+            <div class="section-header">
+                <h2>Featured Stories</h2>
+                <div class="section-controls">
+                    <div class="sort-control">
+                        <select id="sortStories" class="sort-select">
+                            <option value="default">Sort by: Featured</option>
+                            <option value="title">Title A-Z</option>
+                            <option value="author">Author</option>
+                            <option value="newest">Newest First</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stories-grid" id="storiesGrid">
+                <!-- Stories will be loaded here -->
+                <div class="loading-stories">
+                    <div class="spinner">
+                        <div class="spinner-circle"></div>
+                        <div class="spinner-circle"></div>
+                        <div class="spinner-circle"></div>
+                    </div>
+                    <p>Loading magical stories...</p>
+                </div>
+            </div>
+
+            <!-- Story of the Day -->
+            <div class="story-of-day" id="storyOfDay">
+                <div class="story-day-header">
+                    <i class="fas fa-star"></i>
+                    <h3>Story Spotlight</h3>
+                </div>
+                <div class="story-day-content">
+                    <div class="story-day-cover">
+                        <div class="cover-placeholder"></div>
+                    </div>
+                    <div class="story-day-info">
+                        <h4 id="spotlightTitle">Loading...</h4>
+                        <p id="spotlightAuthor" class="author"></p>
+                        <p id="spotlightDesc" class="description"></p>
+                        <a href="#" id="spotlightLink" class="read-btn">
+                            Read Now <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reading Stats -->
+        <section class="stats-section">
+            <h2>Your Reading Journey</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon reading-time">
+                        <i class="fas fa-hourglass-half"></i>
+                    </div>
+                    <h3>Reading Time</h3>
+                    <p class="stat-value" id="totalReadingTime">85 min</p>
+                    <p class="stat-desc">Total reading time across all stories</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon completed">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Stories Read</h3>
+                    <p class="stat-value" id="storiesRead">0</p>
+                    <p class="stat-desc">Track your progress</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon favorite">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Favorites</h3>
+                    <p class="stat-value" id="favoritesCount">0</p>
+                    <p class="stat-desc">Stories you've loved</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <i class="fas fa-book-open"></i>
+                    <span>Open Tales Hub</span>
+                </div>
+                <p class="footer-tagline">
+                    No ads. No tracking. Just beautiful stories.
+                </p>
+                <div class="social-links">
+                    <a href="#" class="social-link" aria-label="Share on Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Share on GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Share via Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Explore</h4>
+                    <a href="#storiesGrid">All Stories</a>
+                    <a href="#" id="randomStory">Random Story</a>
+                    <a href="#statsSection">Reading Stats</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Features</h4>
+                    <a href="#" id="toggleThemeFooter">Dark/Light Theme</a>
+                    <a href="#" id="fontControls">Font Settings</a>
+                    <a href="#" id="exportProgress">Export Progress</a>
+                </div>
+                <div class="footer-column">
+                    <h4>About</h4>
+                    <a href="#" id="aboutModal">About This Project</a>
+                    <a href="https://github.com/opentaleshub" target="_blank">GitHub</a>
+                    <a href="#" id="contribute">Contribute a Story</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; <span id="currentYear">2024</span> Open Tales Hub. All stories are in public domain.</p>
+            <p class="footer-note">
+                Made with <i class="fas fa-heart" style="color: #ff4757;"></i> for literature lovers
+            </p>
+        </div>
+    </footer>
+
+    <!-- Floating Action Button -->
+    <button class="fab" id="fabTop" aria-label="Scroll to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- About Modal -->
+    <div class="modal-overlay" id="aboutModalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>About Open Tales Hub</h3>
+                <button class="close-modal" id="closeAboutModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-content">
+                <p>Open Tales Hub is a passion project dedicated to making classic literature accessible and enjoyable through a modern, beautiful interface.</p>
+                <div class="modal-features">
+                    <div class="feature">
+                        <i class="fas fa-book-reader"></i>
+                        <h4>Immersive Reading</h4>
+                        <p>Clean, distraction-free interface with customizable themes</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-rocket"></i>
+                        <h4>Fast & Lightweight</h4>
+                        <p>No heavy frameworks, just vanilla JavaScript for speed</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-heart"></i>
+                        <h4>Open Source</h4>
+                        <p>Completely free and open source on GitHub</p>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <a href="https://github.com/opentaleshub" target="_blank" class="github-btn">
+                        <i class="fab fa-github"></i> View on GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="script.js"></script>
-    <style>
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-    </style>
 </body>
 </html>

@@ -15,6 +15,46 @@
       "author": "Edgar Allan Poe",
       "genre": "Gothic Horror",
       "file": "stories/tell-tale-hearts.html"
+    },
+    {
+      "id": "the-birthmark",
+      "title": "The Birthmark",
+      "description": "A tale of science, perfection, and the fatal flaw in human nature",
+      "author": "Nathaniel Hawthorne",
+      "genre": "Gothic Romanticism",
+      "file": "stories/the-birthmark.html"
+    },
+    {
+      "id": "the-great-stone-face",
+      "title": "The Great Stone Face",
+      "description": "A timeless allegory of hope, prophecy, and the true nature of greatness",
+      "author": "Nathaniel Hawthorne",
+      "genre": "Allegorical Fiction",
+      "file": "stories/the-great-stone-face.html"
+    },
+    {
+      "id": "the-gift-of-magi",
+      "title": "The Gift of the Magi",
+      "description": "A timeless Christmas tale of love, sacrifice, and the true meaning of giving",
+      "author": "O. Henry",
+      "genre": "Short Story",
+      "file": "stories/the-gift-of-magi.html"
+    },
+    {
+      "id": "to-build-a-fire",
+      "title": "To Build a Fire",
+      "description": "A brutal tale of man versus nature in the unforgiving Yukon wilderness",
+      "author": "Jack London",
+      "genre": "Naturalist Fiction",
+      "file": "stories/to-build-a-fire.html"
+    },
+    {
+      "id": "the-lottery",
+      "title": "The Lottery",
+      "description": "A chilling examination of tradition, conformity, and the dark side of human nature",
+      "author": "Shirley Jackson",
+      "genre": "Horror/Social Commentary",
+      "file": "stories/the-lottery.html"
     }
   ]
 }

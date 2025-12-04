@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Great Stone Face · Nathaniel Hawthorne | Open Tales</title>
+    
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../story.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .stoneface-container {
+            position: relative;
+        }
+        
+        .mountain-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(to bottom, rgba(30, 30, 40, 0.8) 0%, transparent 100%);
+            z-index: -1;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        
+        .theme-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(100, 149, 237, 0.1);
+            color: cornflowerblue;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+            border: 1px solid rgba(100, 149, 237, 0.3);
+        }
+        
+        .prophecy-quote {
+            background: rgba(30, 60, 114, 0.05);
+            border-left: 3px solid cornflowerblue;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+        
+        .character-portrait {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid cornflowerblue;
+        }
+        
+        .character-icon {
+            font-size: 2rem;
+            margin-right: 1.5rem;
+            color: cornflowerblue;
+            opacity: 0.7;
+        }
+        
+        .character-details {
+            flex: 1;
+        }
+        
+        .character-name {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        
+        .character-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <div class="container">
+        <header style="margin-bottom: 2rem; padding-top: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <a href="../index.html" style="text-decoration: none; color: var(--text); display: flex; align-items: center; gap: 0.5rem;">
+                    <span>←</span>
+                    <span style="font-weight: 500;">Open Tales</span>
+                </a>
+                <button id="themeToggle" class="control-btn" style="position: static;">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
+        
+        <article class="story-container stoneface-container">
+            <div class="mountain-bg"></div>
+            
+            <header class="story-header">
+                <h1>The Great Stone Face</h1>
+                <p class="story-subtitle">A timeless allegory of hope, prophecy, and the true nature of greatness</p>
+                <div class="story-meta">
+                    <span><i class="fas fa-user"></i> Nathaniel Hawthorne</span>
+                    <span><i class="fas fa-book"></i> Allegorical Fiction</span>
+                    <span><i class="fas fa-clock"></i> 25 minute read</span>
+                    <span><i class="fas fa-calendar"></i> 1850</span>
+                </div>
+                
+                <div style="margin-top: 1rem;">
+                    <span class="theme-tag">Prophecy</span>
+                    <span class="theme-tag">Greatness</span>
+                    <span class="theme-tag">Patience</span>
+                    <span class="theme-tag">Destiny</span>
+                </div>
+            </header>
+            
+            <div class="story-content">
+                <div class="chapter-section">
+                    <h2 class="chapter-title">I. The Prophecy</h2>
+                    
+                    <p>One afternoon, when the sun was going down, a mother and her little boy sat at the door of their cottage, talking about the Great Stone Face. They had but to lift their eyes, and there it was plainly to be seen, though miles away, with the sunshine brightening all its features.</p>
+                    
+                    <p>The Great Stone Face was a work of Nature in her mood of majestic playfulness, formed on the perpendicular side of a mountain by some immense rocks, which had been thrown together in such a position as, when viewed at a proper distance, precisely to resemble the features of the human countenance. It seemed as if an enormous giant, or a Titan, had sculptured his own likeness on the precipice. There was the broad arch of the forehead, a hundred feet in height; the nose, with its long bridge; and the vast lips, which, if they could have spoken, would have rolled their thunder accents from one end of the valley to the other.</p>
+                    
+                    <div class="prophecy-quote">
+                        "The prophecy is that, at some future day, a child should be born hereabouts who is destined to become the greatest and noblest personage of his time, and whose countenance, in manhood, should bear an exact resemblance to the Great Stone Face."
+                    </div>
+                    
+                    <p>"Mother," said the child, whose name was Ernest, "I wish that it could speak, for it looks so very kindly that its voice must needs be pleasant. If I were to see a man with such a face, I should love him dearly."</p>
+                    
+                    <p>"If an old prophecy should come to pass," answered his mother, "we may see a man, some time or other, with exactly such a face as that."</p>
+                    
+                    <p>"What prophecy do you mean, dear mother?" eagerly inquired Ernest. "Pray tell me about it!"</p>
+                    
+                    <p>So his mother told him a story that her own mother had told to her, when she herself was younger than little Ernest; a story, not of things that were past, but of what was yet to come; a story, however, so very old, that even the Indians, who formerly inhabited this valley, had heard it from their forefathers, to whom, as they affirmed, it had been murmured by the mountain streams, and whispered by the wind among the tree-tops.</p>
+                    
+                    <p>The prophecy was that, at some future day, a child should be born hereabouts who is destined to become the greatest and noblest personage of his time, and whose countenance, in manhood, should bear an exact resemblance to the Great Stone Face.</p>
+                </div>
+                
+                <div class="chapter-section">
+                    <h2 class="chapter-title">II. The First Candidate: Gathergold</h2>
+                    
+                    <div class="character-portrait">
+                        <div class="character-icon">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <div class="character-details">
+                            <div class="character-name">Mr. Gathergold</div>
+                            <div class="character-desc">
+                                A shrewd and diligent man of business who made a vast fortune in trade. Having grown rich, he resolved to return to his native valley and end his days where he was born.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p>Many years passed, and Ernest grew to be a young man. He attracted little notice from the other inhabitants of the valley; for they saw nothing remarkable in his way of life, save that, when the labor of the day was over, he still loved to go apart and gaze and meditate upon the Great Stone Face. Their idea was that this was a folly, but pardonable, because Ernest was industrious, kind, and neighborly, and neglected no duty for the sake of indulging this idle habit.</p>
+                    
+                    <p>By this time poor Mr. Gathergold was dead and buried; and the oddest part of the matter was, that his wealth, which was the body and spirit of his existence, had disappeared before his death, leaving nothing of him but a living skeleton, covered over with a wrinkled yellow skin. Since the melting away of his gold, it had been very generally conceded that there was no such striking resemblance, after all, betwixt the ignoble features of the ruined merchant and that majestic face upon the mountain.</p>
+                    
+                    <p>So the people ceased to honor him during his lifetime, and quietly consigned him to forgetfulness after his decease. Once in a while, it is true, his memory was brought up in connection with the magnificent palace which he had built, and which was now a hotel accommodating hundreds of guests who were as ignorant of Mr. Gathergold as the cliffs of the Great Stone Face.</p>
+                    
+                    <div class="quote">
+                        Their idea was that this was a folly, but pardonable, because Ernest was industrious, kind, and neighborly, and neglected no duty for the sake of indulging this idle habit.
+                    </div>
+                    
+                    <p>But Ernest, having lost what was truly valuable in his benefactor, and having found no better substitute for the Great Stone Face than a wealth of gold, threw aside the pamphlet in disgust. It was a sad sight, indeed, to see how the mountain had thrown its own gloom over this poor mortal's life—how his natural sunshine had been extinguished beneath that stony aspect.</p>
+                </div>
+                
+                <div class="chapter-section">
+                    <h2 class="chapter-title">III. The Second Candidate: Old Blood-and-Thunder</h2>
+                    
+                    <div class="character-portrait">
+                        <div class="character-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="character-details">
+                            <div class="character-name">Old Blood-and-Thunder</div>
+                            <div class="character-desc">
+                                A famous commander who had won many battles and was acclaimed as a national hero. He was returning to spend his latter days in his native valley.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p>Years went on, and Ernest grew to be a man of middle age. By this time he had become accustomed to the idea that the great man foretold by the prophecy was not to appear in his lifetime. But he still looked forward with hope to the day when that majestic face should find its human counterpart.</p>
+                    
+                    <p>In the meantime, there came news that another son of the valley, who had left it many years before, had achieved great renown, and was returning to spend his latter days in the home of his childhood. This man—let us call him Old Blood-and-Thunder—had risen from a humble position to be a famous commander, and was now a general of high rank. Battles had been fought and won under his command, and wherever the drum beat or the trumpet sounded, there was Blood-and-Thunder at the head of the soldiers.</p>
+                    
+                    <p>The inhabitants of the valley, whose imaginations had been much exercised by the prophecy, now fancied that they saw in the general's face a resemblance to the Great Stone Face. They pointed out how the lines of care in his forehead corresponded with the furrows on the mountain's brow, and how the firm set of his mouth matched the stony lips.</p>
+                    
+                    <p>When the general arrived, a great banquet was prepared in his honor. Ernest was among the guests, and as he looked at the celebrated warrior, he could not help feeling disappointed. There was certainly a resemblance—but it was a resemblance of the outer features only. The spirit, the soul, the noble expression which Ernest had learned to look for in the Great Stone Face—these were lacking in the countenance of Old Blood-and-Thunder.</p>
+                    
+                    <div class="quote">
+                        He could not help feeling disappointed. There was certainly a resemblance—but it was a resemblance of the outer features only.
+                    </div>
+                    
+                    <p>"This is not the man of the prophecy," sighed Ernest to himself, as he made his way homeward. "The world must wait longer."</p>
+                    
+                    <p>Nor was this his only disappointment. In the course of time, other men arose who were hailed as the fulfillment of the prophecy—a statesman with a sagacious brow, a poet with a dreamy eye, a philosopher with thoughtful countenance. Each in turn was examined by Ernest, and each in turn was found wanting.</p>
+                </div>
+                
+                <div class="chapter-section">
+                    <h2 class="chapter-title">IV. The Poet's Visit</h2>
+                    
+                    <div class="character-portrait">
+                        <div class="character-icon">
+                            <i class="fas fa-pen-fancy"></i>
+                        </div>
+                        <div class="character-details">
+                            <div class="character-name">The Poet</div>
+                            <div class="character-desc">
+                                A celebrated writer who had heard of Ernest's wisdom and the legend of the Great Stone Face, and came to visit the valley.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p>Ernest had ceased to be obscure. Unsought for, undesired, had come the fame which so many seek. His thoughts had taken shape in words that spread far and wide, until the world had learned to know him as a man of wisdom. He had become a preacher, not by formal appointment, but because the need was in him and the opportunity was around him. The pure and high simplicity of his thought, which, as one of his listeners expressed it, was like the water of a hidden wellspring, found its way to many hearts.</p>
+                    
+                    <p>It so happened that a poet, whose genius had made him famous, came to visit this region. He had heard of the Great Stone Face and of Ernest, and wished to meet them both. One summer day he arrived at Ernest's cottage, where he found the good man holding a book in his hand, which he read and then, with a thoughtful air, laid upon the table.</p>
+                    
+                    <p>"You read," said the poet, "the very book that I would choose from all others. Your life, good Ernest, has been a nobler poem than any I have written."</p>
+                    
+                    <p>They sat together on a bench before the cottage, looking at the Great Stone Face. Ernest poured out his heart to the poet, telling him all his hopes and disappointments regarding the prophecy.</p>
+                    
+                    <p>The poet listened with deep interest. "I, too," he said, "have cherished a hope that the great man might appear in my lifetime. I have sought him in the halls of state, in the camps of war, in the seats of learning—but never have I found him."</p>
+                    
+                    <p>Then, looking earnestly at Ernest, he added: "But why do you look so steadfastly at the mountain? Do you still hope to see the great man come?"</p>
+                    
+                    <p>Ernest pointed to the book he had been reading. "The poets," he said, "keep the heart alive with their songs of hope and prophecy. They remind us that the good and great may yet appear, though we grow old waiting."</p>
+                </div>
+                
+                <div class="chapter-section">
+                    <h2 class="chapter-title">V. The Fulfillment</h2>
+                    
+                    <p>Now it happened that the people of the valley, who had watched Ernest from childhood, and who had always loved and honored him, began to perceive a wonderful thing. As Ernest grew older, his face had taken on a noble expression—an expression of wisdom, kindness, and spiritual strength. And those who looked from his face to the Great Stone Face saw, with amazement, that they were the same.</p>
+                    
+                    <p>The prophecy was fulfilled. But not as anyone had expected.</p>
+                    
+                    <p>One evening, according to their custom, Ernest was addressing a group of neighbors in the open air. He stood in a little niche of the hills, with the audience seated on the sloping ground before him. Behind him, in the distance, rose the Great Stone Face, bathed in the glory of the setting sun.</p>
+                    
+                    <p>As Ernest spoke, his words were so full of power and tenderness, his thoughts so pure and lofty, that the listeners felt as if an angel were speaking to them. They forgot the speaker; they forgot the place; they forgot even the Great Stone Face that gazed down upon them. They were conscious only of the truth that was uttered, and the love from which it sprang.</p>
+                    
+                    <div class="quote">
+                        As Ernest spoke, his words were so full of power and tenderness, his thoughts so pure and lofty, that the listeners felt as if an angel were speaking to them.
+                    </div>
+                    
+                    <p>At that moment, in sympathy with a thought which he was about to utter, the face of Ernest assumed a grandeur of expression so imbued with benevolence, that the poet, by an irresistible impulse, threw his arms aloft and shouted:</p>
+                    
+                    <p>"Behold! Behold! Ernest is himself the likeness of the Great Stone Face!"</p>
+                    
+                    <p>Then all the people looked, and saw that what the deep-sighted poet said was true. The prophecy was fulfilled. But Ernest, having finished what he had to say, took the poet's arm, and walked slowly homeward, still hoping that some wiser and better man than himself would by and by appear, bearing a resemblance to the Great Stone Face.</p>
+                    
+                    <p>Yet Ernest's own face, as he grew old, was transfigured with the glory of a life spent in the service of others—a life of simple goodness, of steadfast hope, of unwavering faith in the promise of the future. And in this transfiguration, the people of the valley saw at last the living image of the prophecy that had so long haunted their dreams.</p>
+                </div>
+                
+                <div class="chapter-section" style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border);">
+                    <h2 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--text);">About this Story</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                        "The Great Stone Face" is a short story by Nathaniel Hawthorne, first published in 1850. 
+                        It tells the allegorical tale of a man named Ernest who waits his entire life for the fulfillment 
+                        of a prophecy that a great man bearing the likeness of a natural rock formation will appear. 
+                        The story explores themes of true greatness, the deceptive nature of fame and wealth, 
+                        and the idea that genuine nobility comes from a life of virtue, wisdom, and service to others. 
+                        In the end, Ernest himself becomes the living embodiment of the prophecy through his simple, 
+                        good life—a powerful statement about the nature of true greatness.
+                    </p>
+                </div>
+                
+                <a href="../index.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    Return to all stories
+                </a>
+            </div>
+        </article>
+    </div>
+    
+    <div class="reading-controls">
+        <button class="control-btn" id="fontIncrease" title="Increase font size">
+            <i class="fas fa-plus"></i>
+        </button>
+        <button class="control-btn" id="fontDecrease" title="Decrease font size">
+            <i class="fas fa-minus"></i>
+        </button>
+        <button class="control-btn" id="scrollTopBtn" title="Scroll to top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </div>
+    
+    <script src="../story.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mountainBg = document.querySelector('.mountain-bg');
+            
+            // Create a subtle mountain peak effect
+            mountainBg.style.background = `
+                linear-gradient(to bottom right, transparent 49%, rgba(30, 30, 40, 0.1) 50%, transparent 51%),
+                linear-gradient(to bottom left, transparent 49%, rgba(30, 30, 40, 0.1) 50%, transparent 51%),
+                linear-gradient(to bottom, rgba(30, 30, 40, 0.1) 0%, transparent 100%)
+            `;
+            
+            // Add character reveal animations
+            const characterPortraits = document.querySelectorAll('.character-portrait');
+            characterPortraits.forEach((portrait, index) => {
+                portrait.style.opacity = '0';
+                portrait.style.transform = 'translateX(-20px)';
+                portrait.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                
+                setTimeout(() => {
+                    portrait.style.opacity = '1';
+                    portrait.style.transform = 'translateX(0)';
+                }, 300 * (index + 1));
+            });
+        });
+    </script>
+</body>
+</html>

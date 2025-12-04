@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Lottery · Shirley Jackson | Open Tales</title>
+    
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../story.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .lottery-container {
+            position: relative;
+        }
+        
+        .ominous-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(139, 0, 0, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(178, 34, 34, 0.02) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .theme-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(178, 34, 34, 0.1);
+            color: #b22222;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+            border: 1px solid rgba(178, 34, 34, 0.3);
+        }
+        
+        .foreshadow-box {
+            background: rgba(178, 34, 34, 0.05);
+            border-left: 4px solid #b22222;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .foreshadow-title {
+            color: #b22222;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .lottery-procedure {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .procedure-step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+        
+        .procedure-step:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .step-number {
+            background: #b22222;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .blurred-text {
+            filter: blur(2px);
+            transition: filter 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .blurred-text:hover {
+            filter: blur(0);
+        }
+        
+        .blurred-text:after {
+            content: "Hover to reveal";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(178, 34, 34, 0.7);
+            font-size: 0.8rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .blurred-text:hover:after {
+            opacity: 1;
+        }
+        
+        .reveal-box {
+            background: rgba(178, 34, 34, 0.1);
+            border: 2px dashed #b22222;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .reveal-box:before {
+            content: "⚠️";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <div class="container">
+        <div class="ominous-bg"></div>
+        
+        <header style="margin-bottom: 2rem; padding-top: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <a href="../index.html" style="text-decoration: none; color: var(--text); display: flex; align-items: center; gap: 0.5rem;">
+                    <span>←</span>
+                    <span style="font-weight: 500;">Open Tales</span>
+                </a>
+                <button id="themeToggle" class="control-btn" style="position: static;">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
+        
+        <article class="story-container lottery-container">
+            <header class="story-header">
+                <h1>The Lottery</h1>
+                <p class="story-subtitle">A chilling examination of tradition, conformity, and the dark side of human nature</p>
+                <div class="story-meta">
+                    <span><i class="fas fa-user"></i> Shirley Jackson</span>
+                    <span><i class="fas fa-book"></i> Horror/Social Commentary</span>
+                    <span><i class="fas fa-clock"></i> 15 minute read</span>
+                    <span><i class="fas fa-calendar"></i> 1948</span>
+                </div>
+                
+                <div style="margin-top: 1rem;">
+                    <span class="theme-tag">Tradition</span>
+                    <span class="theme-tag">Conformity</span>
+                    <span class="theme-tag">Violence</span>
+                    <span class="theme-tag">Society</span>
+                </div>
+                
+                <div class="foreshadow-box">
+                    <div class="foreshadow-title">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Content Warning</span>
+                    </div>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                        This story contains disturbing themes and a shocking ending that has unsettled readers since its 
+                        publication in 1948. It explores the dangers of blind tradition and collective violence.
+                    </p>
+                </div>
+            </header>
+            
+            <div class="story-content">
+                <div class="chapter-section">
+                    <h2 class="chapter-title">The Morning of June 27th</h2>
+                    
+                    <p>The morning of June 27th was clear and sunny, with the fresh warmth of a full-summer day; the flowers were blossoming profusely and the grass was richly green. The people of the village began to gather in the square, between the post office and the bank, around ten o'clock; in some towns there were so many people that the lottery took two days and had to be started on June 26th, but in this village, where there were only about three hundred people, the whole lottery took less than two hours, so it could begin at ten o'clock in the morning and still be through in time to allow the villagers to get home for noon dinner.</p>
+                    
+                    <p>The children assembled first, of course. School was recently over for the summer, and the feeling of liberty sat uneasily on most of them; they tended to gather together quietly for a while before they broke into boisterous play, and their talk was still of the classroom and the teacher, of books and reprimands. Bobby Martin had already stuffed his pockets full of stones, and the other boys soon followed his example, selecting the smoothest and roundest stones; Bobby and Harry Jones and Dickie Delacroix—the villagers pronounced this name "Dellacroy"—eventually made a great pile of stones in one corner of the square and guarded it against the raids of the other boys. The girls stood aside, talking among themselves, looking over their shoulders at the boys, and the very small children rolled in the dust or clung to the hands of their older brothers or sisters.</p>
+                    
+                    <div class="quote">
+                        Bobby Martin had already stuffed his pockets full of stones, and the other boys soon followed his example, selecting the smoothest and roundest stones.
+                    </div>
+                    
+                    <p>Soon the men began to gather, surveying their own children, speaking of planting and rain, tractors and taxes. They stood together, away from the pile of stones in the corner, and their jokes were quiet and they smiled rather than laughed. The women, wearing faded house dresses and sweaters, came shortly after their menfolk. They greeted one another and exchanged bits of gossip as they went to join their husbands. Soon the women, standing by their husbands, began to call to their children, and the children came reluctantly, having to be called four or five times. Bobby Martin ducked under his mother's grasping hand and ran, laughing, back to the pile of stones. His father spoke up sharply, and Bobby came quickly and took his place between his father and his oldest brother.</p>
+                    
+                    <p>The lottery was conducted—as were the square dances, the teenage club, the Halloween program—by Mr. Summers, who had time and energy to devote to civic activities. He was a round-faced, jovial man and he ran the coal business, and people were sorry for him, because he had no children and his wife was a scold. When he arrived in the square, carrying the black wooden box, there was a murmur of conversation among the villagers, and he waved and called, "Little late today, folks." The postmaster, Mr. Graves, followed him, carrying a three-legged stool, and the stool was put in the center of the square and Mr. Summers set the black box down on it. The villagers kept their distance, leaving a space between themselves and the stool, and when Mr. Summers said, "Some of you fellows want to give me a hand?" there was a hesitation before two men, Mr. Martin and his oldest son, Baxter, came forward to hold the box steady on the stool while Mr. Summers stirred up the papers inside it.</p>
+                </div>
+                
+                <div class="chapter-section">
+                    <h2 class="chapter-title">The Black Box</h2>
+                    
+                    <p>The original paraphernalia for the lottery had been lost long ago, and the black box now resting on the stool had been put into use even before Old Man Warner, the oldest man in town, was born. Mr. Summers spoke frequently to the villagers about making a new box, but no one liked to upset even as much tradition as was represented by the black box. There was a story that the present box had been made with some pieces of the box that had preceded it, that had been constructed when the first people settled down to make a village here. Every year, after the lottery, Mr. Summers began talking again about a new box, but every year the subject was allowed to fade off without anything's being done. The black box grew shabbier each year; by now it was no longer completely black but splintered badly along one side to show the original wood color, and in some places faded or stained.</p>
+                    
+                    <div class="foreshadow-box">
+                        <div class="foreshadow-title">
+                            <i class="fas fa-history"></i>
+                            <span>The Weight of Tradition</span>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                            Mr. Summers spoke frequently to the villagers about making a new box, but no one liked to upset 
+                            even as much tradition as was represented by the black box. There was a story that the present 
+                            box had been made with some pieces of the box that had preceded it, that had been constructed 
+                            when the first people settled down to make a village here.
+                        </p>
+                    </div>
+                    
+                    <p>Mr. Martin and his oldest son, Baxter, held the black box securely on the stool until Mr. Summers had stirred the papers thoroughly with his hand. Because so much of the ritual had been forgotten or discarded, Mr. Summers had been successful in having slips of paper substituted for the chips of wood that had been used for generations. Chips of wood, Mr. Summers had argued, had been all very well when the village was tiny, but now that the population was more than three hundred and likely to keep on growing, it was necessary to use something that would fit more easily into the black box. The night before the lottery, Mr. Summers and Mr. Graves made up the slips of paper and put them in the box, and it was then taken to the safe of Mr. Summers's coal company and locked up until Mr. Summers was ready to take it to the square next morning. The rest of the year, the box was put away, sometimes one place, sometimes another; it had spent one year in Mr. Graves's barn and another year underfoot in the post office, and sometimes it was set on a shelf in the Martin grocery and left there.</p>
+                    
+                    <p>There was a great deal of fussing to be done before Mr. Summers declared the lottery open. There were the lists to make up—of heads of families, heads of households in each family, members of each household in each family. There was the proper swearing-in of Mr. Summers by the postmaster, as the official of the lottery; at one time, some people remembered, there had been a recital of some sort, performed by the official of the lottery, a perfunctory, tuneless chant that had been rattled off duly each year; some people believed that the official of the lottery used to stand just so when he said or sang it, others believed that he was supposed to walk among the people, but years and years ago this part of the ritual had been allowed to lapse. There had been, also, a ritual salute, which the official of the lottery had had to use in addressing each person who came up to draw from the box, but this also had changed with time, until now it was felt necessary only for the official to speak to each person approaching. Mr. Summers was very good at all this; in his clean white shirt and blue jeans, with one hand resting carelessly on the black box, he seemed very proper and important as he talked interminably to Mr. Graves and the Martins.</p>
+                </div>
+                
+                <div class="chapter-section">
+                    <h2 class="chapter-title">The Drawing Begins</h2>
+                    
+                    <p>Just as Mr. Summers finally left off talking and turned to the assembled villagers, Mrs. Hutchinson came hurriedly along the path to the square, her sweater thrown over her shoulders, and slid into place in the back of the crowd. "Clean forgot what day it was," she said to Mrs. Delacroix, who stood next to her, and they both laughed softly. "Thought my old man was out back stacking wood," Mrs. Hutchinson went on, "and then I looked out the window and the kids was gone, and then I remembered it was the twenty-seventh and came a-running." She dried her hands on her apron, and Mrs. Delacroix said, "You're in time, though. They're still talking away up there."</p>
+                    
+                    <p>Mrs. Hutchinson craned her neck to see through the crowd and found her husband and children standing near the front. She tapped Mrs. Delacroix on the arm as a farewell and began to make her way through the crowd. The people separated good-humoredly to let her through; two or three people said, in voices just loud enough to be heard across the crowd, "Here comes your Missus, Hutchinson," and "Bill, she made it after all." Mrs. Hutchinson reached her husband, and Mr. Summers, who had been waiting, said cheerfully, "Thought we were going to have to get on without you, Tessie." Mrs. Hutchinson said, grinning, "Wouldn't have me leave m'dishes in the sink, now, would you, Joe?," and soft laughter ran through the crowd as the people back toward the center of the square.</p>
+                    
+                    <div class="lottery-procedure">
+                        <h3 style="margin-bottom: 1rem; color: var(--text); font-size: 1.1rem;">The Lottery Procedure</h3>
+                        
+                        <div class="procedure-step">
+                            <div class="step-number">1</div>
+                            <div>
+                                <strong>Heads of Household Draw</strong>
+                                <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 0.25rem;">
+                                    Each head of household comes forward to draw a single slip of paper from the black box. 
+                                    The slips are folded and no one looks at their paper until everyone has drawn.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="procedure-step">
+                            <div class="step-number">2</div>
+                            <div>
+                                <strong>Family Selection</strong>
+                                <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 0.25rem;">
+                                    Once all heads of household have drawn, they unfold their papers simultaneously. 
+                                    The family with the marked paper is selected for the second round.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="procedure-step">
+                            <div class="step-number">3</div>
+                            <div>
+                                <strong>Individual Selection</strong>
+                                <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 0.25rem;">
+                                    Every member of the selected family, including children, draws a new slip of paper. 
+                                    One slip contains a black spot.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p>"Well, now," Mr. Summers said soberly, "guess we better get started, get this over with, so's we can go back to work. Anybody ain't here?"</p>
+                    
+                    <p>"Dunbar," several people said. "Dunbar, Dunbar."</p>
+                    
+                    <p>Mr. Summers consulted his list. "Clyde Dunbar," he said. "That's right. He's broke his leg, hasn't he? Who's drawing for him?"</p>
+                    
+                    <p>"Me, I guess," a woman said, and Mr. Summers turned to look at her. "Wife draws for her husband," Mr. Summers said. "Don't you have a grown boy to do it for you, Janey?" Although Mr. Summers and everyone else in the village knew the answer perfectly well, it was the business of the official of the lottery to ask such questions formally. Mr. Summers waited with an expression of polite interest while Mrs. Dunbar answered.</p>
+                    
+                    <p>"Horace's not but sixteen yet," Mrs. Dunbar said regretfully. "Guess I gotta fill in for the old man this year."</p>
+                    
+                    <p>"Right," Mr. Summers said. He made a note on the list he was holding. Then he asked, "Watson boy drawing this year?"</p>
+                    
+                    <p>A tall boy in the crowd raised his hand. "Here," he said. "I'm drawing for m'mother and me." He blinked his eyes nervously and ducked his head as several voices in the crowd said things like "Good fellow, Jack," and "Glad to see your mother's got a man to do it."</p>
+                </div>
+                
+                <div class="chapter-section">
+                    <h2 class="chapter-title">"It Isn't Fair, It Isn't Right"</h2>
+                    
+                    <p>"Well," Mr. Summers said, "guess that's everyone. Old Man Warner make it?"</p>
+                    
+                    <p>"Here," a voice said, and Mr. Summers nodded.</p>
+                    
+                    <p>A sudden hush fell on the crowd as Mr. Summers cleared his throat and looked at the list. "All ready?" he called. "Now, I'll read the names—heads of families first—and the men come up and take a paper out of the box. Keep the paper folded in your hand without looking at it until everyone has had a turn. Everything clear?"</p>
+                    
+                    <p>The people had done it so many times that they only half listened to the directions; most of them were quiet, wetting their lips, not looking around. Then Mr. Summers raised one hand high and said, "Adams." A man disengaged himself from the crowd and came forward. "Hi, Steve," Mr. Summers said, and Mr. Adams said, "Hi, Joe." They grinned at one another humorlessly and nervously. Then Mr. Adams reached into the black box and took out a folded paper. He held it firmly by one corner as he turned and went hastily back to his place in the crowd, where he stood a little apart from his family, not looking down at his hand.</p>
+                    
+                    <div class="quote">
+                        "Seventy-seventh year I been in the lottery," Old Man Warner said as he went through the crowd. "Seventy-seventh time."
+                    </div>
+                    
+                    <p>"Allen," Mr. Summers said. "Anderson.... Bentham."</p>
+                    
+                    <p>Seemed like there was a time between each of these names, as though Mr. Summers had to wait for each person to come to the box, take a paper, and return to their place. The crowd was quiet, except for the rustling of the papers as they were drawn.</p>
+                    
+                    <p>"Hutchinson," Mr. Summers called. "Bill Hutchinson."</p>
+                    
+                    <p>Bill Hutchinson, who had been standing quietly with his family, stepped forward. "Get up there, Bill," Mrs. Hutchinson said, and the people near her laughed.</p>
+                    
+                    <p>"Jones," Mr. Summers called next. "Martin."</p>
+                    
+                    <p>"Overdyke.... Percy."</p>
+                    
+                    <p>"I wish they'd hurry," Mrs. Dunbar said to her older son. "I wish they'd hurry."</p>
+                    
+                    <p>"They're almost through," her son said.</p>
+                    
+                    <p>"You get ready to run tell Dad," Mrs. Dunbar said.</p>
+                    
+                    <p>Mr. Summers called his own name and then stepped forward precisely and selected a slip from the box. Then he called, "Warner."</p>
+                    
+                    <p>"Seventy-seventh year I been in the lottery," Old Man Warner said as he went through the crowd. "Seventy-seventh time."</p>
+                    
+                    <p>"Watson." The tall boy came awkwardly through the crowd. Someone said, "Don't be nervous, Jack," and Mr. Summers said, "Take your time, son."</p>
+                </div>
+                
+                <div class="chapter-section">
+                    <h2 class="chapter-title">The Marked Paper</h2>
+                    
+                    <p>"Zanini," Mr. Summers called, and that was the last name.</p>
+                    
+                    <p>There was a pause, and then Mr. Summers looked around at all the people who were holding folded papers in their hands. "All right, folks," he said. "Open the papers. Harry, you open little Dave's."</p>
+                    
+                    <p>Mr. Graves opened the slip of paper and there was a general sigh through the crowd as he held it up and everyone could see that it was blank. Nancy and Bill Jr. opened theirs at the same time, and both beamed and laughed, turning around to the crowd and holding their slips of paper above their heads.</p>
+                    
+                    <p>"Tessie," Mr. Summers said. There was a pause, and then Mr. Summers looked at Bill Hutchinson, and Bill unfolded his paper and showed it. It was blank.</p>
+                    
+                    <p>"It's Tessie," Mr. Summers said, and his voice was hushed. "Show us her paper, Bill."</p>
+                    
+                    <p>Bill Hutchinson went over to his wife and forced the slip of paper out of her hand. It had a black spot on it, the black spot Mr. Summers had made the night before with the heavy pencil in the coal-company office. Bill Hutchinson held it up, and there was a stir in the crowd.</p>
+                    
+                    <div class="reveal-box">
+                        <h3 style="margin-bottom: 1rem; color: #b22222;">The Black Spot</h3>
+                        <p style="color: var(--text-secondary); line-height: 1.7;">
+                            The slip of paper had a black spot on it, the black spot Mr. Summers had made the night before 
+                            with the heavy pencil in the coal-company office. This mark designated the selected family 
+                            for the second round of the lottery.
+                        </p>
+                    </div>
+                    
+                    <p>"All right, folks," Mr. Summers said. "You know what we got to do now. Hutchinson family's got to draw again."</p>
+                    
+                    <p>"I think we ought to start over," Mrs. Hutchinson said, as quietly as she could. "I tell you it wasn't fair. You didn't give him time enough to choose. Everybody saw that."</p>
+                    
+                    <p>Mr. Graves had selected the five slips and put them in the box, and he dropped all the papers but those onto the ground, where the breeze caught them and lifted them off.</p>
+                    
+                    <p>"Listen, everybody," Mrs. Hutchinson was saying to the people around her.</p>
+                    
+                    <p>"Ready, Bill?" Mr. Summers asked, and Bill Hutchinson, with one quick glance around at his wife and children, nodded.</p>
+                    
+                    <p>"Remember," Mr. Summers said, "take the slips and keep them folded until each person has taken one. Harry, you help little Dave." Mr. Graves took the hand of the little boy, who came willingly with him up to the box. "Take a paper out of the box, Davy," Mr. Summers said. Davy put his hand into the box and laughed. "Take just one paper," Mr. Summers said. "Harry, you hold it for him." Mr. Graves took the child's hand and removed the folded paper from the tight fist and held it while little Dave stood next to him and looked up at him wonderingly.</p>
+                    
+                    <p>"Nancy next," Mr. Summers said. Nancy was twelve, and her school friends breathed heavily as she went forward, switching her skirt, and took a slip daintily from the box. "Bill Jr.," Mr. Summers said, and Billy, his face red and his feet overlarge, nearly knocked the box over as he got a paper out. "Tessie," Mr. Summers said. She hesitated for a minute, looking around defiantly, and then set her lips and went up to the box. She snatched a paper out and held it behind her.</p>
+                    
+                    <p>"Bill," Mr. Summers said, and Bill Hutchinson reached into the box and felt around, bringing his hand out at last with the slip of paper in it.</p>
+                </div>
+                
+                <div class="chapter-section">
+                    <h2 class="chapter-title">The Stones</h2>
+                    
+                    <p>The crowd was quiet. A girl whispered, "I hope it's not Nancy," and the sound of the whisper reached the edges of the crowd.</p>
+                    
+                    <p>"It's not the way it used to be," Old Man Warner said clearly. "People ain't the way they used to be."</p>
+                    
+                    <p>"All right," Mr. Summers said. "Open the papers. Harry, you open little Dave's."</p>
+                    
+                    <p>Mr. Graves opened the slip of paper and there was a general sigh through the crowd as he held it up and everyone could see that it was blank. Nancy and Bill Jr. opened theirs at the same time, and both beamed and laughed, turning around to the crowd and holding their slips of paper above their heads.</p>
+                    
+                    <p>"Tessie," Mr. Summers said. There was a pause, and then Mr. Summers looked at Bill Hutchinson, and Bill unfolded his paper and showed it. It was blank.</p>
+                    
+                    <p>"It's Tessie," Mr. Summers said, and his voice was hushed. "Show us her paper, Bill."</p>
+                    
+                    <p>Bill Hutchinson went over to his wife and forced the slip of paper out of her hand. It had a black spot on it, the black spot Mr. Summers had made the night before with the heavy pencil in the coal-company office. Bill Hutchinson held it up, and there was a stir in the crowd.</p>
+                    
+                    <div class="quote">
+                        "It isn't fair, it isn't right," Mrs. Hutchinson screamed, and then they were upon her.
+                    </div>
+                    
+                    <p>"All right, folks," Mr. Summers said. "Let's finish quickly."</p>
+                    
+                    <p>Although the villagers had forgotten the ritual and lost the original black box, they still remembered to use stones. The pile of stones the boys had made earlier was ready; there were stones on the ground with the blowing scraps of paper that had come out of the box. Mrs. Delacroix selected a stone so large she had to pick it up with both hands and turned to Mrs. Dunbar. "Come on," she said. "Hurry up."</p>
+                    
+                    <p>Mrs. Dunbar had small stones in both hands, and she said, gasping for breath, "I can't run at all. You'll have to go ahead and I'll catch up with you."</p>
+                    
+                    <p>The children had stones already, and someone gave little Davy Hutchinson a few pebbles.</p>
+                    
+                    <p>Tessie Hutchinson was in the center of a cleared space by now, and she held her hands out desperately as the villagers moved in on her. "It isn't fair," she said. A stone hit her on the side of the head.</p>
+                    
+                    <p>Old Man Warner was saying, "Come on, come on, everyone." Steve Adams was in the front of the crowd of villagers, with Mrs. Graves beside him.</p>
+                    
+                    <p>"It isn't fair, it isn't right," Mrs. Hutchinson screamed, and then they were upon her.</p>
+                    
+                    <p class="blurred-text" style="margin-top: 2rem; padding: 1.5rem; background: rgba(178, 34, 34, 0.05); border-radius: 8px;">
+                        The story concludes with the villagers completing the ritual. Mrs. Hutchinson's protest is cut short as the stones begin to fly. The final image is of the community returning to their normal lives, having performed their annual duty. The lottery is over, and the villagers will gather again next year on the same date, in the same square, to repeat the tradition that none dare question.
+                    </p>
+                </div>
+                
+                <div class="chapter-section" style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border);">
+                    <h2 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--text);">About this Story</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                        "The Lottery" is a short story by Shirley Jackson, first published in The New Yorker in 1948. 
+                        The story describes a fictional small American town that observes an annual ritual known as "the lottery." 
+                        Jackson's tale explores themes of blind tradition, collective violence, and the dark side of human nature 
+                        that can hide beneath the surface of civilized society. Upon its publication, "The Lottery" generated 
+                        more mail than any other story in The New Yorker's history—most of it negative. Readers were shocked 
+                        by its disturbing ending and many canceled their subscriptions. Today, it is considered a classic 
+                        of American literature and is widely anthologized and studied for its powerful social commentary.
+                    </p>
+                </div>
+                
+                <a href="../index.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    Return to all stories
+                </a>
+            </div>
+        </article>
+    </div>
+    
+    <div class="reading-controls">
+        <button class="control-btn" id="fontIncrease" title="Increase font size">
+            <i class="fas fa-plus"></i>
+        </button>
+        <button class="control-btn" id="fontDecrease" title="Decrease font size">
+            <i class="fas fa-minus"></i>
+        </button>
+        <button class="control-btn" id="scrollTopBtn" title="Scroll to top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </div>
+    
+    <script src="../story.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add ominous effect as user scrolls
+            const ominousBg = document.querySelector('.ominous-bg');
+            const sections = document.querySelectorAll('.chapter-section');
+            
+            window.addEventListener('scroll', function() {
+                const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+                
+                // Increase red tone as story progresses
+                const redIntensity = Math.min(0.1, scrollPercent / 1000);
+                ominousBg.style.background = `
+                    radial-gradient(circle at 20% 80%, rgba(139, 0, 0, ${0.03 + redIntensity}) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 20%, rgba(178, 34, 34, ${0.02 + redIntensity}) 0%, transparent 50%)
+                `;
+            });
+            
+            // Add staggered reveal for sections
+            sections.forEach((section, index) => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(10px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                
+                setTimeout(() => {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }, 150 * index);
+            });
+            
+            // Add click effect to blurred text
+            const blurredText = document.querySelector('.blurred-text');
+            if (blurredText) {
+                blurredText.addEventListener('click', function() {
+                    this.style.filter = 'blur(0)';
+                    this.style.cursor = 'default';
+                    this.querySelector(':after').style.display = 'none';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

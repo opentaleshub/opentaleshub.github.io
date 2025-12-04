@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Birthmark · Nathaniel Hawthorne | Open Tales</title>
+    
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../story.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .birthmark-container {
+            position: relative;
+        }
+        
+        .birthmark-symbol {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            opacity: 0.05;
+            background: radial-gradient(circle, crimson 20%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+        
+        .theme-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(220, 20, 60, 0.1);
+            color: crimson;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+            border: 1px solid rgba(220, 20, 60, 0.3);
+        }
+        
+        .perfection-quote {
+            border-left: 3px solid crimson;
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+        
+        .warning-note {
+            background: rgba(220, 20, 60, 0.05);
+            border-left: 3px solid crimson;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 4px 4px 0;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <div class="container">
+        <header style="margin-bottom: 2rem; padding-top: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <a href="../index.html" style="text-decoration: none; color: var(--text); display: flex; align-items: center; gap: 0.5rem;">
+                    <span>←</span>
+                    <span style="font-weight: 500;">Open Tales</span>
+                </a>
+                <button id="themeToggle" class="control-btn" style="position: static;">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
+        
+        <article class="story-container birthmark-container">
+            <div class="birthmark-symbol"></div>
+            
+            <header class="story-header">
+                <h1>The Birthmark</h1>
+                <p class="story-subtitle">A tale of science, perfection, and the fatal flaw in human nature</p>
+                <div class="story-meta">
+                    <span><i class="fas fa-user"></i> Nathaniel Hawthorne</span>
+                    <span><i class="fas fa-book"></i> Gothic Romanticism</span>
+                    <span><i class="fas fa-clock"></i> 20 minute read</span>
+                    <span><i class="fas fa-calendar"></i> 1843</span>
+                </div>
+                
+                <div style="margin-top: 1rem;">
+                    <span class="theme-tag">Perfection</span>
+                    <span class="theme-tag">Science</span>
+                    <span class="theme-tag">Mortality</span>
+                    <span class="theme-tag">Obsession</span>
+                </div>
+            </header>
+            
+            <div class="story-content">
+                <div class="chapter-section">
+                    <h2 class="chapter-title">I. The Crimson Hand</h2>
+                    
+                    <p>In the latter part of the last century there lived a man of science, an eminent proficient in every branch of natural philosophy, who not long before our story opens had made experience of a spiritual affinity more attractive than any chemical one. He had left his laboratory to the care of an assistant, cleared his fine countenance from the furnace smoke, washed the stain of acids from his fingers, and persuaded a beautiful woman to become his wife. In those days when the comparatively recent discovery of electricity and other kindred mysteries of Nature seemed to open paths into the region of miracle, it was not unusual for the love of science to rival the love of woman in its depth and absorbing energy.</p>
+                    
+                    <p>The higher intellect, the imagination, the spirit, and even the heart might all find their congenial aliment in pursuits which, as some of their ardent votaries believed, would ascend from one step of powerful intelligence to another, until the philosopher should lay his hand on the secret of creative force and perhaps make new worlds for himself. We know not whether Aylmer possessed this degree of faith in man's ultimate control over Nature. He had devoted himself, however, too unreservedly to scientific studies ever to be weaned from them by any second passion. His love for his young wife might prove the stronger of the two; but it could only be by intertwining itself with his love of science, and uniting the strength of the latter to his own.</p>
+                    
+                    <div class="quote">
+                        He had left his laboratory to the care of an assistant, cleared his fine countenance from the furnace smoke, washed the stain of acids from his fingers, and persuaded a beautiful woman to become his wife.
+                    </div>
+                    
+                    <p>Such a union accordingly took place, and was attended with truly remarkable consequences and a deeply impressive moral. One day, very soon after their marriage, Aylmer sat gazing at his wife with a trouble in his countenance that grew stronger until he spoke.</p>
+                    
+                    <p>"Georgiana," said he, "has it never occurred to you that the mark upon your cheek might be removed?"</p>
+                    
+                    <p>"No, indeed," said she, smiling; but perceiving the seriousness of his manner, she blushed deeply. "To tell you the truth it has been so often called a charm that I was simple enough to imagine it might be so."</p>
+                    
+                    <p>"Ah, upon another face perhaps it might," replied her husband; "but never on yours. No, dearest Georgiana, you came so nearly perfect from the hand of Nature that this slightest possible defect, which we hesitate whether to term a defect or a beauty, shocks me, as being the visible mark of earthly imperfection."</p>
+                    
+                    <p>"Shocks you, my husband!" cried Georgiana, deeply hurt; at first reddening with momentary anger, but then bursting into tears. "Then why did you take me from my mother's side? You cannot love what shocks you!"</p>
+                </div>
+                
+                <div class="chapter-section">
+                    <h2 class="chapter-title">II. The Laboratory of Dreams</h2>
+                    
+                    <p>To explain this conversation it must be mentioned that in the centre of Georgiana's left cheek there was a singular mark, deeply interwoven, as it were, with the texture and substance of her face. In the usual state of her complexion—a healthy though delicate bloom—the mark wore a tint of deeper crimson, which imperfectly defined its shape amid the surrounding rosiness. When she blushed it gradually became more indistinct, and finally vanished amid the triumphant rush of blood that bathed the whole cheek with its brilliant glow. But if any shifting motion caused her to turn pale there was the mark again, a crimson stain upon the snow, in what Aylmer sometimes deemed an almost fearful distinctness.</p>
+                    
+                    <p>Its shape bore not a little similarity to the human hand, though of the smallest pygmy size. Georgiana's lovers were wont to say that some fairy at her birth hour had laid her tiny hand upon the infant's cheek, and left this impress there in token of the magic endowments that were to give her such sway over all hearts. Many a desperate swain would have risked life for the privilege of pressing his lips to the mysterious hand. It must not be concealed, however, that the impression wrought by this fairy sign manual varied exceedingly, according to the difference of temperament in the beholders.</p>
+                    
+                    <div class="warning-note">
+                        The birthmark—that symbol of imperfection—became more than a physical feature; it grew into a psychological obsession that would consume both scientist and subject.
+                    </div>
+                    
+                    <p>Aylmer saw in the birthmark nothing less than a symbol of his wife's liability to sin, sorrow, decay, and death. His sombre imagination was not long in rendering the birthmark a frightful object, causing him more trouble and horror than ever Georgiana's beauty, whether of soul or sense, had given him delight. It was the fatal flaw of humanity which Nature, in one shape or another, stamps ineffaceably on all her productions, either to imply that they are temporary and finite, or that their perfection must be wrought by toil and pain.</p>
+                    
+                    <p>"Dearest Georgiana, I have spent much thought upon the subject," hastily interrupted Aylmer. "I am convinced of the perfect practicability of its removal."</p>
+                    
+                    <p>"If there be the remotest possibility of it," continued Georgiana, "let the attempt be made at whatever risk. Danger is nothing to me; for life, while this hateful mark makes me the object of your horror and disgust—life is a burden which I would fling down with joy. Either remove this dreadful hand, or take my wretched life! You have deep science. All the world bears witness of it. You have achieved great wonders. Cannot you remove this little, little mark, which I cover with the tips of two small fingers?"</p>
+                </div>
+                
+                <div class="chapter-section">
+                    <h2 class="chapter-title">III. The Elixir of Life</h2>
+                    
+                    <p>He led her back to his laboratory and, with a tenderness that spoke volumes for the depth of his affection, explained the operation he proposed to undertake. The room was hung with gorgeous curtains, which imparted the combination of grandeur and grace that no other species of adornment can achieve; and they fell from the ceiling to the floor in rich folds, concealing all angles and straight lines, as if to shut in the scene from infinite space. Aylmer had converted those smoky, dingy, sombre rooms where he had spent his brightest years in recondite pursuits into a series of beautiful apartments not unfit to be the secluded abode of a lovely woman.</p>
+                    
+                    <p>On a table of costly marble stood a goblet of perfectly pure water, and beside it a small crystal vase containing a quantity of the same fluid, rendered richly luminous by a flood of light that streamed upon it from above. In this goblet Aylmer intended to mix the elixir that would remove the birthmark.</p>
+                    
+                    <p>"Georgiana," said he, "it is dangerous to read in a scientific book. These books impart a kind of forbidden knowledge that may be too high for humanity. Yet, for your sake, I would venture even into the dim region of possibility, and bring back from its shadowy limits the means of perfecting what Nature left imperfect in her fairest work."</p>
+                    
+                    <div class="quote">
+                        "It is dangerous to read in a scientific book. These books impart a kind of forbidden knowledge that may be too high for humanity."
+                    </div>
+                    
+                    <p>The first thing that struck Georgiana on entering the laboratory was the hot and pungent smell of acids. Aylmer had been experimenting with various chemical compounds, seeking the precise formula that would target the birthmark without harming the surrounding tissue. Shelves lined with mysterious vessels, retorts, and electrical apparatus surrounded them—a mute testament to Aylmer's ceaseless pursuit of natural secrets.</p>
+                    
+                    <p>"And, Aylmer, are you confident that this experiment will succeed?" asked Georgiana, looking at the apparatus with a mixture of hope and dread.</p>
+                    
+                    <p>"Most confident, my love," he replied. "I have studied this mark for many sleepless nights. I understand its nature—it is but a superficial blemish, a trifling defect in an otherwise perfect creation. With the proper application of scientific principles, we shall erase it as one might erase a pencil mark from paper."</p>
+                    
+                    <p>Yet even as he spoke, Aylmer's eyes avoided hers, and Georgiana detected a slight tremor in his hand as he measured a crimson liquid into the goblet. The scientist's confidence, she realized with a sinking heart, was not as complete as his words suggested.</p>
+                </div>
+                
+                <div class="chapter-section">
+                    <h2 class="chapter-title">IV. The Fatal Perfection</h2>
+                    
+                    <p>The decisive night arrived. The atmosphere of the room had been carefully prepared. Aylmer had spent the preceding days purifying the air, adjusting the temperature, and arranging the lighting to create optimal conditions for the procedure. Georgiana lay upon a couch, her cheek exposed, the crimson hand seeming to glow with an unnatural intensity in the soft lamplight.</p>
+                    
+                    <p>"My peerless bride, it is successful! You are perfect!" exclaimed Aylmer, with a fervor that lit up his whole countenance.</p>
+                    
+                    <p>Georgiana opened her eyes and looked into the mirror which her husband had arranged for that purpose. A faint smile flitted over her lips when she recognized how barely perceptible was now that crimson hand which had once blazed forth with such disastrous brilliancy. Then her eyes sought Aylmer's face with a trouble and anxiety that he could by no means account for.</p>
+                    
+                    <p>"My poor Aylmer!" she murmured.</p>
+                    
+                    <p>"Poor? Nay, richest, happiest, most favored!" exclaimed he. "My peerless bride, it is successful! You are perfect!"</p>
+                    
+                    <p>"My poor Aylmer," she repeated, with a more than human tenderness, "you have aimed loftily; you have done nobly. Do not repent that with so high and pure a feeling, you have rejected the best the earth could offer. Aylmer, dearest Aylmer, I am dying!"</p>
+                    
+                    <p>Alas! it was too true! The fatal hand had grappled with the mystery of life, and was the bond by which an angelic spirit kept itself in union with a mortal frame. As the last crimson tint of the birthmark—that sole token of human imperfection—faded from her cheek, the parting breath of the now perfect woman passed into the atmosphere, and her soul, lingering a moment near her husband, took its heavenward flight.</p>
+                    
+                    <div class="perfection-quote">
+                        The momentary circumstance was too strong for him; he failed to look beyond the shadowy scope of time, and, living once for all in eternity, to find the perfect future in the present.
+                    </div>
+                    
+                    <p>Then a hoarse, chuckling laugh was heard again! Thus ever does the gross fatality of earth exult in its invariable triumph over the immortal essence which, in this dim sphere of half development, demands the completeness of a higher state. Yet, had Aylmer reached a profounder wisdom, he need not thus have flung away the happiness which would have woven his mortal life of the selfsame texture with the celestial. The momentary circumstance was too strong for him; he failed to look beyond the shadowy scope of time, and, living once for all in eternity, to find the perfect future in the present.</p>
+                </div>
+                
+                <div class="chapter-section" style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border);">
+                    <h2 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--text);">About this Story</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                        "The Birthmark" is a short story by American writer Nathaniel Hawthorne, first published in 1843. 
+                        The story examines the dangerous pursuit of perfection through science and the inherent flaws in human nature. 
+                        Hawthorne critiques the Romantic era's faith in science and progress, suggesting that some human imperfections 
+                        are essential to our humanity. The birthmark symbolizes both mortal imperfection and the unique individuality 
+                        that makes us human—qualities that science cannot remove without destroying life itself.
+                    </p>
+                </div>
+                
+                <a href="../index.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    Return to all stories
+                </a>
+            </div>
+        </article>
+    </div>
+    
+    <div class="reading-controls">
+        <button class="control-btn" id="fontIncrease" title="Increase font size">
+            <i class="fas fa-plus"></i>
+        </button>
+        <button class="control-btn" id="fontDecrease" title="Decrease font size">
+            <i class="fas fa-minus"></i>
+        </button>
+        <button class="control-btn" id="scrollTopBtn" title="Scroll to top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </div>
+    
+    <script src="../story.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const birthmark = document.querySelector('.birthmark-symbol');
+            
+            // Make birthmark pulse subtly
+            setInterval(() => {
+                birthmark.style.transform = `scale(${1 + Math.sin(Date.now()/1000)*0.05})`;
+                birthmark.style.opacity = `${0.03 + Math.sin(Date.now()/1500)*0.02}`;
+            }, 50);
+            
+            // Add fade-in animation for sections
+            const sections = document.querySelectorAll('.chapter-section');
+            sections.forEach((section, index) => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                
+                setTimeout(() => {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+        });
+    </script>
+</body>
+</html>

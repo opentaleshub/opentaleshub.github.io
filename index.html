@@ -1,329 +1,314 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- SEO & Meta Tags -->
-    <title>Open Tales Hub – Immersive Short Stories for Quick Reading</title>
-    <meta name="description" content="Discover beautiful, immersive short stories from classic literature. Read online with smooth animations, dark/light themes, and distraction-free interface.">
-    <meta name="keywords" content="short stories, classic literature, online reading, dark mode, immersive reading">
-
-    <!-- Open Graph -->
-    <meta property="og:title" content="Open Tales Hub – Immersive Short Stories">
-    <meta property="og:description" content="Beautiful short stories with immersive reading experience.">
-    <meta property="og:url" content="https://opentaleshub.github.io/">
-    <meta property="og:type" content="website">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Open Tales Hub – Immersive Stories">
-    <meta name="twitter:description" content="Beautiful short stories for quick reading.">
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📖</text></svg>">
-
-    <!-- CSS -->
+    <title>OpenTalesHub | Medieval Story Collection</title>
+    <meta name="description" content="A collection of short stories in a medieval RPG adventure style">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
-
-    <!-- PWA Manifest -->
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#121212">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗡️</text></svg>">
 </head>
 <body>
-    <!-- Particle Background -->
-    <div class="particles-container" id="particles"></div>
-
-    <!-- Navigation -->
-    <nav class="main-nav">
-        <div class="nav-container">
-            <a href="/" class="logo">
-                <i class="fas fa-book-open"></i>
-                <span>Open Tales</span>
-            </a>
-            <div class="nav-controls">
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <button class="nav-btn" id="searchToggle" aria-label="Search stories">
-                    <i class="fas fa-search"></i>
-                </button>
+    <!-- RPG Game Container -->
+    <div class="rpg-container">
+        <!-- Top Banner -->
+        <header class="rpg-header">
+            <div class="header-title">
+                <h1><i class="fas fa-scroll"></i> OPEN<span class="highlight">TALES</span>HUB</h1>
+                <p class="tagline">A Quest for Great Stories</p>
             </div>
+            <div class="rpg-stats">
+                <div class="stat"><span class="stat-icon">📚</span> Stories: <span id="story-count">0</span></div>
+                <div class="stat"><span class="stat-icon">⭐</span> Adventure Level: <span id="adventure-level">1</span></div>
+                <div class="stat"><span class="stat-icon">🏰</span> Keep: <span id="user-location">Grand Library</span></div>
+            </div>
+        </header>
+
+        <!-- Main Game Area -->
+        <div class="game-area">
+            <!-- Left Panel - Navigation -->
+            <nav class="rpg-nav">
+                <div class="nav-title">Quest Log</div>
+                <ul class="nav-menu">
+                    <li><a href="#stories" class="nav-link active" data-section="stories"><i class="fas fa-book-open"></i> Story Archive</a></li>
+                    <li><a href="#categories" class="nav-link" data-section="categories"><i class="fas fa-map"></i> Story Map</a></li>
+                    <li><a href="#new" class="nav-link" data-section="new"><i class="fas fa-quill"></i> New Arrivals</a></li>
+                    <li><a href="#about" class="nav-link" data-section="about"><i class="fas fa-landmark"></i> About the Keep</a></li>
+                </ul>
+
+                <div class="nav-title">Inventory</div>
+                <div class="inventory">
+                    <div class="inventory-item">
+                        <span class="item-icon">🔖</span>
+                        <span>Bookmarks: <span id="bookmark-count">0</span></span>
+                    </div>
+                    <div class="inventory-item">
+                        <span class="item-icon">🕯️</span>
+                        <span>Reading Time: <span id="reading-time">0h</span></span>
+                    </div>
+                </div>
+
+                <div class="rpg-button-container">
+                    <button class="rpg-button" id="dark-mode-btn"><i class="fas fa-moon"></i> Torch Mode</button>
+                    <button class="rpg-button" id="random-story"><i class="fas fa-dice"></i> Random Quest</button>
+                </div>
+            </nav>
+
+            <!-- Center Panel - Content -->
+            <main class="rpg-main">
+                <!-- Stories Section -->
+                <section id="stories" class="content-section active">
+                    <div class="section-header">
+                        <h2><i class="fas fa-treasure-chest"></i> Story Archive</h2>
+                        <p class="section-description">Select a tale from our collection. Each story is a unique adventure.</p>
+                    </div>
+
+                    <div class="search-area">
+                        <div class="rpg-input-container">
+                            <input type="text" id="story-search" placeholder="Search for stories by title or author..." class="rpg-input">
+                            <button class="rpg-input-btn"><i class="fas fa-search"></i></button>
+                        </div>
+                        <div class="filter-buttons">
+                            <button class="filter-btn active" data-filter="all">All Quests</button>
+                            <button class="filter-btn" data-filter="short">Short Tales</button>
+                            <button class="filter-btn" data-filter="medium">Medium Adventures</button>
+                            <button class="filter-btn" data-filter="long">Epic Journeys</button>
+                        </div>
+                    </div>
+
+                    <div class="stories-grid" id="stories-container">
+                        <!-- Stories will be loaded here by JavaScript -->
+                        <div class="loading-spinner">
+                            <div class="spinner"></div>
+                            <p>Loading stories from the archives...</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Categories Section -->
+                <section id="categories" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-map-marked-alt"></i> Story Map</h2>
+                        <p class="section-description">Navigate stories by genre and theme.</p>
+                    </div>
+
+                    <div class="categories-container">
+                        <div class="category-card" data-category="mystery">
+                            <div class="category-icon">🕵️</div>
+                            <h3>Mystery & Suspense</h3>
+                            <p>Unravel secrets and solve puzzles</p>
+                            <span class="story-count">3 stories</span>
+                        </div>
+
+                        <div class="category-card" data-category="adventure">
+                            <div class="category-icon">⚔️</div>
+                            <h3>Adventure</h3>
+                            <p>Journeys to unknown lands</p>
+                            <span class="story-count">4 stories</span>
+                        </div>
+
+                        <div class="category-card" data-category="classic">
+                            <div class="category-icon">🏛️</div>
+                            <h3>Classic Tales</h3>
+                            <p>Timeless stories from masters</p>
+                            <span class="story-count">5 stories</span>
+                        </div>
+
+                        <div class="category-card" data-category="fantasy">
+                            <div class="category-icon">🐉</div>
+                            <h3>Fantasy</h3>
+                            <p>Magic, creatures, and legends</p>
+                            <span class="story-count">2 stories</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- New Arrivals Section -->
+                <section id="new" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-quill-alt"></i> New Arrivals</h2>
+                        <p class="section-description">Freshly inked stories added to our collection.</p>
+                    </div>
+
+                    <div class="new-arrivals">
+                        <div class="arrival-card">
+                            <div class="arrival-badge">NEW!</div>
+                            <h3>The Raven's Call</h3>
+                            <p>A mysterious raven brings messages from beyond the grave.</p>
+                            <div class="arrival-meta">
+                                <span><i class="fas fa-hourglass-half"></i> 15 min read</span>
+                                <span><i class="fas fa-calendar"></i> Added: This week</span>
+                            </div>
+                        </div>
+
+                        <div class="arrival-card">
+                            <div class="arrival-badge">COMING SOON</div>
+                            <h3>Knight's Oath</h3>
+                            <p>A knight must choose between honor and love.</p>
+                            <div class="arrival-meta">
+                                <span><i class="fas fa-hourglass-half"></i> 25 min read</span>
+                                <span><i class="fas fa-calendar"></i> Next week</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contribute-box">
+                        <h3><i class="fas fa-feather-alt"></i> Submit Your Tale</h3>
+                        <p>Have a story to share with our adventurers? Manuscripts are accepted on full moons.</p>
+                        <button class="rpg-button" id="contribute-btn"><i class="fas fa-scroll"></i> Inquire About Submission</button>
+                    </div>
+                </section>
+
+                <!-- About Section -->
+                <section id="about" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-landmark"></i> About the Keep</h2>
+                        <p class="section-description">Welcome to OpenTalesHub, a fortress of stories.</p>
+                    </div>
+
+                    <div class="about-content">
+                        <div class="about-text">
+                            <p>In the year of our scroll 2024, the Grand Library of OpenTalesHub was established as a sanctuary for stories of all kinds. Our keep houses tales from wandering bards, scribes, and storytellers from across the realms.</p>
+
+                            <p>Each week, our archivists add new manuscripts to our collection, carefully preserving them for future generations of readers and adventurers.</p>
+
+                            <h3><i class="fas fa-dragon"></i> Our Mission</h3>
+                            <p>To protect and share stories that ignite imagination, challenge minds, and transport readers to other worlds.</p>
+
+                            <h3><i class="fas fa-crown"></i> The Keeper's Note</h3>
+                            <blockquote class="rpg-quote">
+                                "Stories are the maps that guide us through life's adventures. In these halls, every book is a portal, every page a new path."
+                                <cite>— The Keeper of Tales</cite>
+                            </blockquote>
+                        </div>
+
+                        <div class="about-stats">
+                            <div class="stat-card">
+                                <div class="stat-number" id="total-stories">0</div>
+                                <div class="stat-label">Stories in Archive</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">7</div>
+                                <div class="stat-label">Story Genres</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">Weekly</div>
+                                <div class="stat-label">New Additions</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">∞</div>
+                                <div class="stat-label">Adventures Awaiting</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <!-- Right Panel - Features -->
+            <aside class="rpg-sidebar">
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-hourglass"></i> Currently Reading</h3>
+                    <div class="currently-reading">
+                        <p>No active story</p>
+                        <button class="rpg-button-small" id="resume-reading"><i class="fas fa-play"></i> Resume Last Tale</button>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-trophy"></i> Achievements</h3>
+                    <div class="achievements">
+                        <div class="achievement locked">
+                            <span class="achievement-icon">📖</span>
+                            <div>
+                                <h4>First Page</h4>
+                                <p>Read your first story</p>
+                            </div>
+                        </div>
+                        <div class="achievement locked">
+                            <span class="achievement-icon">🏰</span>
+                            <div>
+                                <h4>Keep Explorer</h4>
+                                <p>Visit all sections</p>
+                            </div>
+                        </div>
+                        <div class="achievement locked">
+                            <span class="achievement-icon">🕯️</span>
+                            <div>
+                                <h4>Night Reader</h4>
+                                <p>Read 5 stories</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-calendar-star"></i> Weekly Quest</h3>
+                    <div class="weekly-quest">
+                        <h4>Read 3 Different Stories</h4>
+                        <p>Reward: <span class="reward">⭐ Unlock "Avid Reader" Achievement</span></p>
+                        <div class="quest-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                            <span class="progress-text">0/3</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-shield-alt"></i> Site Status</h3>
+                    <div class="site-status">
+                        <div class="status-item">
+                            <span class="status-indicator active"></span>
+                            <span>Archive: <strong>Secure</strong></span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-indicator active"></span>
+                            <span>Manuscripts: <strong>Protected</strong></span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-indicator active"></span>
+                            <span>Portal: <strong>Open</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
         </div>
-    </nav>
 
-    <!-- Search Overlay -->
-    <div class="search-overlay" id="searchOverlay">
-        <div class="search-container">
-            <div class="search-header">
-                <h3>Search Stories</h3>
-                <button class="close-search" id="closeSearch">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="search-input-wrapper">
-                <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Search by title, author, or genre..." autocomplete="off">
-                <div class="search-hint">
-                    <span>Press <kbd>Esc</kbd> to close</span>
-                </div>
-            </div>
-            <div class="search-results" id="searchResults"></div>
-        </div>
-    </div>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1 class="hero-title">
-                    <span class="title-line">Immerse Yourself</span>
-                    <span class="title-line">In Timeless Tales</span>
-                </h1>
-                <p class="hero-subtitle">
-                    Discover beautiful short stories from classic literature.
-                    Perfect for a 5-15 minute escape into another world.
-                </p>
-                <div class="hero-stats">
-                    <div class="stat">
-                        <i class="fas fa-book"></i>
-                        <span id="totalStories">7+ Stories</span>
-                    </div>
-                    <div class="stat">
-                        <i class="fas fa-clock"></i>
-                        <span>5-15 min read</span>
-                    </div>
-                    <div class="stat">
-                        <i class="fas fa-palette"></i>
-                        <span>Dark/Light Theme</span>
-                    </div>
-                </div>
-            </div>
-            <div class="hero-illustration">
-                <div class="floating-book">
-                    <div class="book-cover">
-                        <div class="book-spine"></div>
-                        <div class="book-pages"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Scroll Indicator -->
-        <div class="scroll-indicator">
-            <div class="mouse">
-                <div class="wheel"></div>
-            </div>
-            <span>Scroll to explore</span>
-        </div>
-    </section>
-
-    <!-- Main Content -->
-    <main class="main-container">
-        <!-- Featured Quote -->
-        <section class="quote-section">
-            <div class="quote-card" id="dailyQuote">
-                <div class="quote-icon">
-                    <i class="fas fa-quote-left"></i>
-                </div>
-                <p class="quote-text">"The purpose of a writer is to keep civilization from destroying itself."</p>
-                <p class="quote-author">— Albert Camus</p>
-                <button class="refresh-quote" id="refreshQuote">
-                    <i class="fas fa-sync-alt"></i>
-                    New Quote
-                </button>
-            </div>
-        </section>
-
-        <!-- Stories Grid -->
-        <section class="stories-section">
-            <div class="section-header">
-                <h2>Featured Stories</h2>
-                <div class="section-controls">
-                    <div class="sort-control">
-                        <select id="sortStories" class="sort-select">
-                            <option value="default">Sort by: Featured</option>
-                            <option value="title">Title A-Z</option>
-                            <option value="author">Author</option>
-                            <option value="newest">Newest First</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="stories-grid" id="storiesGrid">
-                <!-- Stories will be loaded here -->
-                <div class="loading-stories">
-                    <div class="spinner">
-                        <div class="spinner-circle"></div>
-                        <div class="spinner-circle"></div>
-                        <div class="spinner-circle"></div>
-                    </div>
-                    <p>Loading magical stories...</p>
-                </div>
-            </div>
-
-            <!-- Story of the Day -->
-            <div class="story-of-day" id="storyOfDay">
-                <div class="story-day-header">
-                    <i class="fas fa-star"></i>
-                    <h3>Story Spotlight</h3>
-                </div>
-                <div class="story-day-content">
-                    <div class="story-day-cover">
-                        <div class="cover-placeholder"></div>
-                    </div>
-                    <div class="story-day-info">
-                        <h4 id="spotlightTitle">Loading...</h4>
-                        <p id="spotlightAuthor" class="author"></p>
-                        <p id="spotlightDesc" class="description"></p>
-                        <a href="#" id="spotlightLink" class="read-btn">
-                            Read Now <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Reading Stats -->
-        <section class="stats-section">
-            <h2>Your Reading Journey</h2>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon reading-time">
-                        <i class="fas fa-hourglass-half"></i>
-                    </div>
-                    <h3>Reading Time</h3>
-                    <p class="stat-value" id="totalReadingTime">85 min</p>
-                    <p class="stat-desc">Total reading time across all stories</p>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon completed">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <h3>Stories Read</h3>
-                    <p class="stat-value" id="storiesRead">0</p>
-                    <p class="stat-desc">Track your progress</p>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon favorite">
-                        <i class="fas fa-heart"></i>
-                    </div>
-                    <h3>Favorites</h3>
-                    <p class="stat-value" id="favoritesCount">0</p>
-                    <p class="stat-desc">Stories you've loved</p>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="main-footer">
-        <div class="footer-content">
-            <div class="footer-brand">
+        <!-- Bottom Footer -->
+        <footer class="rpg-footer">
+            <div class="footer-content">
                 <div class="footer-logo">
-                    <i class="fas fa-book-open"></i>
-                    <span>Open Tales Hub</span>
+                    <h3><i class="fas fa-scroll"></i> OPEN<span class="highlight">TALES</span>HUB</h3>
+                    <p>© 2024 The Grand Library of Tales</p>
                 </div>
-                <p class="footer-tagline">
-                    No ads. No tracking. Just beautiful stories.
-                </p>
-                <div class="social-links">
-                    <a href="#" class="social-link" aria-label="Share on Twitter">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" class="social-link" aria-label="Share on GitHub">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="#" class="social-link" aria-label="Share via Email">
-                        <i class="fas fa-envelope"></i>
-                    </a>
+
+                <div class="footer-links">
+                    <a href="#" class="footer-link"><i class="fas fa-envelope"></i> Contact Scribe</a>
+                    <a href="#" class="footer-link"><i class="fas fa-shield-alt"></i> Privacy Scroll</a>
+                    <a href="#" class="footer-link"><i class="fas fa-book-dead"></i> Forgotten Tales</a>
+                </div>
+
+                <div class="footer-social">
+                    <span class="social-icon"><i class="fab fa-github"></i></span>
+                    <span class="social-icon"><i class="fas fa-rss"></i></span>
+                    <span class="social-icon"><i class="fas fa-book"></i></span>
                 </div>
             </div>
 
-            <div class="footer-links">
-                <div class="footer-column">
-                    <h4>Explore</h4>
-                    <a href="#storiesGrid">All Stories</a>
-                    <a href="#" id="randomStory">Random Story</a>
-                    <a href="#statsSection">Reading Stats</a>
-                </div>
-                <div class="footer-column">
-                    <h4>Features</h4>
-                    <a href="#" id="toggleThemeFooter">Dark/Light Theme</a>
-                    <a href="#" id="fontControls">Font Settings</a>
-                    <a href="#" id="exportProgress">Export Progress</a>
-                </div>
-                <div class="footer-column">
-                    <h4>About</h4>
-                    <a href="#" id="aboutModal">About This Project</a>
-                    <a href="https://github.com/opentaleshub" target="_blank">GitHub</a>
-                    <a href="#" id="contribute">Contribute a Story</a>
-                </div>
+            <div class="footer-note">
+                <p>This keep is maintained by dedicated scribes. All stories belong to their original authors.</p>
+                <p class="update-notice">Next manuscript delivery: <span id="next-update">7 days</span></p>
             </div>
-        </div>
-
-        <div class="footer-bottom">
-            <p>&copy; <span id="currentYear">2024</span> Open Tales Hub. All stories are in public domain.</p>
-            <p class="footer-note">
-                Made with <i class="fas fa-heart" style="color: #ff4757;"></i> for literature lovers
-            </p>
-        </div>
-    </footer>
-
-    <!-- Floating Action Button -->
-    <button class="fab" id="fabTop" aria-label="Scroll to top">
-        <i class="fas fa-chevron-up"></i>
-    </button>
-
-    <!-- Toast Notifications -->
-    <div class="toast-container" id="toastContainer"></div>
-
-    <!-- About Modal -->
-    <div class="modal-overlay" id="aboutModalOverlay">
-        <div class="modal">
-            <div class="modal-header">
-                <h3>About Open Tales Hub</h3>
-                <button class="close-modal" id="closeAboutModal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-content">
-                <p>Open Tales Hub is a passion project dedicated to making classic literature accessible and enjoyable through a modern, beautiful interface.</p>
-                <div class="modal-features">
-                    <div class="feature">
-                        <i class="fas fa-book-reader"></i>
-                        <h4>Immersive Reading</h4>
-                        <p>Clean, distraction-free interface with customizable themes</p>
-                    </div>
-                    <div class="feature">
-                        <i class="fas fa-rocket"></i>
-                        <h4>Fast & Lightweight</h4>
-                        <p>No heavy frameworks, just vanilla JavaScript for speed</p>
-                    </div>
-                    <div class="feature">
-                        <i class="fas fa-heart"></i>
-                        <h4>Open Source</h4>
-                        <p>Completely free and open source on GitHub</p>
-                    </div>
-                </div>
-                <div class="modal-actions">
-                    <a href="https://github.com/opentaleshub" target="_blank" class="github-btn">
-                        <i class="fab fa-github"></i> View on GitHub
-                    </a>
-                </div>
-            </div>
-        </div>
+        </footer>
     </div>
 
     <!-- JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

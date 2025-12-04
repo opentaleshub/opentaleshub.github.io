@@ -1,814 +1,680 @@
-// Open Tales Hub - Main JavaScript
-class OpenTalesHub {
-    constructor() {
-        this.stories = [];
-        this.favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-        this.readingProgress = JSON.parse(localStorage.getItem('readingProgress')) || {};
-        this.storiesRead = JSON.parse(localStorage.getItem('storiesRead')) || [];
+// OpenTalesHub RPG JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    // DOM Elements
+    const storyCountEl = document.getElementById('story-count');
+    const adventureLevelEl = document.getElementById('adventure-level');
+    const storiesContainer = document.getElementById('stories-container');
+    const darkModeBtn = document.getElementById('dark-mode-btn');
+    const randomStoryBtn = document.getElementById('random-story');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const contentSections = document.querySelectorAll('.content-section');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const searchInput = document.getElementById('story-search');
+    const totalStoriesEl = document.getElementById('total-stories');
+    const bookmarkCountEl = document.getElementById('bookmark-count');
+    const readingTimeEl = document.getElementById('reading-time');
+    const resumeReadingBtn = document.getElementById('resume-reading');
+    const contributeBtn = document.getElementById('contribute-btn');
 
-        // APIs
-        this.quoteApi = 'https://api.quotable.io/random';
-        this.weatherApi = 'https://api.open-meteo.com/v1/forecast';
+    // Game State
+    let gameState = {
+        darkMode: false,
+        bookmarks: JSON.parse(localStorage.getItem('opentaleshub_bookmarks')) || [],
+        readingProgress: JSON.parse(localStorage.getItem('opentaleshub_progress')) || {},
+        stories: [],
+        categories: {
+            'mystery': ['The Tell-Tale Heart', 'The Lottery'],
+            'adventure': ['To Build a Fire', 'The Great Stone Face'],
+            'classic': ['The Gift of the Magi', 'The Birthmark', 'What Men Live By'],
+            'fantasy': [] // Add your fantasy stories here
+        }
+    };
 
-        // DOM Elements
-        this.elements = {};
+    // Initialize the game
+    initGame();
 
-        this.init();
+    function initGame() {
+        // Load stories from data/stories.json
+        loadStories();
+
+        // Update stats
+        updateStats();
+
+        // Set up event listeners
+        setupEventListeners();
+
+        // Set up fake loading animation
+        simulateLoading();
+
+        // Update next update timer
+        updateNextUpdateTimer();
     }
 
-    async init() {
-        this.cacheElements();
-        this.initTheme();
-        this.initParticles();
-        this.initEventListeners();
-        this.loadStories();
-        this.loadDailyQuote();
-        this.updateStats();
-        this.setupSpotlight();
-        this.updateCurrentYear();
-
-        // Check for new features
-        this.checkForNewFeatures();
-    }
-
-    cacheElements() {
-        this.elements = {
-            themeToggle: document.getElementById('themeToggle'),
-            searchToggle: document.getElementById('searchToggle'),
-            searchOverlay: document.getElementById('searchOverlay'),
-            closeSearch: document.getElementById('closeSearch'),
-            searchInput: document.getElementById('searchInput'),
-            searchResults: document.getElementById('searchResults'),
-            storiesGrid: document.getElementById('storiesGrid'),
-            sortStories: document.getElementById('sortStories'),
-            refreshQuote: document.getElementById('refreshQuote'),
-            dailyQuote: document.getElementById('dailyQuote'),
-            fabTop: document.getElementById('fabTop'),
-            aboutModal: document.getElementById('aboutModal'),
-            aboutModalOverlay: document.getElementById('aboutModalOverlay'),
-            closeAboutModal: document.getElementById('closeAboutModal'),
-            toastContainer: document.getElementById('toastContainer'),
-            randomStory: document.getElementById('randomStory'),
-            toggleThemeFooter: document.getElementById('toggleThemeFooter'),
-            totalStories: document.getElementById('totalStories'),
-            totalReadingTime: document.getElementById('totalReadingTime'),
-            storiesRead: document.getElementById('storiesRead'),
-            favoritesCount: document.getElementById('favoritesCount'),
-            storyOfDay: document.getElementById('storyOfDay'),
-            spotlightTitle: document.getElementById('spotlightTitle'),
-            spotlightAuthor: document.getElementById('spotlightAuthor'),
-            spotlightDesc: document.getElementById('spotlightDesc'),
-            spotlightLink: document.getElementById('spotlightLink')
-        };
-    }
-
-    initTheme() {
-        // Check for saved theme or prefer-color-scheme
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-        const theme = savedTheme || (prefersDark ? 'dark' : 'light');
-        document.documentElement.setAttribute('data-theme', theme);
-
-        // Update theme toggle icon
-        const icon = this.elements.themeToggle.querySelector('i');
-        icon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
-
-        // Add transition after initial load
-        setTimeout(() => {
-            document.body.style.transition = 'background-color 0.3s, color 0.3s';
-        }, 100);
-    }
-
-    initParticles() {
-        if (typeof particlesJS !== 'undefined') {
-            particlesJS('particles', {
-                particles: {
-                    number: { value: 40, density: { enable: true, value_area: 800 } },
-                    color: { value: document.documentElement.getAttribute('data-theme') === 'dark' ? '#8b5cf6' : '#7c3aed' },
-                    shape: { type: 'circle' },
-                    opacity: { value: 0.1, random: true },
-                    size: { value: 3, random: true },
-                    line_linked: { enable: false },
-                    move: {
-                        enable: true,
-                        speed: 1,
-                        direction: 'none',
-                        random: true,
-                        straight: false,
-                        out_mode: 'out'
-                    }
-                },
-                interactivity: {
-                    events: {
-                        onhover: { enable: true, mode: 'repulse' },
-                        onclick: { enable: true, mode: 'push' }
-                    }
+    function loadStories() {
+        // Try to load from data/stories.json
+        fetch('data/stories.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Stories file not found');
                 }
+                return response.json();
+            })
+            .then(data => {
+                gameState.stories = data.stories || [];
+                displayStories(gameState.stories);
+                updateStoryCount();
+                updateCategoryCounts();
+            })
+            .catch(error => {
+                console.log('Could not load stories.json, using fallback data:', error);
+                // Fallback to hardcoded stories based on your file structure
+                gameState.stories = getFallbackStories();
+                displayStories(gameState.stories);
+                updateStoryCount();
+                updateCategoryCounts();
             });
-        }
     }
 
-    initEventListeners() {
-        // Theme toggle
-        this.elements.themeToggle.addEventListener('click', () => this.toggleTheme());
-
-        // Search
-        this.elements.searchToggle.addEventListener('click', () => this.openSearch());
-        this.elements.closeSearch.addEventListener('click', () => this.closeSearch());
-        this.elements.searchInput.addEventListener('input', (e) => this.handleSearch(e.target.value));
-
-        // Close search on Escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this.elements.searchOverlay.classList.contains('active')) {
-                this.closeSearch();
+    function getFallbackStories() {
+        // Create story objects based on your existing story files
+        return [
+            {
+                id: 'tell-tale-heart',
+                title: 'The Tell-Tale Heart',
+                author: 'Edgar Allan Poe',
+                description: 'A haunting tale of guilt and madness, where a murderer is tormented by the sound of his victim\'s beating heart.',
+                readTime: 15,
+                date: '1843',
+                filename: 'tell-tale-heart.html',
+                category: 'mystery',
+                icon: '🫀'
+            },
+            {
+                id: 'the-gift-of-magi',
+                title: 'The Gift of the Magi',
+                author: 'O. Henry',
+                description: 'A young couple sacrifices their most prized possessions to buy Christmas gifts for each other.',
+                readTime: 10,
+                date: '1905',
+                filename: 'the-gift-of-magi.html',
+                category: 'classic',
+                icon: '🎁'
+            },
+            {
+                id: 'the-lottery',
+                title: 'The Lottery',
+                author: 'Shirley Jackson',
+                description: 'A small town holds its annual lottery with a shocking and brutal tradition.',
+                readTime: 20,
+                date: '1948',
+                filename: 'the-lottery.html',
+                category: 'mystery',
+                icon: '🎫'
+            },
+            {
+                id: 'what-men-live-by',
+                title: 'What Men Live By',
+                author: 'Leo Tolstoy',
+                description: 'A shoemaker takes in a mysterious stranger and learns profound lessons about humanity.',
+                readTime: 25,
+                date: '1885',
+                filename: 'what-men-live-by.html',
+                category: 'classic',
+                icon: '👞'
+            },
+            {
+                id: 'the-birthmark',
+                title: 'The Birthmark',
+                author: 'Nathaniel Hawthorne',
+                description: 'A scientist becomes obsessed with removing a small birthmark from his wife\'s cheek.',
+                readTime: 30,
+                date: '1843',
+                filename: 'the-birthmark.html',
+                category: 'classic',
+                icon: '🔬'
+            },
+            {
+                id: 'the-great-stone-face',
+                title: 'The Great Stone Face',
+                author: 'Nathaniel Hawthorne',
+                description: 'A prophecy about a man who will resemble the Great Stone Face brings hope to a valley.',
+                readTime: 35,
+                date: '1850',
+                filename: 'the-great-stone-face.html',
+                category: 'adventure',
+                icon: '🗿'
+            },
+            {
+                id: 'to-build-a-fire',
+                title: 'To Build a Fire',
+                author: 'Jack London',
+                description: 'A man and his dog travel through the Yukon wilderness in extreme cold.',
+                readTime: 40,
+                date: '1908',
+                filename: 'to-build-a-fire.html',
+                category: 'adventure',
+                icon: '🔥'
             }
-        });
-
-        // Sort stories
-        this.elements.sortStories.addEventListener('change', (e) => this.sortStories(e.target.value));
-
-        // Refresh quote
-        this.elements.refreshQuote.addEventListener('click', () => this.loadDailyQuote());
-
-        // FAB scroll to top
-        this.elements.fabTop.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            this.showToast('Scroll to top!', 'success');
-        });
-
-        // Show/hide FAB based on scroll
-        window.addEventListener('scroll', () => {
-            const fab = this.elements.fabTop;
-            if (window.scrollY > 300) {
-                fab.classList.add('visible');
-            } else {
-                fab.classList.remove('visible');
-            }
-        });
-
-        // Modal
-        if (this.elements.aboutModal) {
-            this.elements.aboutModal.addEventListener('click', () => this.openModal());
-        }
-        this.elements.closeAboutModal.addEventListener('click', () => this.closeModal());
-        this.elements.aboutModalOverlay.addEventListener('click', (e) => {
-            if (e.target === this.elements.aboutModalOverlay) {
-                this.closeModal();
-            }
-        });
-
-        // Random story
-        if (this.elements.randomStory) {
-            this.elements.randomStory.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.openRandomStory();
-            });
-        }
-
-        // Theme toggle from footer
-        if (this.elements.toggleThemeFooter) {
-            this.elements.toggleThemeFooter.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.toggleTheme();
-            });
-        }
-
-        // Keyboard shortcuts
-        document.addEventListener('keydown', (e) => {
-            // Ctrl/Cmd + K for search
-            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-                e.preventDefault();
-                this.openSearch();
-            }
-
-            // Ctrl/Cmd + / for theme toggle
-            if ((e.ctrlKey || e.metaKey) && e.key === '/') {
-                e.preventDefault();
-                this.toggleTheme();
-            }
-
-            // R for random story
-            if (e.key === 'r' && !e.ctrlKey && !e.metaKey) {
-                this.openRandomStory();
-            }
-        });
+        ];
     }
 
-    toggleTheme() {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-
-        // Update icon
-        const icon = this.elements.themeToggle.querySelector('i');
-        icon.className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
-
-        // Update particles color
-        if (typeof particlesJS !== 'undefined') {
-            particlesJS('particles', {
-                particles: {
-                    color: { value: newTheme === 'dark' ? '#8b5cf6' : '#7c3aed' }
-                }
-            });
-        }
-
-        this.showToast(`Switched to ${newTheme} theme`, 'success');
-    }
-
-    openSearch() {
-        this.elements.searchOverlay.classList.add('active');
-        this.elements.searchInput.focus();
-        document.body.style.overflow = 'hidden';
-    }
-
-    closeSearch() {
-        this.elements.searchOverlay.classList.remove('active');
-        this.elements.searchInput.value = '';
-        this.elements.searchResults.innerHTML = '';
-        document.body.style.overflow = '';
-    }
-
-    async handleSearch(query) {
-        if (!query.trim()) {
-            this.elements.searchResults.innerHTML = '';
-            return;
-        }
-
-        const filteredStories = this.stories.filter(story =>
-            story.title.toLowerCase().includes(query.toLowerCase()) ||
-            story.author.toLowerCase().includes(query.toLowerCase()) ||
-            story.description.toLowerCase().includes(query.toLowerCase()) ||
-            story.genre.toLowerCase().includes(query.toLowerCase())
-        );
-
-        this.displaySearchResults(filteredStories, query);
-    }
-
-    displaySearchResults(results, query) {
-        if (results.length === 0) {
-            this.elements.searchResults.innerHTML = `
-                <div class="no-results">
-                    <i class="fas fa-search"></i>
-                    <h4>No stories found</h4>
-                    <p>No stories match "${query}"</p>
+    function displayStories(stories) {
+        if (stories.length === 0) {
+            storiesContainer.innerHTML = `
+                <div class="no-stories">
+                    <h3>No stories found in the archives</h3>
+                    <p>The scribes are busy transcribing new tales. Check back soon!</p>
                 </div>
             `;
             return;
         }
 
-        const resultsHTML = results.map(story => `
-            <div class="search-result-item" data-id="${story.id}">
-                <div class="result-content">
-                    <h4>${story.title}</h4>
-                    <p class="result-author">by ${story.author}</p>
-                    <p class="result-desc">${story.description}</p>
-                </div>
-                <a href="${story.file}" class="result-link">
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-        `).join('');
+        let html = '';
 
-        this.elements.searchResults.innerHTML = `
-            <div class="results-header">
-                <p>Found ${results.length} story${results.length === 1 ? '' : 's'}</p>
-            </div>
-            ${resultsHTML}
-        `;
+        stories.forEach(story => {
+            const isBookmarked = gameState.bookmarks.includes(story.id);
+            const readProgress = gameState.readingProgress[story.id] || 0;
+            const progressPercent = readProgress > 0 ? Math.min(readProgress, 100) : 0;
 
-        // Add click handlers
-        document.querySelectorAll('.search-result-item').forEach(item => {
-            item.addEventListener('click', (e) => {
-                if (!e.target.closest('.result-link')) {
-                    const link = item.querySelector('.result-link');
-                    window.location.href = link.href;
-                    this.closeSearch();
-                }
-            });
-        });
-    }
+            html += `
+                <div class="story-card" data-category="${story.category}" data-readtime="${story.readTime}">
+                    <div class="story-icon">${story.icon || '📖'}</div>
+                    <h3 class="story-title">${story.title}</h3>
+                    <div class="story-author">by ${story.author}</div>
+                    <p class="story-description">${story.description}</p>
 
-    async loadStories() {
-        try {
-            // Show loading state
-            this.elements.storiesGrid.innerHTML = `
-                <div class="loading-stories">
-                    <div class="spinner">
-                        <div class="spinner-circle"></div>
-                        <div class="spinner-circle"></div>
-                        <div class="spinner-circle"></div>
+                    ${readProgress > 0 ? `
+                    <div class="progress-bar" style="margin-bottom: 10px;">
+                        <div class="progress-fill" style="width: ${progressPercent}%"></div>
                     </div>
-                    <p>Loading magical stories...</p>
-                </div>
-            `;
+                    ` : ''}
 
-            // Load stories from JSON
-            const response = await fetch('data/stories.json');
-            const data = await response.json();
-            this.stories = data.stories || [];
+                    <div class="story-meta">
+                        <div class="read-time"><i class="fas fa-hourglass-half"></i> ${story.readTime} min</div>
+                        <div class="story-date"><i class="fas fa-calendar"></i> ${story.date}</div>
+                    </div>
 
-            // Update total stories count
-            this.elements.totalStories.textContent = `${this.stories.length}+ Stories`;
+                    <button class="read-btn" data-story="${story.id}">
+                        <i class="fas fa-book-open"></i> Begin Reading
+                    </button>
 
-            // Display stories with staggered animation
-            this.displayStories(this.stories);
-
-            // Add CSS for animations
-            this.addStoryCardAnimations();
-
-        } catch (error) {
-            console.error('Error loading stories:', error);
-            this.showToast('Failed to load stories. Please try again.', 'error');
-
-            this.elements.storiesGrid.innerHTML = `
-                <div class="error-state">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <h4>Something went wrong</h4>
-                    <p>Unable to load stories at the moment.</p>
-                    <button onclick="location.reload()" class="retry-btn">
-                        <i class="fas fa-redo"></i> Try Again
+                    <button class="bookmark-btn" data-story="${story.id}" style="
+                        position: absolute;
+                        top: 15px;
+                        right: 15px;
+                        background: none;
+                        border: none;
+                        font-size: 1.5rem;
+                        cursor: pointer;
+                        color: ${isBookmarked ? 'var(--gold)' : 'var(--stone)'};
+                    ">
+                        ${isBookmarked ? '🔖' : '📑'}
                     </button>
                 </div>
             `;
+        });
+
+        storiesContainer.innerHTML = html;
+
+        // Add event listeners to story buttons
+        document.querySelectorAll('.read-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const storyId = this.getAttribute('data-story');
+                startReading(storyId);
+            });
+        });
+
+        document.querySelectorAll('.bookmark-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const storyId = this.getAttribute('data-story');
+                toggleBookmark(storyId, this);
+            });
+        });
+    }
+
+    function startReading(storyId) {
+        const story = gameState.stories.find(s => s.id === storyId);
+        if (story) {
+            // Track reading start
+            if (!gameState.readingProgress[storyId]) {
+                gameState.readingProgress[storyId] = 0;
+            }
+
+            // Update current reading in localStorage
+            localStorage.setItem('opentaleshub_current', storyId);
+            localStorage.setItem('opentaleshub_progress', JSON.stringify(gameState.readingProgress));
+
+            // Navigate to story page
+            window.location.href = `stories/${story.filename}`;
         }
     }
 
-    displayStories(stories) {
-        if (stories.length === 0) {
-            this.elements.storiesGrid.innerHTML = `
-                <div class="no-stories">
-                    <i class="fas fa-book"></i>
-                    <h4>No stories yet</h4>
-                    <p>Check back soon for new stories!</p>
-                </div>
-            `;
+    function toggleBookmark(storyId, button) {
+        const index = gameState.bookmarks.indexOf(storyId);
+
+        if (index === -1) {
+            // Add bookmark
+            gameState.bookmarks.push(storyId);
+            button.innerHTML = '🔖';
+            button.style.color = 'var(--gold)';
+
+            // Show notification
+            showNotification('Story added to bookmarks!', 'success');
+        } else {
+            // Remove bookmark
+            gameState.bookmarks.splice(index, 1);
+            button.innerHTML = '📑';
+            button.style.color = 'var(--stone)';
+
+            // Show notification
+            showNotification('Story removed from bookmarks', 'info');
+        }
+
+        // Save to localStorage
+        localStorage.setItem('opentaleshub_bookmarks', JSON.stringify(gameState.bookmarks));
+
+        // Update bookmark count
+        bookmarkCountEl.textContent = gameState.bookmarks.length;
+    }
+
+    function updateStats() {
+        // Update story count
+        storyCountEl.textContent = gameState.stories.length;
+        if (totalStoriesEl) totalStoriesEl.textContent = gameState.stories.length;
+
+        // Update bookmark count
+        bookmarkCountEl.textContent = gameState.bookmarks.length;
+
+        // Calculate total reading time
+        const totalReadingTime = Object.keys(gameState.readingProgress).reduce((total, storyId) => {
+            const story = gameState.stories.find(s => s.id === storyId);
+            if (story) {
+                const progress = gameState.readingProgress[storyId] || 0;
+                return total + Math.round((story.readTime * progress) / 100);
+            }
+            return total;
+        }, 0);
+
+        readingTimeEl.textContent = `${totalReadingTime}m`;
+
+        // Calculate adventure level based on reading progress
+        const totalProgress = Object.values(gameState.readingProgress).reduce((a, b) => a + b, 0);
+        const averageProgress = gameState.stories.length > 0 ? totalProgress / gameState.stories.length : 0;
+        const level = Math.floor(averageProgress / 20) + 1;
+        adventureLevelEl.textContent = level;
+
+        // Update achievements
+        updateAchievements();
+    }
+
+    function updateAchievements() {
+        const achievements = document.querySelectorAll('.achievement');
+
+        // First Page achievement
+        if (Object.keys(gameState.readingProgress).length > 0) {
+            achievements[0].classList.remove('locked');
+            achievements[0].classList.add('unlocked');
+        }
+
+        // Keep Explorer achievement (visits to different sections)
+        const visitedSections = JSON.parse(localStorage.getItem('opentaleshub_visited_sections')) || [];
+        if (visitedSections.length >= 4) {
+            achievements[1].classList.remove('locked');
+            achievements[1].classList.add('unlocked');
+        }
+
+        // Night Reader achievement (read 5 stories with at least 50% progress)
+        const completedStories = Object.entries(gameState.readingProgress)
+            .filter(([_, progress]) => progress >= 50).length;
+
+        if (completedStories >= 5) {
+            achievements[2].classList.remove('locked');
+            achievements[2].classList.add('unlocked');
+        }
+
+        // Update weekly quest progress
+        const questProgress = Math.min(completedStories, 3);
+        const progressFill = document.querySelector('.progress-fill');
+        const progressText = document.querySelector('.progress-text');
+
+        if (progressFill && progressText) {
+            const percent = (questProgress / 3) * 100;
+            progressFill.style.width = `${percent}%`;
+            progressText.textContent = `${questProgress}/3`;
+        }
+    }
+
+    function updateCategoryCounts() {
+        // Count stories per category
+        const categoryCounts = {};
+
+        gameState.stories.forEach(story => {
+            if (categoryCounts[story.category]) {
+                categoryCounts[story.category]++;
+            } else {
+                categoryCounts[story.category] = 1;
+            }
+        });
+
+        // Update category cards
+        document.querySelectorAll('.category-card').forEach(card => {
+            const category = card.getAttribute('data-category');
+            const count = categoryCounts[category] || 0;
+            const countElement = card.querySelector('.story-count');
+
+            if (countElement) {
+                countElement.textContent = `${count} ${count === 1 ? 'story' : 'stories'}`;
+            }
+        });
+    }
+
+    function updateStoryCount() {
+        const count = gameState.stories.length;
+        storyCountEl.textContent = count;
+
+        // Update adventure level based on number of stories
+        if (count >= 10) {
+            adventureLevelEl.textContent = '3';
+        } else if (count >= 5) {
+            adventureLevelEl.textContent = '2';
+        } else {
+            adventureLevelEl.textContent = '1';
+        }
+    }
+
+    function setupEventListeners() {
+        // Dark mode toggle
+        darkModeBtn.addEventListener('click', function() {
+            gameState.darkMode = !gameState.darkMode;
+            document.body.classList.toggle('dark-mode', gameState.darkMode);
+
+            if (gameState.darkMode) {
+                this.innerHTML = '<i class="fas fa-sun"></i> Daylight Mode';
+                showNotification('Torch lit! Reading in dark mode', 'info');
+            } else {
+                this.innerHTML = '<i class="fas fa-moon"></i> Torch Mode';
+                showNotification('Torch extinguished', 'info');
+            }
+
+            // Save preference
+            localStorage.setItem('opentaleshub_darkmode', gameState.darkMode);
+        });
+
+        // Random story button
+        randomStoryBtn.addEventListener('click', function() {
+            if (gameState.stories.length > 0) {
+                const randomIndex = Math.floor(Math.random() * gameState.stories.length);
+                const randomStory = gameState.stories[randomIndex];
+
+                showNotification(`Your random quest: "${randomStory.title}"`, 'info');
+
+                // Navigate to story after a short delay
+                setTimeout(() => {
+                    startReading(randomStory.id);
+                }, 1500);
+            } else {
+                showNotification('No stories available for a random quest', 'error');
+            }
+        });
+
+        // Navigation links
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                // Remove active class from all links
+                navLinks.forEach(l => l.classList.remove('active'));
+
+                // Add active class to clicked link
+                this.classList.add('active');
+
+                // Get target section
+                const targetSection = this.getAttribute('data-section');
+
+                // Hide all sections
+                contentSections.forEach(section => {
+                    section.classList.remove('active');
+                });
+
+                // Show target section
+                document.getElementById(targetSection).classList.add('active');
+
+                // Track section visit
+                const visitedSections = JSON.parse(localStorage.getItem('opentaleshub_visited_sections')) || [];
+                if (!visitedSections.includes(targetSection)) {
+                    visitedSections.push(targetSection);
+                    localStorage.setItem('opentaleshub_visited_sections', JSON.stringify(visitedSections));
+                    updateAchievements();
+                }
+            });
+        });
+
+        // Filter buttons
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all filter buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+
+                // Add active class to clicked button
+                this.classList.add('active');
+
+                // Get filter value
+                const filter = this.getAttribute('data-filter');
+
+                // Filter stories
+                let filteredStories = [...gameState.stories];
+
+                if (filter === 'short') {
+                    filteredStories = gameState.stories.filter(story => story.readTime <= 15);
+                } else if (filter === 'medium') {
+                    filteredStories = gameState.stories.filter(story => story.readTime > 15 && story.readTime <= 30);
+                } else if (filter === 'long') {
+                    filteredStories = gameState.stories.filter(story => story.readTime > 30);
+                }
+
+                // Display filtered stories
+                displayStories(filteredStories);
+
+                // Show notification
+                if (filter !== 'all') {
+                    showNotification(`Showing ${filteredStories.length} ${filter} stories`, 'info');
+                }
+            });
+        });
+
+        // Search functionality
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+
+            if (searchTerm.length === 0) {
+                displayStories(gameState.stories);
+                return;
+            }
+
+            const filteredStories = gameState.stories.filter(story =>
+                story.title.toLowerCase().includes(searchTerm) ||
+                story.author.toLowerCase().includes(searchTerm) ||
+                story.description.toLowerCase().includes(searchTerm)
+            );
+
+            displayStories(filteredStories);
+        });
+
+        // Resume reading button
+        if (resumeReadingBtn) {
+            resumeReadingBtn.addEventListener('click', function() {
+                const currentStoryId = localStorage.getItem('opentaleshub_current');
+
+                if (currentStoryId) {
+                    const story = gameState.stories.find(s => s.id === currentStoryId);
+                    if (story) {
+                        startReading(currentStoryId);
+                    } else {
+                        showNotification('Could not find your last story', 'error');
+                    }
+                } else {
+                    showNotification('No story in progress', 'info');
+                }
+            });
+        }
+
+        // Contribute button
+        if (contributeBtn) {
+            contributeBtn.addEventListener('click', function() {
+                showNotification('Manuscript submissions open on the next full moon. Check back soon!', 'info');
+            });
+        }
+
+        // Category cards
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
+                const categoryStories = gameState.stories.filter(story => story.category === category);
+
+                // Switch to stories section
+                navLinks.forEach(l => l.classList.remove('active'));
+                document.querySelector('[data-section="stories"]').classList.add('active');
+
+                contentSections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById('stories').classList.add('active');
+
+                // Filter to this category
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                document.querySelector('[data-filter="all"]').classList.add('active');
+
+                // Display filtered stories
+                displayStories(categoryStories);
+
+                showNotification(`Showing ${categoryStories.length} ${category} stories`, 'info');
+            });
+        });
+
+        // Load dark mode preference
+        const savedDarkMode = localStorage.getItem('opentaleshub_darkmode');
+        if (savedDarkMode === 'true') {
+            gameState.darkMode = true;
+            document.body.classList.add('dark-mode');
+            darkModeBtn.innerHTML = '<i class="fas fa-sun"></i> Daylight Mode';
+        }
+    }
+
+    function simulateLoading() {
+        // Fake loading delay for effect
+        setTimeout(() => {
+            document.querySelector('.loading-spinner')?.remove();
+        }, 1500);
+    }
+
+    function updateNextUpdateTimer() {
+        // Calculate days until next update (every 7 days)
+        const lastUpdate = localStorage.getItem('opentaleshub_last_update');
+        const now = new Date();
+        const nextUpdateEl = document.getElementById('next-update');
+
+        if (!nextUpdateEl) return;
+
+        if (!lastUpdate) {
+            localStorage.setItem('opentaleshub_last_update', now.toISOString());
+            nextUpdateEl.textContent = '7 days';
             return;
         }
 
-        const storiesHTML = stories.map((story, index) => this.createStoryCard(story, index)).join('');
-        this.elements.storiesGrid.innerHTML = storiesHTML;
+        const lastUpdateDate = new Date(lastUpdate);
+        const daysSinceUpdate = Math.floor((now - lastUpdateDate) / (1000 * 60 * 60 * 24));
+        const daysUntilUpdate = 7 - (daysSinceUpdate % 7);
 
-        // Initialize story card interactions
-        this.initStoryCardInteractions();
+        nextUpdateEl.textContent = `${daysUntilUpdate} ${daysUntilUpdate === 1 ? 'day' : 'days'}`;
+
+        // If it's update day, show special message
+        if (daysUntilUpdate === 0 || daysUntilUpdate === 7) {
+            nextUpdateEl.textContent = 'Tomorrow!';
+            showNotification('New stories arriving tomorrow!', 'success');
+        }
     }
 
-    createStoryCard(story, index) {
-        const isFavorite = this.favorites.includes(story.id);
-        const readProgress = this.readingProgress[story.id] || 0;
-        const isRead = this.storiesRead.includes(story.id);
+    function showNotification(message, type = 'info') {
+        // Remove existing notification
+        const existingNotification = document.querySelector('.rpg-notification');
+        if (existingNotification) {
+            existingNotification.remove();
+        }
 
-        // Calculate reading time (approx 200 words per minute)
-        const wordCount = story.description.split(' ').length + (story.title.split(' ').length * 2);
-        const readingTime = Math.max(5, Math.ceil(wordCount / 200));
-
-        // Add delay for staggered animation
-        const animationDelay = `${index * 0.1}s`;
-
-        return `
-            <div class="story-card" style="animation-delay: ${animationDelay};" data-id="${story.id}">
-                <div class="story-card-header">
-                    <span class="story-card-genre">${story.genre}</span>
-                    <h3 class="story-card-title">${story.title}</h3>
-                    <p class="story-card-author">
-                        <i class="fas fa-user-pen"></i>
-                        ${story.author}
-                    </p>
-                </div>
-                <div class="story-card-body">
-                    <p class="story-card-description">${story.description}</p>
-                    <div class="story-card-meta">
-                        <div class="story-card-time">
-                            <i class="fas fa-clock"></i>
-                            <span>${readingTime} min read</span>
-                        </div>
-                        <div class="story-card-actions">
-                            <button class="story-card-btn favorite ${isFavorite ? 'active' : ''}"
-                                    aria-label="${isFavorite ? 'Remove from favorites' : 'Add to favorites'}">
-                                <i class="fas fa-heart"></i>
-                            </button>
-                            <button class="story-card-btn share" aria-label="Share story">
-                                <i class="fas fa-share-alt"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <a href="${story.file}" class="read-story-btn">
-                    <i class="fas fa-book-open"></i>
-                    Read Story
-                    ${isRead ? '<span class="read-badge"><i class="fas fa-check"></i></span>' : ''}
-                </a>
-                ${readProgress > 0 ? `
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${readProgress}%"></div>
-                    </div>
-                ` : ''}
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `rpg-notification ${type}`;
+        notification.innerHTML = `
+            <div class="notification-content">
+                <span class="notification-icon">${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span>
+                <span>${message}</span>
             </div>
         `;
-    }
 
-    addStoryCardAnimations() {
-        const style = document.createElement('style');
-        style.textContent = `
-            .story-card {
-                animation: fadeInUp 0.6s ease-out;
-                animation-fill-mode: both;
-                opacity: 0;
-            }
-
-            @keyframes fadeInUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(20px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-
-            .progress-bar {
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                height: 3px;
-                background: rgba(139, 92, 246, 0.1);
-                overflow: hidden;
-            }
-
-            .progress-fill {
-                height: 100%;
-                background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%);
-                transition: width 0.3s ease;
-            }
-
-            .read-badge {
-                margin-left: 8px;
-                background: var(--success);
-                color: white;
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 0.7rem;
-            }
-        `;
-        document.head.appendChild(style);
-    }
-
-    initStoryCardInteractions() {
-        // Favorite buttons
-        document.querySelectorAll('.story-card-btn.favorite').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const card = btn.closest('.story-card');
-                const storyId = card.dataset.id;
-                this.toggleFavorite(storyId, btn);
-            });
-        });
-
-        // Share buttons
-        document.querySelectorAll('.story-card-btn.share').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const card = btn.closest('.story-card');
-                const storyId = card.dataset.id;
-                const story = this.stories.find(s => s.id === storyId);
-                if (story) {
-                    this.shareStory(story);
-                }
-            });
-        });
-
-        // Card click for quick read
-        document.querySelectorAll('.story-card').forEach(card => {
-            card.addEventListener('click', (e) => {
-                // Don't trigger if clicking on buttons or links
-                if (!e.target.closest('.story-card-btn') && !e.target.closest('a')) {
-                    const link = card.querySelector('.read-story-btn');
-                    if (link) {
-                        // Mark as started reading
-                        const storyId = card.dataset.id;
-                        if (!this.storiesRead.includes(storyId)) {
-                            this.storiesRead.push(storyId);
-                            localStorage.setItem('storiesRead', JSON.stringify(this.storiesRead));
-                            this.updateStats();
-                        }
-
-                        // Navigate to story
-                        window.location.href = link.href;
-                    }
-                }
-            });
-        });
-    }
-
-    toggleFavorite(storyId, button) {
-        const index = this.favorites.indexOf(storyId);
-        const isFavorite = index > -1;
-
-        if (isFavorite) {
-            this.favorites.splice(index, 1);
-            button.classList.remove('active');
-            this.showToast('Removed from favorites', 'info');
-        } else {
-            this.favorites.push(storyId);
-            button.classList.add('active');
-            this.showToast('Added to favorites', 'success');
-
-            // Add favorite animation
-            button.style.animation = 'none';
-            setTimeout(() => {
-                button.style.animation = 'heartBeat 0.5s ease';
-            }, 10);
-        }
-
-        localStorage.setItem('favorites', JSON.stringify(this.favorites));
-        this.updateStats();
-
-        // Add heartBeat animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes heartBeat {
-                0% { transform: scale(1); }
-                14% { transform: scale(1.3); }
-                28% { transform: scale(1); }
-                42% { transform: scale(1.3); }
-                70% { transform: scale(1); }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-
-    shareStory(story) {
-        if (navigator.share) {
-            navigator.share({
-                title: story.title,
-                text: `Check out "${story.title}" by ${story.author} on Open Tales Hub`,
-                url: window.location.origin + '/' + story.file
-            })
-            .then(() => this.showToast('Story shared successfully!', 'success'))
-            .catch(() => this.showToast('Sharing cancelled', 'info'));
-        } else {
-            // Fallback: Copy to clipboard
-            const url = window.location.origin + '/' + story.file;
-            navigator.clipboard.writeText(`${story.title} - ${url}`)
-                .then(() => this.showToast('Link copied to clipboard!', 'success'))
-                .catch(() => this.showToast('Failed to copy link', 'error'));
-        }
-    }
-
-    sortStories(method) {
-        let sortedStories = [...this.stories];
-
-        switch (method) {
-            case 'title':
-                sortedStories.sort((a, b) => a.title.localeCompare(b.title));
-                break;
-            case 'author':
-                sortedStories.sort((a, b) => a.author.localeCompare(b.author));
-                break;
-            case 'newest':
-                // Assuming newer stories are at the end of the array
-                sortedStories.reverse();
-                break;
-            default:
-                // Default order (as in JSON)
-                break;
-        }
-
-        this.displayStories(sortedStories);
-        this.showToast(`Sorted by: ${method === 'default' ? 'featured' : method}`, 'info');
-    }
-
-    async loadDailyQuote() {
-        try {
-            const btn = this.elements.refreshQuote;
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
-
-            const response = await fetch(this.quoteApi);
-            const data = await response.json();
-
-            this.elements.dailyQuote.querySelector('.quote-text').textContent = `"${data.content}"`;
-            this.elements.dailyQuote.querySelector('.quote-author').textContent = `— ${data.author}`;
-
-            // Save quote for today
-            localStorage.setItem('dailyQuote', JSON.stringify({
-                quote: data.content,
-                author: data.author,
-                date: new Date().toDateString()
-            }));
-
-            // Add subtle animation
-            this.elements.dailyQuote.style.animation = 'none';
-            setTimeout(() => {
-                this.elements.dailyQuote.style.animation = 'fadeIn 0.8s ease-out';
-            }, 10);
-
-            this.showToast('New quote loaded!', 'success');
-
-        } catch (error) {
-            console.error('Error loading quote:', error);
-            this.showToast('Failed to load quote. Using saved one.', 'error');
-
-            // Try to load saved quote
-            const savedQuote = localStorage.getItem('dailyQuote');
-            if (savedQuote) {
-                const { quote, author } = JSON.parse(savedQuote);
-                this.elements.dailyQuote.querySelector('.quote-text').textContent = `"${quote}"`;
-                this.elements.dailyQuote.querySelector('.quote-author').textContent = `— ${author}`;
-            }
-        } finally {
-            const btn = this.elements.refreshQuote;
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-sync-alt"></i> New Quote';
-        }
-    }
-
-    setupSpotlight() {
-        // Pick a random story for spotlight
-        if (this.stories.length > 0) {
-            const randomIndex = Math.floor(Math.random() * this.stories.length);
-            const spotlightStory = this.stories[randomIndex];
-
-            this.elements.spotlightTitle.textContent = spotlightStory.title;
-            this.elements.spotlightAuthor.textContent = `by ${spotlightStory.author}`;
-            this.elements.spotlightDesc.textContent = spotlightStory.description;
-            this.elements.spotlightLink.href = spotlightStory.file;
-
-            // Update daily if needed
-            const lastSpotlight = localStorage.getItem('lastSpotlight');
-            const today = new Date().toDateString();
-
-            if (lastSpotlight !== today) {
-                localStorage.setItem('lastSpotlight', today);
-            }
-        }
-    }
-
-    updateStats() {
-        // Update stories read count
-        const readCount = this.storiesRead.length;
-        this.elements.storiesRead.textContent = readCount;
-
-        // Update favorites count
-        this.elements.favoritesCount.textContent = this.favorites.length;
-
-        // Calculate total reading time (assuming 5-15 min per story)
-        const totalReadingTime = this.stories.reduce((total, story) => {
-            const wordCount = story.description.split(' ').length + (story.title.split(' ').length * 2);
-            return total + Math.max(5, Math.ceil(wordCount / 200));
-        }, 0);
-
-        this.elements.totalReadingTime.textContent = `${totalReadingTime} min`;
-    }
-
-    updateCurrentYear() {
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
-    }
-
-    openRandomStory() {
-        if (this.stories.length > 0) {
-            const randomIndex = Math.floor(Math.random() * this.stories.length);
-            const randomStory = this.stories[randomIndex];
-
-            this.showToast(`Taking you to: ${randomStory.title}`, 'info');
-
-            // Small delay for toast
-            setTimeout(() => {
-                window.location.href = randomStory.file;
-            }, 1000);
-        }
-    }
-
-    openModal() {
-        this.elements.aboutModalOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    closeModal() {
-        this.elements.aboutModalOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    showToast(message, type = 'info') {
-        const toast = document.createElement('div');
-        toast.className = `toast ${type}`;
-        toast.innerHTML = `
-            <i class="fas fa-${this.getToastIcon(type)}"></i>
-            <div class="toast-content">
-                <p>${message}</p>
-            </div>
-            <button class="close-toast">
-                <i class="fas fa-times"></i>
-            </button>
+        // Add styles
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--parchment-dark);
+            border: 3px solid ${type === 'success' ? 'var(--forest)' : type === 'error' ? 'var(--ruby)' : 'var(--stone)'};
+            border-radius: 8px;
+            padding: 15px 20px;
+            z-index: 1000;
+            font-family: var(--font-heading);
+            color: var(--ink);
+            box-shadow: 0 5px 15px var(--shadow);
+            animation: slideIn 0.3s ease;
+            max-width: 300px;
         `;
 
-        this.elements.toastContainer.appendChild(toast);
+        document.body.appendChild(notification);
 
-        // Trigger animation
-        setTimeout(() => toast.classList.add('show'), 10);
+        // Remove after 3 seconds
+        setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }, 3000);
 
-        // Auto remove after 5 seconds
-        const autoRemove = setTimeout(() => {
-            this.removeToast(toast);
-        }, 5000);
-
-        // Close button
-        toast.querySelector('.close-toast').addEventListener('click', () => {
-            clearTimeout(autoRemove);
-            this.removeToast(toast);
-        });
-
-        // Add styles for toast
-        if (!document.querySelector('#toast-styles')) {
+        // Add keyframe animations
+        if (!document.querySelector('#notification-styles')) {
             const style = document.createElement('style');
-            style.id = 'toast-styles';
+            style.id = 'notification-styles';
             style.textContent = `
-                .toast {
-                    animation: slideInUp 0.3s ease-out;
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
                 }
-
-                @keyframes slideInUp {
-                    from {
-                        transform: translateY(20px);
-                        opacity: 0;
-                    }
-                    to {
-                        transform: translateY(0);
-                        opacity: 1;
-                    }
-                }
-
-                .toast.show {
-                    transform: translateY(0);
-                    opacity: 1;
+                @keyframes slideOut {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
                 }
             `;
             document.head.appendChild(style);
         }
     }
 
-    removeToast(toast) {
-        toast.classList.remove('show');
-        setTimeout(() => {
-            if (toast.parentNode) {
-                toast.parentNode.removeChild(toast);
-            }
-        }, 300);
+    // Add some interactive sounds (placeholder - would need actual sound files)
+    function playSound(type) {
+        // This is a placeholder - you would need actual sound files
+        console.log(`Playing ${type} sound`);
     }
 
-    getToastIcon(type) {
-        const icons = {
-            success: 'check-circle',
-            error: 'exclamation-circle',
-            warning: 'exclamation-triangle',
-            info: 'info-circle'
-        };
-        return icons[type] || 'info-circle';
-    }
-
-    checkForNewFeatures() {
-        // Check if user has visited before
-        const lastVisit = localStorage.getItem('lastVisit');
-        const now = new Date();
-
-        if (!lastVisit) {
-            // First visit
-            setTimeout(() => {
-                this.showToast('Welcome to Open Tales Hub! Explore our collection of stories.', 'info');
-            }, 2000);
-        } else {
-            const daysSinceLastVisit = Math.floor((now - new Date(lastVisit)) / (1000 * 60 * 60 * 24));
-
-            if (daysSinceLastVisit > 7) {
-                this.showToast('Welcome back! We have new stories for you.', 'success');
-            }
+    // Initialize on load
+    window.addEventListener('load', function() {
+        // Check for service worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(registration => {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                })
+                .catch(error => {
+                    console.log('Service Worker registration failed:', error);
+                });
         }
-
-        localStorage.setItem('lastVisit', now.toISOString());
-    }
-}
-
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    const app = new OpenTalesHub();
-
-    // Make app available globally for debugging
-    window.OpenTalesHub = app;
-
-    // Add service worker for PWA
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/sw.js').catch(error => {
-                console.log('Service Worker registration failed:', error);
-            });
-        });
-    }
+    });
 });

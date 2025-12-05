@@ -1,16 +1,27 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Gift of the Magi · O. Henry | Open Tales</title>
+    <title>The Gift of the Magi · O. Henry | PixelTales Hub</title>
     
+    <!-- New Pixel Art Styles -->
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../story.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎁</text></svg>">
+    
     <style>
-        .gift-container {
+        /* Christmas Theme */
+        .story-header {
+            border-bottom: 3px solid #2196f3;
+            padding-bottom: 2rem;
+            margin-bottom: 2rem;
             position: relative;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+        }
+        
+        .night-theme .story-header {
+            background: linear-gradient(135deg, rgba(26, 54, 93, 0.2), rgba(10, 25, 41, 0.1));
         }
         
         .christmas-lights {
@@ -19,343 +30,491 @@
             left: 0;
             width: 100%;
             height: 4px;
-            background: linear-gradient(90deg, 
-                #ff0000 0%, #ff0000 10%,
-                #00ff00 20%, #00ff00 30%,
-                #0000ff 40%, #0000ff 50%,
-                #ffff00 60%, #ffff00 70%,
-                #ff00ff 80%, #ff00ff 90%,
-                #ff0000 100%);
-            opacity: 0.1;
-            z-index: 1;
+            background: repeating-linear-gradient(
+                90deg,
+                #ff0000 0px, #ff0000 10px,
+                #00ff00 10px, #00ff00 20px,
+                #0000ff 20px, #0000ff 30px,
+                #ffff00 30px, #ffff00 40px,
+                #ff00ff 40px, #ff00ff 50px
+            );
+            background-size: 50px 100%;
             animation: lights 3s linear infinite;
+            opacity: 0.3;
+            border-radius: 2px;
         }
         
         @keyframes lights {
             0% { background-position: 0 0; }
-            100% { background-position: 100px 0; }
+            100% { background-position: 50px 0; }
         }
         
-        .theme-tag {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: rgba(255, 215, 0, 0.1);
-            color: gold;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            margin: 0.5rem 0.5rem 0.5rem 0;
-            border: 1px solid rgba(255, 215, 0, 0.3);
+        .chapter {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            border: 2px solid var(--day-border);
+            background: rgba(255, 255, 255, 0.03);
+            box-shadow: 4px 4px 0 var(--day-shadow);
+            position: relative;
+            overflow: hidden;
         }
         
-        .ironic-quote {
-            background: rgba(255, 215, 0, 0.05);
-            border: 1px solid rgba(255, 215, 0, 0.2);
+        .night-theme .chapter {
+            border-color: var(--night-border);
+            background: rgba(0, 0, 0, 0.1);
+            box-shadow: 4px 4px 0 var(--night-shadow);
+        }
+        
+        .chapter:before {
+            content: '🎄';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            opacity: 0.1;
+            transform: rotate(15deg);
+        }
+        
+        .chapter-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--day-text);
+            text-shadow: 2px 2px 0 var(--day-shadow);
+            position: relative;
+            padding-left: 1rem;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .night-theme .chapter-title {
+            color: var(--night-text);
+            text-shadow: 2px 2px 0 var(--night-shadow);
+            border-left-color: #90cdf4;
+        }
+        
+        .quote {
+            background: rgba(33, 150, 243, 0.1);
+            border-left: 4px solid #2196f3;
             padding: 1.5rem;
             margin: 2rem 0;
-            border-radius: 8px;
             font-style: italic;
+            border-radius: 0 8px 8px 0;
             position: relative;
         }
         
-        .ironic-quote:before {
+        .quote:before {
             content: '"';
             position: absolute;
             top: -10px;
             left: 10px;
             font-size: 3rem;
-            color: gold;
-            opacity: 0.2;
+            color: #2196f3;
+            opacity: 0.3;
             font-family: Georgia, serif;
         }
         
+        .night-theme .quote {
+            background: rgba(144, 205, 244, 0.15);
+            border-left-color: #90cdf4;
+        }
+        
         .gift-reveal {
-            background: rgba(30, 30, 40, 0.3);
-            border-radius: 8px;
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px dashed rgba(255, 215, 0, 0.5);
             padding: 2rem;
             margin: 2rem 0;
             text-align: center;
-            border: 2px dashed rgba(255, 215, 0, 0.3);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .gift-reveal:before {
+            content: '✨';
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            font-size: 1.5rem;
+            animation: sparkle 2s infinite;
+        }
+        
+        .gift-reveal:after {
+            content: '✨';
+            position: absolute;
+            bottom: -10px;
+            right: 10px;
+            font-size: 1.5rem;
+            animation: sparkle 2s infinite reverse;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
         }
         
         .gift-icon {
             font-size: 3rem;
-            color: gold;
             margin-bottom: 1rem;
-            opacity: 0.7;
+            display: block;
         }
         
         .wisdom-box {
-            background: linear-gradient(135deg, rgba(30, 30, 40, 0.8), rgba(40, 40, 60, 0.8));
-            border-left: 4px solid gold;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border-radius: 0 8px 8px 0;
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.1), rgba(255, 215, 0, 0.1));
+            border: 2px solid rgba(33, 150, 243, 0.3);
+            padding: 2rem;
+            margin: 3rem 0;
+            border-radius: 8px;
+            position: relative;
+        }
+        
+        .wisdom-box:before {
+            content: '💡';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            font-size: 2rem;
+            background: var(--day-card);
+            padding: 5px;
+            border-radius: 50%;
+            border: 2px solid rgba(33, 150, 243, 0.3);
+        }
+        
+        .night-theme .wisdom-box:before {
+            background: var(--night-card);
+        }
+        
+        .theme-tag {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            background: rgba(33, 150, 243, 0.2);
+            color: #2196f3;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin: 0.25rem;
+            border: 1px solid rgba(33, 150, 243, 0.3);
+        }
+        
+        .night-theme .theme-tag {
+            background: rgba(144, 205, 244, 0.2);
+            color: #90cdf4;
+            border-color: rgba(144, 205, 244, 0.4);
         }
     </style>
 </head>
 <body>
-    <div class="progress-bar" id="progressBar"></div>
+    <!-- Christmas Lights -->
+    <div class="christmas-lights"></div>
     
-    <div class="container">
-        <header style="margin-bottom: 2rem; padding-top: 2rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <a href="../index.html" style="text-decoration: none; color: var(--text); display: flex; align-items: center; gap: 0.5rem;">
-                    <span>←</span>
-                    <span style="font-weight: 500;">Open Tales</span>
-                </a>
-                <button id="themeToggle" class="control-btn" style="position: static;">
-                    <i class="fas fa-moon"></i>
-                </button>
+    <!-- Reading Progress -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+    <!-- Theme Toggle -->
+    <div class="story-theme-toggle">
+        <button id="storyThemeBtn" class="story-theme-btn">
+            <span class="sun">☀️</span>
+            <span class="moon">🌙</span>
+            <span class="story-slider"></span>
+        </button>
+    </div>
+    
+    <!-- Back Button -->
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 100;">
+        <a href="../index.html" class="back-btn">← Back</a>
+    </div>
+    
+    <!-- Story Container -->
+    <div class="story-container">
+        <header class="story-header">
+            <h1 class="story-title">The Gift of the Magi</h1>
+            <div class="story-meta">
+                <span class="story-author">by O. Henry</span>
+                <span class="story-genre" style="background: #2196f3; color: white;">Short Story</span>
+            </div>
+            <p class="story-description">A timeless Christmas tale of love, sacrifice, and the true meaning of giving</p>
+            
+            <div style="margin-top: 1rem;">
+                <span class="theme-tag">Sacrifice</span>
+                <span class="theme-tag">Love</span>
+                <span class="theme-tag">Irony</span>
+                <span class="theme-tag">Christmas</span>
             </div>
         </header>
         
-        <article class="story-container gift-container">
-            <div class="christmas-lights"></div>
+        <div class="story-content">
+            <!-- Chapter 1 -->
+            <div class="chapter">
+                <h2 class="chapter-title">One Dollar and Eighty-Seven Cents</h2>
+                
+                <p>One dollar and eighty-seven cents. That was all. And sixty cents of it was in pennies. Pennies saved one and two at a time by bulldozing the grocer and the vegetable man and the butcher until one's cheeks burned with the silent imputation of parsimony that such close dealing implied. Three times Della counted it. One dollar and eighty-seven cents. And the next day would be Christmas.</p>
+                
+                <p>There was clearly nothing to do but flop down on the shabby little couch and howl. So Della did it. Which instigates the moral reflection that life is made up of sobs, sniffles, and smiles, with sniffles predominating.</p>
+                
+                <p>While the mistress of the home is gradually subsiding from the first stage to the second, take a look at the home. A furnished flat at $8 per week. It did not exactly beggar description, but it certainly had that word on the lookout for the mendicancy squad.</p>
+                
+                <p>In the vestibule below was a letter-box into which no letter would go, and an electric button from which no mortal finger could coax a ring. Also appertaining thereunto was a card bearing the name "Mr. James Dillingham Young."</p>
+                
+                <div class="quote">
+                    One dollar and eighty-seven cents. That was all. And sixty cents of it was in pennies. Pennies saved one and two at a time... And the next day would be Christmas.
+                </div>
+                
+                <p>The "Dillingham" had been flung to the breeze during a former period of prosperity when its possessor was being paid $30 per week. Now, when the income was shrunk to $20, the letters of "Dillingham" looked blurred, as though they were thinking seriously of contracting to a modest and unassuming D. But whenever Mr. James Dillingham Young came home and reached his flat above he was called "Jim" and greatly hugged by Mrs. James Dillingham Young, already introduced to you as Della. Which is all very good.</p>
+                
+                <p>Della finished her cry and attended to her cheeks with the powder rag. She stood by the window and looked out dully at a gray cat walking a gray fence in a gray backyard. Tomorrow would be Christmas Day, and she had only $1.87 with which to buy Jim a present. She had been saving every penny she could for months, with this result. Twenty dollars a week doesn't go far. Expenses had been greater than she had calculated. They always are. Only $1.87 to buy a present for Jim. Her Jim. Many a happy hour she had spent planning for something nice for him. Something fine and rare and sterling—something just a little bit near to being worthy of the honor of being owned by Jim.</p>
+            </div>
             
-            <header class="story-header">
-                <h1>The Gift of the Magi</h1>
-                <p class="story-subtitle">A timeless Christmas tale of love, sacrifice, and the true meaning of giving</p>
-                <div class="story-meta">
-                    <span><i class="fas fa-user"></i> O. Henry</span>
-                    <span><i class="fas fa-book"></i> Short Story</span>
-                    <span><i class="fas fa-clock"></i> 10 minute read</span>
-                    <span><i class="fas fa-calendar"></i> 1905</span>
+            <!-- Chapter 2 -->
+            <div class="chapter">
+                <h2 class="chapter-title">Della's Hair</h2>
+                
+                <p>There was a pier-glass between the windows of the room. Perhaps you have seen a pier-glass in an $8 flat. A very thin and very agile person may, by observing his reflection in a rapid sequence of longitudinal strips, obtain a fairly accurate conception of his looks. Della, being slender, had mastered the art.</p>
+                
+                <p>Suddenly she whirled from the window and stood before the glass. Her eyes were shining brilliantly, but her face had lost its color within twenty seconds. Rapidly she pulled down her hair and let it fall to its full length.</p>
+                
+                <p>Now, there were two possessions of the James Dillingham Youngs in which they both took a mighty pride. One was Jim's gold watch that had been his father's and his grandfather's. The other was Della's hair. Had the Queen of Sheba lived in the flat across the airshaft, Della would have let her hair hang out the window some day to dry just to depreciate Her Majesty's jewels and gifts. Had King Solomon been the janitor, with all his treasures piled up in the basement, Jim would have pulled out his watch every time he passed, just to see him pluck at his beard from envy.</p>
+                
+                <div class="quote">
+                    Had the Queen of Sheba lived in the flat across the airshaft, Della would have let her hair hang out the window some day to dry just to depreciate Her Majesty's jewels and gifts.
                 </div>
                 
-                <div style="margin-top: 1rem;">
-                    <span class="theme-tag">Sacrifice</span>
-                    <span class="theme-tag">Love</span>
-                    <span class="theme-tag">Irony</span>
-                    <span class="theme-tag">Christmas</span>
-                </div>
-            </header>
+                <p>So now Della's beautiful hair fell about her rippling and shining like a cascade of brown waters. It reached below her knee and made itself almost a garment for her. And then she did it up again nervously and quickly. Once she faltered for a minute and stood still while a tear or two splashed on the worn red carpet.</p>
+                
+                <p>On went her old brown jacket; on went her old brown hat. With a whirl of skirts and with the brilliant sparkle still in her eyes, she fluttered out the door and down the stairs to the street.</p>
+                
+                <p>Where she stopped the sign read: "Mme. Sofronie. Hair Goods of All Kinds." One flight up Della ran, and collected herself, panting. Madame, large, too white, chilly, hardly looked the "Sofronie."</p>
+                
+                <p>"Will you buy my hair?" asked Della.</p>
+                
+                <p>"I buy hair," said Madame. "Take yer hat off and let's have a sight at the looks of it."</p>
+                
+                <p>Down rippled the brown cascade.</p>
+                
+                <p>"Twenty dollars," said Madame, lifting the mass with a practised hand.</p>
+                
+                <p>"Give it to me quick," said Della.</p>
+                
+                <p>Oh, and the next two hours tripped by on rosy wings. Forget the hashed metaphor. She was ransacking the stores for Jim's present.</p>
+            </div>
             
-            <div class="story-content">
-                <div class="chapter-section">
-                    <h2 class="chapter-title">One Dollar and Eighty-Seven Cents</h2>
-                    
-                    <p>One dollar and eighty-seven cents. That was all. And sixty cents of it was in pennies. Pennies saved one and two at a time by bulldozing the grocer and the vegetable man and the butcher until one's cheeks burned with the silent imputation of parsimony that such close dealing implied. Three times Della counted it. One dollar and eighty-seven cents. And the next day would be Christmas.</p>
-                    
-                    <p>There was clearly nothing to do but flop down on the shabby little couch and howl. So Della did it. Which instigates the moral reflection that life is made up of sobs, sniffles, and smiles, with sniffles predominating.</p>
-                    
-                    <p>While the mistress of the home is gradually subsiding from the first stage to the second, take a look at the home. A furnished flat at $8 per week. It did not exactly beggar description, but it certainly had that word on the lookout for the mendicancy squad.</p>
-                    
-                    <p>In the vestibule below was a letter-box into which no letter would go, and an electric button from which no mortal finger could coax a ring. Also appertaining thereunto was a card bearing the name "Mr. James Dillingham Young."</p>
-                    
-                    <div class="quote">
-                        One dollar and eighty-seven cents. That was all. And sixty cents of it was in pennies. Pennies saved one and two at a time... And the next day would be Christmas.
-                    </div>
-                    
-                    <p>The "Dillingham" had been flung to the breeze during a former period of prosperity when its possessor was being paid $30 per week. Now, when the income was shrunk to $20, the letters of "Dillingham" looked blurred, as though they were thinking seriously of contracting to a modest and unassuming D. But whenever Mr. James Dillingham Young came home and reached his flat above he was called "Jim" and greatly hugged by Mrs. James Dillingham Young, already introduced to you as Della. Which is all very good.</p>
-                    
-                    <p>Della finished her cry and attended to her cheeks with the powder rag. She stood by the window and looked out dully at a gray cat walking a gray fence in a gray backyard. Tomorrow would be Christmas Day, and she had only $1.87 with which to buy Jim a present. She had been saving every penny she could for months, with this result. Twenty dollars a week doesn't go far. Expenses had been greater than she had calculated. They always are. Only $1.87 to buy a present for Jim. Her Jim. Many a happy hour she had spent planning for something nice for him. Something fine and rare and sterling—something just a little bit near to being worthy of the honor of being owned by Jim.</p>
-                </div>
+            <!-- Chapter 3 -->
+            <div class="chapter">
+                <h2 class="chapter-title">The Perfect Gift</h2>
                 
-                <div class="chapter-section">
-                    <h2 class="chapter-title">Della's Hair</h2>
-                    
-                    <p>There was a pier-glass between the windows of the room. Perhaps you have seen a pier-glass in an $8 flat. A very thin and very agile person may, by observing his reflection in a rapid sequence of longitudinal strips, obtain a fairly accurate conception of his looks. Della, being slender, had mastered the art.</p>
-                    
-                    <p>Suddenly she whirled from the window and stood before the glass. Her eyes were shining brilliantly, but her face had lost its color within twenty seconds. Rapidly she pulled down her hair and let it fall to its full length.</p>
-                    
-                    <p>Now, there were two possessions of the James Dillingham Youngs in which they both took a mighty pride. One was Jim's gold watch that had been his father's and his grandfather's. The other was Della's hair. Had the Queen of Sheba lived in the flat across the airshaft, Della would have let her hair hang out the window some day to dry just to depreciate Her Majesty's jewels and gifts. Had King Solomon been the janitor, with all his treasures piled up in the basement, Jim would have pulled out his watch every time he passed, just to see him pluck at his beard from envy.</p>
-                    
-                    <div class="ironic-quote">
-                        Had the Queen of Sheba lived in the flat across the airshaft, Della would have let her hair hang out the window some day to dry just to depreciate Her Majesty's jewels and gifts.
-                    </div>
-                    
-                    <p>So now Della's beautiful hair fell about her rippling and shining like a cascade of brown waters. It reached below her knee and made itself almost a garment for her. And then she did it up again nervously and quickly. Once she faltered for a minute and stood still while a tear or two splashed on the worn red carpet.</p>
-                    
-                    <p>On went her old brown jacket; on went her old brown hat. With a whirl of skirts and with the brilliant sparkle still in her eyes, she fluttered out the door and down the stairs to the street.</p>
-                    
-                    <p>Where she stopped the sign read: "Mme. Sofronie. Hair Goods of All Kinds." One flight up Della ran, and collected herself, panting. Madame, large, too white, chilly, hardly looked the "Sofronie."</p>
-                    
-                    <p>"Will you buy my hair?" asked Della.</p>
-                    
-                    <p>"I buy hair," said Madame. "Take yer hat off and let's have a sight at the looks of it."</p>
-                    
-                    <p>Down rippled the brown cascade.</p>
-                    
-                    <p>"Twenty dollars," said Madame, lifting the mass with a practised hand.</p>
-                    
-                    <p>"Give it to me quick," said Della.</p>
-                    
-                    <p>Oh, and the next two hours tripped by on rosy wings. Forget the hashed metaphor. She was ransacking the stores for Jim's present.</p>
-                </div>
+                <p>She found it at last. It surely had been made for Jim and no one else. There was no other like it in any of the stores, and she had turned all of them inside out. It was a platinum fob chain simple and chaste in design, properly proclaiming its value by substance alone and not by meretricious ornamentation—as all good things should do. It was even worthy of The Watch. As soon as she saw it she knew that it must be Jim's. It was like him. Quietness and value—the description applied to both. Twenty-one dollars they took from her for it, and she hurried home with the 87 cents. With that chain on his watch Jim might be properly anxious about the time in any company. Grand as the watch was, he sometimes looked at it on the sly on account of the old leather strap that he used in place of a chain.</p>
                 
-                <div class="chapter-section">
-                    <h2 class="chapter-title">The Perfect Gift</h2>
-                    
-                    <p>She found it at last. It surely had been made for Jim and no one else. There was no other like it in any of the stores, and she had turned all of them inside out. It was a platinum fob chain simple and chaste in design, properly proclaiming its value by substance alone and not by meretricious ornamentation—as all good things should do. It was even worthy of The Watch. As soon as she saw it she knew that it must be Jim's. It was like him. Quietness and value—the description applied to both. Twenty-one dollars they took from her for it, and she hurried home with the 87 cents. With that chain on his watch Jim might be properly anxious about the time in any company. Grand as the watch was, he sometimes looked at it on the sly on account of the old leather strap that he used in place of a chain.</p>
-                    
-                    <div class="gift-reveal">
-                        <div class="gift-icon">
-                            <i class="fas fa-gift"></i>
-                        </div>
-                        <h3 style="margin-bottom: 1rem; color: gold;">The Platinum Fob Chain</h3>
-                        <p style="color: var(--text-secondary);">
-                            Simple and chaste in design, properly proclaiming its value by substance alone—worthy of Jim's treasured watch.
-                        </p>
-                    </div>
-                    
-                    <p>When Della reached home her intoxication gave way a little to prudence and reason. She got out her curling irons and lighted the gas and went to work repairing the ravages made by generosity added to love. Which is always a tremendous task, dear friends—a mammoth task.</p>
-                    
-                    <p>Within forty minutes her head was covered with tiny, close-lying curls that made her look wonderfully like a truant schoolboy. She looked at her reflection in the mirror long, carefully, and critically.</p>
-                    
-                    <p>"If Jim doesn't kill me," she said to herself, "before he takes a second look at me, he'll say I look like a Coney Island chorus girl. But what could I do—oh! what could I do with a dollar and eighty-seven cents?"</p>
-                    
-                    <p>At 7 o'clock the coffee was made and the frying-pan was on the back of the stove hot and ready to cook the chops.</p>
-                    
-                    <p>Jim was never late. Della doubled the fob chain in her hand and sat on the corner of the table near the door that he always entered. Then she heard his step on the stair away down on the first flight, and she turned white for just a moment. She had a habit of saying little silent prayers about the simplest everyday things, and now she whispered: "Please God, make him think I am still pretty."</p>
-                </div>
-                
-                <div class="chapter-section">
-                    <h2 class="chapter-title">Jim's Return</h2>
-                    
-                    <p>The door opened and Jim stepped in and closed it. He looked thin and very serious. Poor fellow, he was only twenty-two—and to be burdened with a family! He needed a new overcoat and he was without gloves.</p>
-                    
-                    <p>Jim stopped inside the door, as immovable as a setter at the scent of quail. His eyes were fixed upon Della, and there was an expression in them that she could not read, and it terrified her. It was not anger, nor surprise, nor disapproval, nor horror, nor any of the sentiments that she had been prepared for. He simply stared at her fixedly with that peculiar expression on his face.</p>
-                    
-                    <p>Della wriggled off the table and went for him.</p>
-                    
-                    <p>"Jim, darling," she cried, "don't look at me that way. I had my hair cut off and sold it because I couldn't have lived through Christmas without giving you a present. It'll grow out again—you won't mind, will you? I just had to do it. My hair grows awfully fast. Say 'Merry Christmas!' Jim, and let's be happy. You don't know what a nice—what a beautiful, nice gift I've got for you."</p>
-                    
-                    <p>"You've cut off your hair?" asked Jim, laboriously, as if he had not arrived at that patent fact yet even after the hardest mental labor.</p>
-                    
-                    <p>"Cut it off and sold it," said Della. "Don't you like me just as well, anyhow? I'm me without my hair, ain't I?"</p>
-                    
-                    <p>Jim looked about the room curiously.</p>
-                    
-                    <p>"You say your hair is gone?" he said, with an air almost of idiocy.</p>
-                    
-                    <p>"You needn't look for it," said Della. "It's sold, I tell you—sold and gone, too. It's Christmas Eve, boy. Be good to me, for it went for you. Maybe the hairs of my head were numbered," she went on with a sudden serious sweetness, "but nobody could ever count my love for you. Shall I put the chops on, Jim?"</p>
-                    
-                    <p>Out of his trance Jim seemed quickly to wake. He enfolded his Della. For ten seconds let us regard with discreet scrutiny some inconsequential object in the other direction. Eight dollars a week or a million a year—what is the difference? A mathematician or a wit would give you the wrong answer. The magi brought valuable gifts, but that was not among them. This dark assertion will be illuminated later on.</p>
-                </div>
-                
-                <div class="chapter-section">
-                    <h2 class="chapter-title">The Combs and The Chain</h2>
-                    
-                    <p>Jim drew a package from his overcoat pocket and threw it upon the table.</p>
-                    
-                    <p>"Don't make any mistake, Dell," he said, "about me. I don't think there's anything in the way of a haircut or a shave or a shampoo that could make me like my girl any less. But if you'll unwrap that package you may see why you had me going a while at first."</p>
-                    
-                    <p>White fingers and nimble tore at the string and paper. And then an ecstatic scream of joy; and then, alas! a quick feminine change to hysterical tears and wails, necessitating the immediate employment of all the comforting powers of the lord of the flat.</p>
-                    
-                    <p>For there lay The Combs—the set of combs, side and back, that Della had worshipped for long in a Broadway window. Beautiful combs, pure tortoise shell, with jeweled rims—just the shade to wear in the beautiful vanished hair. They were expensive combs, she knew, and her heart had simply craved and yearned over them without the least hope of possession. And now, they were hers, but the tresses that should have adorned the coveted adornments were gone.</p>
-                    
-                    <div class="gift-reveal">
-                        <div class="gift-icon">
-                            <i class="fas fa-gift"></i>
-                        </div>
-                        <h3 style="margin-bottom: 1rem; color: gold;">The Tortoise Shell Combs</h3>
-                        <p style="color: var(--text-secondary);">
-                            Beautiful combs, pure tortoise shell with jeweled rims—just the shade to wear in beautiful hair that was no longer there.
-                        </p>
-                    </div>
-                    
-                    <p>But she hugged them to her bosom, and at length she was able to look up with dim eyes and a smile and say: "My hair grows so fast, Jim!"</p>
-                    
-                    <p>And then Della leaped up like a little singed cat and cried, "Oh, oh!"</p>
-                    
-                    <p>Jim had not yet seen his beautiful present. She held it out to him eagerly upon her open palm. The dull precious metal seemed to flash with a reflection of her bright and ardent spirit.</p>
-                    
-                    <p>"Isn't it a dandy, Jim? I hunted all over town to find it. You'll have to look at the time a hundred times a day now. Give me your watch. I want to see how it looks on it."</p>
-                    
-                    <p>Instead of obeying, Jim tumbled down on the couch and put his hands under the back of his head and smiled.</p>
-                    
-                    <p>"Dell," said he, "let's put our Christmas presents away and keep 'em a while. They're too nice to use just at present. I sold the watch to get the money to buy your combs. And now suppose you put the chops on."</p>
-                </div>
-                
-                <div class="chapter-section">
-                    <h2 class="chapter-title">The Magi</h2>
-                    
-                    <div class="wisdom-box">
-                        <h3 style="margin-bottom: 1rem; color: gold;">The Wisdom of the Magi</h3>
-                        <p style="color: var(--text-secondary); line-height: 1.7;">
-                            The magi, as you know, were wise men—wonderfully wise men—who brought gifts to the Babe in the manger. 
-                            They invented the art of giving Christmas presents. Being wise, their gifts were no doubt wise ones, 
-                            possibly bearing the privilege of exchange in case of duplication. And here I have lamely related to you 
-                            the uneventful chronicle of two foolish children in a flat who most unwisely sacrificed for each other 
-                            the greatest treasures of their house. But in a last word to the wise of these days let it be said that 
-                            of all who give gifts these two were the wisest. Of all who give and receive gifts, such as they are wisest. 
-                            Everywhere they are wisest. They are the magi.
-                        </p>
-                    </div>
-                    
-                    <p>The magi, as you know, were wise men—wonderfully wise men—who brought gifts to the Babe in the manger. They invented the art of giving Christmas presents. Being wise, their gifts were no doubt wise ones, possibly bearing the privilege of exchange in case of duplication. And here I have lamely related to you the uneventful chronicle of two foolish children in a flat who most unwisely sacrificed for each other the greatest treasures of their house. But in a last word to the wise of these days let it be said that of all who give gifts these two were the wisest. Of all who give and receive gifts, such as they are wisest. Everywhere they are wisest. They are the magi.</p>
-                    
-                    <div class="quote">
-                        But in a last word to the wise of these days let it be said that of all who give gifts these two were the wisest. Everywhere they are wisest. They are the magi.
-                    </div>
-                    
-                    <p>And so, in the shabby little flat on Christmas Eve, Jim and Della discovered that their gifts, though rendered useless in practical terms, had served their true purpose. They had expressed a love so profound that it valued sacrifice above utility, and in that mutual sacrifice, they found a gift more valuable than any platinum chain or tortoise shell comb—the gift of knowing, beyond all doubt, that they were loved.</p>
-                    
-                    <p>They ate their Christmas dinner in quiet contentment, their presents laid aside for the moment but their hearts full. The chops were cooked, the coffee was hot, and in their humble flat, illuminated only by the gaslight and their love for each other, they celebrated the truest Christmas either had ever known.</p>
-                </div>
-                
-                <div class="chapter-section" style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border);">
-                    <h2 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--text);">About this Story</h2>
-                    <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
-                        "The Gift of the Magi" is a short story by O. Henry, first published in 1905. 
-                        It tells the story of a young married couple, Jim and Della, who are short on money but desperately 
-                        want to buy each other Christmas gifts. Unbeknownst to each other, each sells their most prized 
-                        possession to buy a gift for the other. The story is famous for its ironic twist ending and its 
-                        commentary on the true meaning of gift-giving. O. Henry's tale has become a Christmas classic, 
-                        celebrated for its poignant exploration of love, sacrifice, and the wisdom found in seemingly 
-                        foolish acts of generosity.
+                <div class="gift-reveal">
+                    <span class="gift-icon">💎</span>
+                    <h3 style="margin-bottom: 1rem; color: #2196f3;">The Platinum Fob Chain</h3>
+                    <p style="color: var(--text-secondary);">
+                        Simple and chaste in design, properly proclaiming its value by substance alone—worthy of Jim's treasured watch.
                     </p>
                 </div>
                 
-                <a href="../index.html" class="back-link">
-                    <i class="fas fa-arrow-left"></i>
-                    Return to all stories
-                </a>
+                <p>When Della reached home her intoxication gave way a little to prudence and reason. She got out her curling irons and lighted the gas and went to work repairing the ravages made by generosity added to love. Which is always a tremendous task, dear friends—a mammoth task.</p>
+                
+                <p>Within forty minutes her head was covered with tiny, close-lying curls that made her look wonderfully like a truant schoolboy. She looked at her reflection in the mirror long, carefully, and critically.</p>
+                
+                <p>"If Jim doesn't kill me," she said to herself, "before he takes a second look at me, he'll say I look like a Coney Island chorus girl. But what could I do—oh! what could I do with a dollar and eighty-seven cents?"</p>
+                
+                <p>At 7 o'clock the coffee was made and the frying-pan was on the back of the stove hot and ready to cook the chops.</p>
+                
+                <p>Jim was never late. Della doubled the fob chain in her hand and sat on the corner of the table near the door that he always entered. Then she heard his step on the stair away down on the first flight, and she turned white for just a moment. She had a habit of saying little silent prayers about the simplest everyday things, and now she whispered: "Please God, make him think I am still pretty."</p>
             </div>
-        </article>
+            
+            <!-- Chapter 4 -->
+            <div class="chapter">
+                <h2 class="chapter-title">Jim's Return</h2>
+                
+                <p>The door opened and Jim stepped in and closed it. He looked thin and very serious. Poor fellow, he was only twenty-two—and to be burdened with a family! He needed a new overcoat and he was without gloves.</p>
+                
+                <p>Jim stopped inside the door, as immovable as a setter at the scent of quail. His eyes were fixed upon Della, and there was an expression in them that she could not read, and it terrified her. It was not anger, nor surprise, nor disapproval, nor horror, nor any of the sentiments that she had been prepared for. He simply stared at her fixedly with that peculiar expression on his face.</p>
+                
+                <p>Della wriggled off the table and went for him.</p>
+                
+                <p>"Jim, darling," she cried, "don't look at me that way. I had my hair cut off and sold it because I couldn't have lived through Christmas without giving you a present. It'll grow out again—you won't mind, will you? I just had to do it. My hair grows awfully fast. Say 'Merry Christmas!' Jim, and let's be happy. You don't know what a nice—what a beautiful, nice gift I've got for you."</p>
+                
+                <p>"You've cut off your hair?" asked Jim, laboriously, as if he had not arrived at that patent fact yet even after the hardest mental labor.</p>
+                
+                <p>"Cut it off and sold it," said Della. "Don't you like me just as well, anyhow? I'm me without my hair, ain't I?"</p>
+                
+                <p>Jim looked about the room curiously.</p>
+                
+                <p>"You say your hair is gone?" he said, with an air almost of idiocy.</p>
+                
+                <p>"You needn't look for it," said Della. "It's sold, I tell you—sold and gone, too. It's Christmas Eve, boy. Be good to me, for it went for you. Maybe the hairs of my head were numbered," she went on with a sudden serious sweetness, "but nobody could ever count my love for you. Shall I put the chops on, Jim?"</p>
+                
+                <p>Out of his trance Jim seemed quickly to wake. He enfolded his Della. For ten seconds let us regard with discreet scrutiny some inconsequential object in the other direction. Eight dollars a week or a million a year—what is the difference? A mathematician or a wit would give you the wrong answer. The magi brought valuable gifts, but that was not among them. This dark assertion will be illuminated later on.</p>
+            </div>
+            
+            <!-- Chapter 5 -->
+            <div class="chapter">
+                <h2 class="chapter-title">The Combs and The Chain</h2>
+                
+                <p>Jim drew a package from his overcoat pocket and threw it upon the table.</p>
+                
+                <p>"Don't make any mistake, Dell," he said, "about me. I don't think there's anything in the way of a haircut or a shave or a shampoo that could make me like my girl any less. But if you'll unwrap that package you may see why you had me going a while at first."</p>
+                
+                <p>White fingers and nimble tore at the string and paper. And then an ecstatic scream of joy; and then, alas! a quick feminine change to hysterical tears and wails, necessitating the immediate employment of all the comforting powers of the lord of the flat.</p>
+                
+                <p>For there lay The Combs—the set of combs, side and back, that Della had worshipped for long in a Broadway window. Beautiful combs, pure tortoise shell, with jeweled rims—just the shade to wear in the beautiful vanished hair. They were expensive combs, she knew, and her heart had simply craved and yearned over them without the least hope of possession. And now, they were hers, but the tresses that should have adorned the coveted adornments were gone.</p>
+                
+                <div class="gift-reveal">
+                    <span class="gift-icon">💝</span>
+                    <h3 style="margin-bottom: 1rem; color: #2196f3;">The Tortoise Shell Combs</h3>
+                    <p style="color: var(--text-secondary);">
+                        Beautiful combs, pure tortoise shell with jeweled rims—just the shade to wear in beautiful hair that was no longer there.
+                    </p>
+                </div>
+                
+                <p>But she hugged them to her bosom, and at length she was able to look up with dim eyes and a smile and say: "My hair grows so fast, Jim!"</p>
+                
+                <p>And then Della leaped up like a little singed cat and cried, "Oh, oh!"</p>
+                
+                <p>Jim had not yet seen his beautiful present. She held it out to him eagerly upon her open palm. The dull precious metal seemed to flash with a reflection of her bright and ardent spirit.</p>
+                
+                <p>"Isn't it a dandy, Jim? I hunted all over town to find it. You'll have to look at the time a hundred times a day now. Give me your watch. I want to see how it looks on it."</p>
+                
+                <p>Instead of obeying, Jim tumbled down on the couch and put his hands under the back of his head and smiled.</p>
+                
+                <p>"Dell," said he, "let's put our Christmas presents away and keep 'em a while. They're too nice to use just at present. I sold the watch to get the money to buy your combs. And now suppose you put the chops on."</p>
+            </div>
+            
+            <!-- Chapter 6 -->
+            <div class="chapter">
+                <h2 class="chapter-title">The Magi</h2>
+                
+                <div class="wisdom-box">
+                    <h3 style="margin-bottom: 1rem; color: #2196f3;">The Wisdom of the Magi</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.7;">
+                        The magi, as you know, were wise men—wonderfully wise men—who brought gifts to the Babe in the manger. 
+                        They invented the art of giving Christmas presents. Being wise, their gifts were no doubt wise ones, 
+                        possibly bearing the privilege of exchange in case of duplication. And here I have lamely related to you 
+                        the uneventful chronicle of two foolish children in a flat who most unwisely sacrificed for each other 
+                        the greatest treasures of their house. But in a last word to the wise of these days let it be said that 
+                        of all who give gifts these two were the wisest. Of all who give and receive gifts, such as they are wisest. 
+                        Everywhere they are wisest. They are the magi.
+                    </p>
+                </div>
+                
+                <p>The magi, as you know, were wise men—wonderfully wise men—who brought gifts to the Babe in the manger. They invented the art of giving Christmas presents. Being wise, their gifts were no doubt wise ones, possibly bearing the privilege of exchange in case of duplication. And here I have lamely related to you the uneventful chronicle of two foolish children in a flat who most unwisely sacrificed for each other the greatest treasures of their house. But in a last word to the wise of these days let it be said that of all who give gifts these two were the wisest. Of all who give and receive gifts, such as they are wisest. Everywhere they are wisest. They are the magi.</p>
+                
+                <div class="quote">
+                    But in a last word to the wise of these days let it be said that of all who give gifts these two were the wisest. Everywhere they are wisest. They are the magi.
+                </div>
+                
+                <p>And so, in the shabby little flat on Christmas Eve, Jim and Della discovered that their gifts, though rendered useless in practical terms, had served their true purpose. They had expressed a love so profound that it valued sacrifice above utility, and in that mutual sacrifice, they found a gift more valuable than any platinum chain or tortoise shell comb—the gift of knowing, beyond all doubt, that they were loved.</p>
+                
+                <p>They ate their Christmas dinner in quiet contentment, their presents laid aside for the moment but their hearts full. The chops were cooked, the coffee was hot, and in their humble flat, illuminated only by the gaslight and their love for each other, they celebrated the truest Christmas either had ever known.</p>
+            </div>
+            
+            <!-- About Section -->
+            <div class="about-story">
+                <h3>About this Story</h3>
+                <p>"The Gift of the Magi" is a short story by O. Henry, first published in 1905. It tells the story of a young married couple, Jim and Della, who are short on money but desperately want to buy each other Christmas gifts. Unbeknownst to each other, each sells their most prized possession to buy a gift for the other. The story is famous for its ironic twist ending and its commentary on the true meaning of gift-giving. O. Henry's tale has become a Christmas classic, celebrated for its poignant exploration of love, sacrifice, and the wisdom found in seemingly foolish acts of generosity.</p>
+            </div>
+            
+            <!-- Back Button -->
+            <center>
+                <a href="../index.html" class="back-btn">← Back to All Stories</a>
+            </center>
+        </div>
     </div>
     
-    <div class="reading-controls">
-        <button class="control-btn" id="fontIncrease" title="Increase font size">
-            <i class="fas fa-plus"></i>
-        </button>
-        <button class="control-btn" id="fontDecrease" title="Decrease font size">
-            <i class="fas fa-minus"></i>
-        </button>
-        <button class="control-btn" id="scrollTopBtn" title="Scroll to top">
-            <i class="fas fa-arrow-up"></i>
-        </button>
-    </div>
-    
+    <!-- Scripts -->
     <script src="../story.js"></script>
     <script>
+        // Story-specific effects
         document.addEventListener('DOMContentLoaded', function() {
-            // Add gift reveal animation
+            const body = document.body;
+            const savedTheme = localStorage.getItem('theme');
+            
+            // Apply saved theme
+            if (savedTheme === 'night') {
+                body.classList.add('night-theme');
+                body.classList.remove('day-theme');
+            } else {
+                body.classList.add('day-theme');
+            }
+            
+            // Theme toggle
+            const storyThemeBtn = document.getElementById('storyThemeBtn');
+            if (storyThemeBtn) {
+                storyThemeBtn.addEventListener('click', function() {
+                    if (body.classList.contains('night-theme')) {
+                        body.classList.remove('night-theme');
+                        body.classList.add('day-theme');
+                        localStorage.setItem('theme', 'day');
+                    } else {
+                        body.classList.remove('day-theme');
+                        body.classList.add('night-theme');
+                        localStorage.setItem('theme', 'night');
+                    }
+                });
+            }
+            
+            // Gift reveal animations
             const giftReveals = document.querySelectorAll('.gift-reveal');
             giftReveals.forEach((gift, index) => {
                 gift.style.opacity = '0';
-                gift.style.transform = 'scale(0.9)';
+                gift.style.transform = 'translateY(20px) scale(0.95)';
                 gift.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
                 
                 setTimeout(() => {
                     gift.style.opacity = '1';
-                    gift.style.transform = 'scale(1)';
-                }, 500 * (index + 1));
+                    gift.style.transform = 'translateY(0) scale(1)';
+                }, 300 * (index + 1));
             });
             
-            // Add subtle sparkle to gold elements
-            const goldElements = document.querySelectorAll('.theme-tag, .gift-icon, .wisdom-box h3');
-            setInterval(() => {
-                goldElements.forEach(el => {
-                    const rand = Math.random();
-                    if (rand > 0.7) {
-                        el.style.filter = 'brightness(1.2)';
-                        setTimeout(() => {
-                            el.style.filter = 'brightness(1)';
-                        }, 300);
-                    }
+            // Add sparkle effect to gifts on hover
+            giftReveals.forEach(gift => {
+                gift.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.02)';
+                    this.style.boxShadow = '0 8px 20px rgba(33, 150, 243, 0.3)';
                 });
+                
+                gift.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                    this.style.boxShadow = 'none';
+                });
+            });
+            
+            // Christmas lights effect
+            const christmasLights = document.querySelector('.christmas-lights');
+            setInterval(() => {
+                christmasLights.style.opacity = Math.random() > 0.5 ? '0.5' : '0.3';
             }, 1000);
+            
+            // Reading progress
+            window.addEventListener('scroll', function() {
+                const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (window.scrollY / windowHeight) * 100;
+                document.getElementById('progressBar').style.width = scrolled + '%';
+            });
+            
+            // Add keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                // Toggle theme with 't'
+                if (e.key === 't' || e.key === 'T') {
+                    storyThemeBtn.click();
+                }
+                // Go back with 'b' or 'Escape'
+                if (e.key === 'b' || e.key === 'B' || e.key === 'Escape') {
+                    window.history.back();
+                }
+            });
+            
+            // Chapter animations
+            const chapters = document.querySelectorAll('.chapter');
+            chapters.forEach((chapter, index) => {
+                chapter.style.opacity = '0.9';
+                chapter.style.transform = 'translateY(20px)';
+                chapter.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                
+                setTimeout(() => {
+                    chapter.style.opacity = '1';
+                    chapter.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
         });
     </script>
 </body>
